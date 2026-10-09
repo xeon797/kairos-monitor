@@ -69,7 +69,7 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
   Implement `criterionMet(domain, day, baseline, obs)` and `evaluateDomains(day, baseline, sleep[], checks[])` per SPEC.md §7.1–7.2 in `src/engine/detect.ts`, returning for each domain: `sustained`, `evaluable`, `metDaysInWindow`, `latest` values. Poor and missing days never count as met.
   **Done when:** unit tests reproduce the sustained columns of the DEMO.md §2 table for days 7–17.
 
-- [ ] **T09 Overall status**
+- [x] **T09 Overall status**
   Implement `overallStatus(domains, baseline)` per SPEC.md §7.3 with the `INSUFFICIENT_DATA` precedence rule.
   **Done when:** tests reproduce the "Overall status" column for days 7–17, plus the missing-data case from DEMO.md §2 check 3.
 
@@ -217,6 +217,8 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
 ---
 
 ## Log
+
+T09 — Overall status with missing-baseline/domain precedence and complete day-table coverage; 23 added tests (155 total), typecheck/build passed — detect.ts, config.ts, status tests, NOTES, PLAN.
 
 T08 — Pure calendar-window detection, tri-state partial OR criteria and current-day evidence/exclusions; 46 new tests (132 total), typecheck/build passed — detect.ts, types.ts, shared quality filters, detection tests/oracle, NOTES, PLAN.
 

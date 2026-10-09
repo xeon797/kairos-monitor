@@ -1,8 +1,23 @@
-import { ERRORS_INCREASE, LAPSES_INCREASE, MIDPOINT_SHIFT_MIN, MIN_MET_DAYS, MIN_VALID_DAYS, RT_INCREASE_FACTOR, SLEEP_DEFICIT_HOURS, WINDOW_DAYS } from './config';
+import { ERRORS_INCREASE, LAPSES_INCREASE, MIDPOINT_SHIFT_MIN, MIN_MET_DAYS, MIN_VALID_DAYS, OVERALL_CHANGE_MIN_DOMAINS, OVERALL_REVIEW_MIN_DOMAINS, RT_INCREASE_FACTOR, SLEEP_DEFICIT_HOURS, WINDOW_DAYS } from './config';
 import { getCheckMeasurementQuality, getSleepMeasurementQuality } from './quality';
-import type { Baseline, CheckObservation, Domain, DomainResult, MeasurementEvidence, SleepObservation } from './types';
+import type { Baseline, CheckObservation, Domain, DomainResult, MeasurementEvidence, SleepObservation, Status } from './types';
 
 export const DOMAINS: readonly Domain[] = ['sleep', 'reaction', 'attention'];
+
+/** Absent/duplicate/mixed-day results cannot establish an evaluation. */
+export function domainsEstablished(results: readonly DomainResult[], required: readonly Domain[] = DOMAINS, day = results[0]?.day): boolean {
+  return required.length > 0 && required.every(domain => {
+    const matches = results.filter(result => result.domain === domain);
+    return matches.length === 1 && matches[0].baselineEstablished && matches[0].evaluable && matches[0].day === day;
+  });
+}
+
+export function overallStatus(domains: readonly DomainResult[], baseline: Baseline | null): Status {
+  if (!baseline || !domainsEstablished(domains)) return 'INSUFFICIENT_DATA';
+  const count = domains.filter(domain => domain.sustained).length;
+  if (count >= OVERALL_REVIEW_MIN_DOMAINS) return 'REVIEW_RECOMMENDED';
+  return count >= OVERALL_CHANGE_MIN_DOMAINS ? 'CHANGE_NOTED' : 'WITHIN_USUAL';
+}
 type Observation = SleepObservation | CheckObservation;
 interface Branch { evidence: MeasurementEvidence; met: boolean | null }
 

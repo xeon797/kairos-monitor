@@ -9,6 +9,9 @@ export const ERRORS_INCREASE = 2;
 export const WINDOW_DAYS = 5;
 export const MIN_MET_DAYS = 3;
 export const MIN_VALID_DAYS = 3;
+// Overall classification: experimental, illustrative (SPEC §7.3).
+export const OVERALL_CHANGE_MIN_DOMAINS = 1;
+export const OVERALL_REVIEW_MIN_DOMAINS = 2;
 
 // Baseline eligibility: experimental, illustrative (SPEC §6).
 export const BASELINE_WINDOW: BaselineWindow = Object.freeze([1, 7] as const);
