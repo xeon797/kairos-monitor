@@ -1,0 +1,24 @@
+.trend-intro, .trend-note { font-size: var(--text-body-sm); color: var(--text-muted); }
+.trend-cards { display: grid; gap: var(--space-6); margin-top: var(--space-6); }
+.trend-card { overflow: hidden; }
+.trend-summary { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-5); margin-top: var(--space-5); font-size: var(--text-body-sm); }
+.trend-summary > span:last-child { color: var(--text-muted); }
+.trend-reference-list { display: grid; gap: var(--space-2); margin-top: var(--space-4); color: var(--text-muted); font-size: var(--text-caption); }
+.trend-reference-list strong { color: var(--text); font-weight: var(--weight-medium); }
+.trend-plot { height: 240px; width: 100%; min-width: 0; margin-block: var(--space-4); }
+.trend-tooltip { background: var(--surface-2); color: var(--text); border: 1px solid var(--border); border-radius: var(--radius-icon); padding: var(--space-3); font-size: var(--text-caption); }
+.trend-legend { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-5); list-style: none; margin: 0; padding: 0; color: var(--text-muted); font-size: var(--text-caption); }
+.trend-note { margin-top: var(--space-4); }
+.trend-table { margin-top: var(--space-5); border-top: 1px solid var(--border); padding-top: var(--space-3); }
+.trend-table summary { min-height: 44px; padding-block: var(--space-3); color: var(--link); cursor: pointer; font-size: var(--text-body-sm); }
+.trend-table table { width: 100%; table-layout: fixed; border-collapse: collapse; font-size: var(--text-caption); }
+.trend-table caption { text-align: left; color: var(--text-muted); padding-bottom: var(--space-4); }
+.trend-table th, .trend-table td { text-align: left; padding: var(--space-3) var(--space-2); vertical-align: top; border-top: 1px solid var(--border); overflow-wrap: anywhere; }
+.trend-table th:first-child { width: 42px; }
+.trend-table th:last-child { width: 74px; }
+.trend-table-measurement + .trend-table-measurement { margin-top: var(--space-3); }
+.trend-table-measurement span { display: block; color: var(--text-muted); margin-top: var(--space-1); }
+.hrv-placeholder { margin-top: var(--space-6); }
+.hrv-placeholder h2 { font-size: var(--text-subheading); }
+.hrv-placeholder p { margin-top: var(--space-2); color: var(--text-muted); }
+@media (min-width: 900px) { .trend-plot { height: 280px; } .trend-table th:last-child { width: 160px; } }

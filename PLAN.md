@@ -131,7 +131,7 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
 
 ## P7 — Trends and About
 
-- [ ] **T20 Trends screen**
+- [x] **T20 Trends screen**
   Build `Trends.tsx` with three Recharts charts per DESIGN.md §4.3 (baseline line, criterion line, baseline-window band, highlighted criterion-met dots, "N of last 5 days" captions, HRV placeholder card).
   **Done when:** charts plot up to the current day only, show the correct criterion lines (6.21 h, 286.2 ms, 3.0 lapses), and render at 360 px without horizontal scroll.
 
@@ -269,3 +269,5 @@ T18 — Immediate templates plus validated synthetic-only AI/cache integration, 
 T19 — Deployment/verification attempted on the existing project/domain; local work committed, but task remains unchecked. Public route/font/persistence/fallback checks pass at both widths; real Gemini acceptance fails (upstream errors/deadlines/rejected output), so no validated EVA/Inventory samples are claimed. T20 has not begun.
 
 T19 repair — Completed the task's real day-12 EVA/Inventory acceptance at both widths: validated provider text, accurate source tags, both template toggles and cached reload. Published guarded extraction/prompt/validator repairs; verified free-tier/account generation before changing Production model to gemini-3.5-flash-lite. 485 unit tests, 16 local browser checks and 2 public core checks pass; typecheck/build pass. Broader desktop real-flow assertion for a separate overall AI call hit the client deadline and correctly retained template; detailed outcomes/limits in NOTES.md. T20 has not begun.
+
+T20 — Recharts evidence charts with saved baseline/config references, separate attention criteria, quality gaps, engine window counts and accessible tables; 496 unit tests and 18 local browser checks pass; typecheck/build pass. T21 is next under the sequential P7 authorization; T22 has not begun.
