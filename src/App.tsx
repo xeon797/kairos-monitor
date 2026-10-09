@@ -7,7 +7,6 @@ import Trends from './screens/Trends';
 import Mission from './screens/Mission';
 import { AppProvider, useApp } from './state/useApp';
 import { SIMULATION_MAX_DAY } from './engine/config';
-import { EnginePreview } from './components/EnginePreview';
 import { SimControls } from './components/SimControls';
 
 const screens: ScreenName[] = ['Today', 'Check', 'Trends', 'Mission'];
@@ -60,7 +59,7 @@ function AppShell() {
           <Route path="/mission" element={<Mission />} />
           <Route path="*" element={<Navigate to="/today" replace />} />
         </Routes>
-        <div className="foundation-tools"><EnginePreview /><SimControls /></div>
+        <div className="simulator-region"><SimControls showLogAction={pathname !== '/today'} /></div>
         </main>
         <footer className="app-footer page-width"><p>{FOOTER_DISCLAIMER}</p></footer>
       </div>

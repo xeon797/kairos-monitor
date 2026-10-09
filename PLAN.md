@@ -99,7 +99,7 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
 
 ## P5 — Today and Mission (Window 2 starts)
 
-- [ ] **T14 Today screen**
+- [x] **T14 Today screen**
   Build `Today.tsx` and components `StatusCard`, `EvidenceRow`, `TaskCard`, `ConcernChip`, `SyntheticBadge`, per DESIGN.md §4.1. The explanation box shows the template text for now (T18 adds the AI text).
   **Done when:** advancing from day 7 to day 12 shows `Change noted` at day 11 and `Review recommended` at day 12 with the correct evidence rows and the next task card.
 
@@ -217,6 +217,8 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
 ---
 
 ## Log
+
+T14 — Today now renders packet status, separate measurement evidence/provenance, next task, template explanation and actual availability; official Satoshi installed locally. 338 unit tests and 8 Chromium checks pass; typecheck/build pass. No T15/P6 work in this commit.
 
 T13 — One shared React store/provider, serialized persisted simulator mutations, filtered engine packets and temporary shell preview; 22 added unit tests (326 total), 5 production/3 StrictMode browser checks, typecheck/build passed — state, preview/controls/badge, shell/CSS, state/browser tests, NOTES, PLAN.
 

@@ -11,3 +11,4 @@ coverage/
 .local/
 *.log
 *.tsbuildinfo
+/public/fonts/*.woff2
