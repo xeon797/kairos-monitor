@@ -33,8 +33,12 @@ for (const width of [360, 1100]) {
     });
 
     await page.goto('/');
+    await expect(page.getByRole('heading',{name:'Readiness before the next task.',exact:true})).toBeVisible();
+    await page.getByRole('link',{name:'Launch demo'}).first().click();
     await expect(page).toHaveURL(/\/today$/);
     await expect(page).toHaveTitle('Kairos Monitor');
+    await page.goto('/today');
+    await expect(page.getByRole('heading',{name:'Today',exact:true})).toBeVisible();
     await page.keyboard.press('Tab');
     await expect(page.getByRole('link', { name: 'Skip to content' })).toBeFocused();
     await page.keyboard.press('Enter');

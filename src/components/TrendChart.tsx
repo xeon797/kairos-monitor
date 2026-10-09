@@ -5,7 +5,7 @@ import { SyntheticBadge } from './SyntheticBadge';
 
 function Marker({cx,cy,payload,metric,square,color}:{cx?:number;cy?:number;payload?:TrendPoint;metric:TrendMetric;square:boolean;color:string}) {
   if(cx===undefined||cy===undefined||payload?.[metric]===null)return null;
-  if(payload?.marked[metric])return <path className="criterion-marker" data-day={payload.day} d={`M ${cx} ${cy-6} l 6 6 -6 6 -6 -6 Z`} fill="var(--chart-criterion)" stroke="var(--color-lavender)" strokeWidth={1.5}/>;
+  if(payload?.marked[metric])return square?<rect className="criterion-marker" data-day={payload.day} x={cx-5} y={cy-5} width={10} height={10} fill="var(--chart-criterion)" stroke="var(--color-lavender)" strokeWidth={1.5}/>:<path className="criterion-marker" data-day={payload.day} d={`M ${cx} ${cy-6} l 6 6 -6 6 -6 -6 Z`} fill="var(--chart-criterion)" stroke="var(--color-lavender)" strokeWidth={1.5}/>;
   return square?<rect x={cx-3} y={cy-3} width={6} height={6} fill={color}/>:<circle cx={cx} cy={cy} r={3} fill={color}/>;
 }
 
@@ -31,7 +31,7 @@ export function TrendChart({chart}:{chart:TrendData}) {
         </LineChart>
       </ResponsiveContainer>
     </div>
-    <ul className="trend-legend" aria-label={`${chart.title} legend`}><li>◯ {chart.series[0].label}{chart.series.length>1?' · □ Commission errors (dashed)':''}</li><li>– – Frozen baseline</li><li>··· Criterion{chart.series.length>1?' · dash-dot for errors':''}</li><li>◆ Larger outlined diamond: criterion met</li><li>Shaded band: baseline days {chart.baselineWindow[0]}–{chart.baselineWindow[1]}</li><li>Gaps: missing or poor data</li></ul>
+    <ul className="trend-legend" aria-label={`${chart.title} legend`}><li>◯ {chart.series[0].label}{chart.series.length>1?' · □ Commission errors (dashed)':''}</li><li>– – Frozen baseline{chart.series.length>1?' · longer dash for errors':''}</li><li>··· Criterion{chart.series.length>1?' · dash-dot for errors':''}</li><li>◆ Larger outlined {chart.series.length>1?'diamond / square':'diamond'}: criterion met</li><li>Shaded band: baseline days {chart.baselineWindow[0]}–{chart.baselineWindow[1]}</li><li>Gaps: missing or poor data</li></ul>
     {chart.domain==='sleep'&&<p className="trend-note">Sleep criteria include duration or midpoint shift. Midpoint evidence appears in the data table; a marked point may reflect either criterion.</p>}
     {chart.domain==='attention'&&<p className="trend-note">Each series marks its own criterion. The attention count above uses lapses or commission errors, as evaluated by the engine.</p>}
     <details className="trend-table"><summary>View {chart.title.toLowerCase()} data table</summary><table><caption>{chart.title} · Synthetic mission telemetry · through day {summary.day}. Values rounded for display only.</caption><thead><tr><th scope="col">Day</th><th scope="col">Evidence</th><th scope="col">Domain criterion</th></tr></thead><tbody>{chart.points.map(point=><tr key={point.day} data-day={point.day}><th scope="row">{point.day}</th><td>{point.measurements.map(m=><div className="trend-table-measurement" key={m.metric}><strong>{m.metric==='midpointMinutes'?'Sleep midpoint':chart.series.find(s=>s.metric===m.metric)?.label}</strong>: {m.quality==='good'?trendNumber(m.value,m.unit):'—'} {m.unit}<span>{m.source==='synthetic'?'Synthetic':m.source==='live'?'Live browser test':'Source unavailable'} · {m.quality} quality</span>{m.reasons.length>0&&<span>{m.reasons.join(' ')}</span>}</div>)}</td><td>{point.domainMet===null?'Not evaluable':point.domainMet?'Met':'Not met'}</td></tr>)}</tbody></table></details>

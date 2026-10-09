@@ -139,6 +139,9 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
   Implement `AboutDialog` per DESIGN.md §8 and make sure every limitation in SPEC.md §17 appears. Add this disclosure: explanations may be rephrased by Google's Gemini model from the same synthetic evidence, and the classification always comes from the deterministic engine. Add the `ProvenanceTag` to each evidence row (hover/tap shows source and quality).
   **Done when:** the dialog opens from the top bar, contains the references, all limitations, and the AI disclosure.
 
+- [x] **P7 authorized landing page addition**
+  Replace the root redirect with a separate introductory page at `/`, outside mission state/simulator/navigation. Preserve `/today`, `/check`, `/trends`, `/mission`, their direct refreshes and saved state. Launch demo opens Today; the console wordmark returns home. Use a real isolated-context synthetic day-12 dashboard capture, honest limitations, existing palette/font and a static orbit fallback because no supplied video exists. Document the future video slot without a broken source. Verify local/public navigation, zero landing state/AI initialization, both widths, reduced motion, media independence, charts/modal and screenshots; deploy the existing Vercel project before stopping before T22/P8.
+
 ---
 
 ## P8 — Checks (scoring and test UIs)
@@ -273,3 +276,5 @@ T19 repair — Completed the task's real day-12 EVA/Inventory acceptance at both
 T20 — Recharts evidence charts with saved baseline/config references, separate attention criteria, quality gaps, engine window counts and accessible tables; 496 unit tests and 18 local browser checks pass; typecheck/build pass. T21 is next under the sequential P7 authorization; T22 has not begun.
 
 T21 — Inverted lavender About modal with limitations, NASA references, explicit focus wrap/native inertness, Escape/Close/trigger restoration; existing provenance tags now keyboard/tap disclosures. 498 unit tests pass; original 18 browser checks plus 2 About checks pass; typecheck/build pass. Authorized landing addition follows; T22 has not begun.
+
+P7 landing addition — Standalone root introduction, lazy mission/Trends boundaries, preserved console routes/state, real isolated day-12 preview and original static orbit fallback. No supplied clip: looping video asset pending. 498 unit tests, 24 local browser checks, 8 public mocked-AI P7 checks and public route/API/font/image HTTP checks pass; typecheck/build pass; deployed existing Vercel project at https://kairos-monitor-gamma.vercel.app. Screenshots/asset provenance/routing documented. P7 complete; next P8/T22, which has not begun.

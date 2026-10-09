@@ -1,4 +1,7 @@
 import { expect, test } from '@playwright/test';
+import { mockAI } from './helpers/mockAI';
+
+test.beforeEach(async({page})=>{await mockAI(page);});
 
 for(const width of [360,1100])test(`About modal and provenance at ${width}px`,async({page})=>{
   await page.setViewportSize({width,height:820});

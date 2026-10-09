@@ -1,4 +1,7 @@
 import { expect, test } from '@playwright/test';
+import { mockAI } from './helpers/mockAI';
+
+test.beforeEach(async({page})=>{await mockAI(page);});
 
 for(const width of [360,1100]) test(`Trends frozen evidence at ${width}px`,async({page})=>{
   await page.setViewportSize({width,height:900});
@@ -30,7 +33,35 @@ for(const width of [360,1100]) test(`Trends frozen evidence at ${width}px`,async
   await expect(sleep.locator('tr[data-day="12"]')).toContainText('Synthetic · good quality');
   await expect(page.getByText('Supporting context only. Not available in this prototype.',{exact:true})).toHaveCount(1);
   await sleep.locator('summary').click();
-  await page.locator('#main-content').scrollIntoViewIfNeeded();
+  await page.evaluate(()=>{document.querySelector('.content-region')!.scrollTop=0;window.scrollTo(0,0);});
   await page.screenshot({path:`.local/p7-screenshots/trends-day12-${width}.png`,fullPage:true});
   expect(errors).toEqual([]);
+});
+
+test('Trends missing and poor telemetry remains gaps and insufficient evidence',async({page})=>{
+  await page.goto('/trends');
+  await expect(page.locator('.trend-card')).toHaveCount(3);
+  await page.evaluate(()=>new Promise<void>((resolve,reject)=>{
+    const open=indexedDB.open('kairos-monitor');open.onerror=()=>reject(open.error);
+    open.onsuccess=()=>{
+      const database=open.result;const tx=database.transaction(['sleep','checks','settings'],'readwrite');
+      tx.oncomplete=()=>{database.close();resolve();};tx.onerror=()=>{database.close();reject(tx.error);};
+      const settings=tx.objectStore('settings');const setting=settings.get('app');setting.onsuccess=()=>settings.put({...setting.result,currentDay:12});
+      for(const day of [10,11,12]){
+        const sleeps=tx.objectStore('sleep'),sleep=sleeps.get(day);sleep.onsuccess=()=>sleeps.put({...sleep.result,quality:day===10?'poor':'missing'});
+        const checks=tx.objectStore('checks'),check=checks.get(`synthetic-check-${day}`);check.onsuccess=()=>checks.put({...check.result,quality:day===10?'poor':'missing'});
+      }
+    };
+  }));
+  await page.reload();
+  for(const card of await page.locator('.trend-card').all()){
+    await expect(card.locator('.evidence-state')).toContainText('Insufficient data');
+    await expect(card.locator('.trend-summary')).toContainText('2 valid days · Not evaluable');
+    await card.locator('summary').click();
+    await expect(card.locator('tr[data-day="10"]')).toContainText('poor quality');
+    await expect(card.locator('tr[data-day="12"]')).toContainText('missing quality');
+    await expect(card.locator('tr[data-day="12"]')).toContainText('—');
+    await expect(card.locator('tr[data-day="12"]')).toContainText('Not evaluable');
+    await expect(card.locator('.criterion-marker[data-day="12"]')).toHaveCount(0);
+  }
 });

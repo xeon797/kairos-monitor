@@ -30,6 +30,9 @@ An astronaut can feel capable while sleep and attention are deteriorating. A das
 See [`DEMO.md`](DEMO.md) for the 90-second script and the full acceptance table.
 
 ## Screens
+
+The public introduction is at `/`. **Launch demo** opens `/today` while preserving the saved mission day. The console wordmark returns to the introduction. Direct `/today`, `/check`, `/trends` and `/mission` routes support hard refreshes. The landing page does not initialize mission storage or request Gemini. Landing asset provenance and the pending video slot are documented in [public/images/README.md](public/images/README.md).
+
 | Screen | Job |
 |---|---|
 | Today | Current status, evidence by domain, next task, data availability |
