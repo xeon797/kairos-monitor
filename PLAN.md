@@ -59,7 +59,7 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
 - [x] **T07 Baseline**
   Implement `computeBaseline(sleep[], checks[], window)` per SPEC.md §6 in `src/engine/baseline.ts`, returning `Baseline | null` (null when under 5 valid nights or 5 valid checks).
   **Done when:** for the synthetic data the baseline equals 7.214 (±0.001), 265.0, 1.000, 1.286; a test with only 4 valid nights returns null.
-  **P2 verification:** independent calculation and fixture tests completed under the missing-DEMO exception. Official scenario-baseline acceptance remains blocked on T05/DEMO.md and is not marked passed. Caller supplies `frozenAt` and explicit check kind; no baseline storage or automatic update is implemented.
+  **P2 verification completed:** independent fixture tests and the adopted DEMO scenario-baseline oracle pass. All 7 baseline nights/checks contribute; means match DEMO §1.2 within 1e-9 and SPEC's ±0.001 targets. Caller supplies `frozenAt` and explicit check kind; no baseline storage or automatic update is implemented.
 
 ---
 
@@ -217,6 +217,8 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
 ---
 
 ## Log
+
+T07 acceptance completion — Adopted DEMO baseline oracle verified under both explicit quality kinds; source isolation/immutability and insufficient-count tests passed; 5 added tests (86 total), typecheck/build passed — tests/unit/scenario-baseline.test.ts, NOTES, PLAN.
 
 T05 — Adopted supplied DEMO.md verbatim; exact 17-day synthetic records, task library and schedule; 9 new data tests (81 total) and typecheck/build passed — DEMO copies, engine/scenarios.ts, tests/unit/scenario-data.test.ts, NOTES, PLAN.
 
