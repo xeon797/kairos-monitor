@@ -87,7 +87,7 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
 
 ## P4 — State layer
 
-- [ ] **T12 Persistence**
+- [x] **T12 Persistence**
   Create `src/db/db.ts` with Dexie tables `sleep`, `checks`, `responses`, `settings`, and `explanations` (key, text, model, createdAt; used by T18). On first run, seed days 1–17 of synthetic data, set `currentDay = 7`, and freeze the baseline into `settings`. Export helpers: `getState()`, `setDay(n)`, `addResponse()`, `addLiveCheck()`, `resetSimulation()`.
   **Done when:** a Vitest test using `fake-indexeddb` seeds, reads, and resets correctly; reset returns to day 7 and clears responses but keeps live checks and cached explanations.
 
@@ -217,6 +217,8 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
 ---
 
 ## Log
+
+T12 — Transactional Dexie seed/frozen baseline, explicit persisted check kinds, validated helpers and unavailable-storage state; 38 added tests (304 total), typecheck/build passed — db.ts, config input limits, persistence tests, package/lock, NOTES, PLAN.
 
 T11 — Full-precision nullable evidence packets, task-specific neutral templates, exact-footer exemption and non-causal trend guard; 89 added tests (266 total), Checkpoint A engine PASS, typecheck/build passed — evidence.ts, templates.ts, types/config/detection evidence, packet/template/integration tests, NOTES, PLAN.
 

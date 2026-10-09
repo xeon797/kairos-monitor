@@ -36,3 +36,10 @@ export const LOW_DEMAND_CONCERN_CAP = 'CHANGE_NOTED' as const;
 
 // Technical performance target: experimental, illustrative prototype budget (SPEC §15).
 export const ENGINE_TARGET_MS = 20;
+
+// Technical simulator/input limits: experimental, illustrative prototype rules
+// from SPEC §4/§12; these do not alter detection or task classification.
+export const SIMULATION_MIN_DAY = 7;
+export const SIMULATION_MAX_DAY = 17;
+export const SCHEDULE_CHANGE_MIN_DAY = 12;
+export const MAX_RESPONSE_NOTE_LENGTH = 200;
