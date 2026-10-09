@@ -4,6 +4,9 @@
   "installCommand": "npm ci",
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
+  "headers": [
+    { "source": "/", "headers": [{ "key": "X-Kairos-Explanations", "value": "v1" }] }
+  ],
   "rewrites": [
     { "source": "/", "destination": "/index.html" },
     { "source": "/today", "destination": "/index.html" },

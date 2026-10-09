@@ -46,3 +46,12 @@ export const MAX_RESPONSE_NOTE_LENGTH = 200;
 
 // Explanation limits: experimental, illustrative prototype safeguards, not clinical criteria.
 export const MAX_EXPLANATION_WORDS = 90;
+// Technical explanation budgets: experimental, illustrative prototype safeguards.
+export const EXPLANATION_BODY_BYTES = 8 * 1024;
+export const EXPLANATION_SERVER_TIMEOUT_MS = 3500;
+export const EXPLANATION_CLIENT_TIMEOUT_MS = 4000;
+export const EXPLANATION_OUTPUT_TOKENS = 160;
+export const EXPLANATION_TEMPERATURE = 0.2;
+export const EXPLANATION_REQUESTS_PER_MINUTE = 20;
+export const EXPLANATION_RATE_WINDOW_MS = 60_000;
+export const EXPLANATION_RATE_MAX_ENTRIES = 1000;

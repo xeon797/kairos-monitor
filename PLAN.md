@@ -115,7 +115,7 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
   Create `src/engine/validateExplanation.ts`: `validateExplanation(text, packet)` returns `{ ok, reasons }`. Reject if the text contains any banned word (DESIGN.md §5.3), contains a number not derivable from the packet (day, values, baselines, deltas, counts; allow rounding to the packet's displayed precision), exceeds 90 words, or (when status is `CHANGE_NOTED` or `REVIEW_RECOMMENDED`) lacks a review or repeat-check prompt. Also export `explanationCacheKey(packet)` (stable string from day, status, taskId, concern, domain values).
   **Done when:** unit tests cover good text, banned word, foreign number, too long, missing review prompt, and that the same packet always yields the same cache key.
 
-- [ ] **T17 Serverless endpoint `api/explain.ts`**
+- [x] **T17 Serverless endpoint `api/explain.ts`**
   POST only. Hand-validate the body against the `EvidencePacket` shape (no new dependencies); cap body at 8 KB; reject any packet whose provenance contains `live` (live check data is never sent). Build the prompt with the rules from SPEC.md §10 (use only packet numbers, never change status, no diagnosis, no clearance language, at most about 70 words, end with a review prompt). Call the Gemini REST API with plain `fetch` (no SDK): key from `GEMINI_API_KEY`, model from `GEMINI_MODEL` (verify the current endpoint and model name in the Gemini API docs), temperature 0.2, `maxOutputTokens` about 160, server timeout 3.5 s. Best-effort in-memory per-IP rate limit (about 20 requests per minute, respond 429). Never log the key or packet contents. Responses: `200 {text, model}`, `503 {error:"not_configured"}` without a key, `502 {error:"upstream"}` on failure.
   **Done when:** unit tests with a mocked `fetch` cover success, missing key, upstream failure, oversized body, live-provenance rejection, and rate limiting.
 
@@ -261,3 +261,5 @@ T02 — Exact design tokens, local font declarations, responsive shell and four 
 4. If the last commit left tests failing, fix those first.
 
 T16 — Pure conservative explanation validation and versioned canonical cache material added. All original tests preserved; 396 unit tests, typecheck and build pass.
+
+T17 — Server-only Gemini REST endpoint with exact synthetic packet validation, bounded per-IP limiting, deadlines and output validation. 434 unit tests, typecheck and build pass; real calls deferred to T19.
