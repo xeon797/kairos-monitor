@@ -119,3 +119,7 @@ Use Node.js 22.12 or newer (Node 24 was used here), then `npm ci` and `npm run d
 Add the licensed Satoshi Regular, Medium, and Bold `.woff2` files manually to `public/fonts/` with the filenames from DESIGN §2.4. Until then, the prescribed system fallback is used. DEMO.md is missing and must be supplied before T05.
 
 Future Gemini configuration uses server-only `GEMINI_API_KEY` and `GEMINI_MODEL`. The P1 shell needs neither variable, contains no endpoint, and makes no model requests. Keep local values in an ignored `.env` file; never use a `VITE_` prefix.
+
+The P1 shell now has Today, Check, Trends and Mission placeholder routes. The mission simulator is not connected yet. About is visibly unavailable until P7. Satoshi files are still absent; the system fallback is used.
+
+For foundation browser checks, run `npx playwright install chromium`, `npm run build`, then `npm run e2e`. The two shell checks exercise every route at 360 px and 1100 px and save screenshots to ignored `test-results/`. They do not exercise the future demo, engine, cognitive tests or offline PWA.

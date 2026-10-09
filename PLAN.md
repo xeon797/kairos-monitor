@@ -216,6 +216,8 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
 
 ## Log
 
+T02 — Exact tokens, font fallback, responsive four-route shell and footer; typecheck/build and 2 foundation browser checks passed, all route screenshots inspected — styles, shell/screens/components, routing dependency, Playwright checks, README, NOTES.
+
 T01 — React 18 scaffold, strict app/config typecheck, separate test runners, empty unit suite (0 tests), production build and Chrome dev-page check passed — app/config files, package lock, canonical docs, README, NOTES.
 T02 — Exact design tokens, local font declarations, responsive shell and four placeholder routes; typecheck/build and 2 foundation browser checks passed at 360/1100 px — src, package lock, Playwright config/checks, NOTES.
 (Agent: add one line per completed task: `T## — what changed — files touched`.)
