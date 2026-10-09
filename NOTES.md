@@ -37,3 +37,12 @@
 - Deployed `index.html`, JS and CSS bytes match the final local production build exactly. The remote screenshots also visually match the local shell. Browser reports/screenshots are ignored under `.local/t03-report.json` and `.local/t03-screenshots/`.
 - Future Gemini environment names remain server-only `GEMINI_API_KEY` and `GEMINI_MODEL`. No Gemini credentials, dummy secrets, endpoint or model requests were created. CLI-generated `.env.local` deployment metadata is ignored and excluded from uploads; the tracked `.env.example` remains empty.
 - Final P1 checks: typecheck passed; Vitest executed with 0 unit tests (empty suite, no behavioral unit-test claim); production build passed; 2 local and 2 public-deployment foundation checks passed. No full demo, engine acceptance or offline/PWA verification was run. T04 has not begun.
+
+## P2 — Engine base
+
+- P2 precheck: clean working tree at `dbe26f5`; DEMO.md is still absent from the workspace and supplied-document directory. T05 is blocked on the authoritative 17-day observation table (including sleep midpoint, RT, lapses, errors and quality metadata). No rows will be inferred from rounded baseline targets or unit-test fixtures. The P2 prompt authorizes continuing independently to T06/T07.
+- T04 preserves SPEC §4/§9 field names and nullability. Task profile/schedule field names are otherwise unspecified; use `TaskProfile { id, name, demand, relevantDomains, reviewCap }` and `ScheduledTask { id, taskId, scheduledDay }` to distinguish a profile from a scheduled occurrence.
+- Observation units are implicit in SPEC's field names (hours, minutes, milliseconds, counts), while evidence values carry `unit`. AGENTS requests a unit on every observation but SPEC's interfaces omit it; no extra required field was invented. Resolve explicit unit metadata and live sleep timestamps before persistence.
+- `TestKind = 'reaction' | 'go_no_go'` is separate from CheckObservation. The existing model lacks test kind; quality validation will require it as an explicit argument and will not infer it from nullable metrics. Resolve its persistence representation before T12/live checks.
+- Config separates experimental detection/baseline/task rules from technical quality and nonnegative-number checks. All specified numbers are centralized; no detection, scoring or task-classification implementation is included in T04.
+- T04 verification: typecheck/build passed and Vitest ran with 0 unit tests. Engine modules are unconnected to the shell; production JS/CSS artifact filenames remain unchanged.

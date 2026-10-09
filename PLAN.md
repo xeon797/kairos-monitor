@@ -43,13 +43,14 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
 
 ## P2 — Engine base
 
-- [ ] **T04 Types and config**
+- [x] **T04 Types and config**
   Create `src/engine/types.ts` (all types from SPEC.md §4 and §9) and `src/engine/config.ts` (all thresholds from SPEC.md §7 and §8, each commented `experimental, illustrative`).
   **Done when:** typecheck passes; config exports `SLEEP_DEFICIT_HOURS=1.0`, `MIDPOINT_SHIFT_MIN=90`, `RT_INCREASE_FACTOR=1.08`, `LAPSES_INCREASE=2`, `ERRORS_INCREASE=2`, `WINDOW_DAYS=5`, `MIN_MET_DAYS=3`, `MIN_VALID_DAYS=3`.
 
 - [ ] **T05 Synthetic scenario data**
   Create `src/engine/scenarios.ts` with the 17-day table from DEMO.md §1 as typed arrays of `SleepObservation` and `CheckObservation` (source `synthetic`, quality `good`), plus the task schedule from SPEC.md §8.3 and the task library from §8.1.
   **Done when:** a unit test asserts 17 sleep rows, 17 check rows, and exact values for days 1, 12, and 17.
+  **P2 dependency:** blocked — DEMO.md and its authoritative 17-day table are absent. T06/T07 may proceed independently under the P2 prompt; fixtures are not mission scenario data.
 
 - [ ] **T06 Quality rules**
   Implement `isCheckValid(check)` and `isSleepValid(sleep)` per SPEC.md §5 in `src/engine/quality.ts`.
@@ -215,6 +216,8 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
 ---
 
 ## Log
+
+T04 — Strict specification types and centralized detection/baseline/quality/task constants; typecheck/build passed, test command ran (0 unit tests); T05 missing-data dependency recorded — engine/types.ts, engine/config.ts, NOTES, PLAN.
 
 T03 — Vercel production READY, public shell and four hard-refresh routes verified at 360/1100 px; API paths excluded, deployed assets match local build — vercel.json, .vercelignore, README, NOTES.
 
