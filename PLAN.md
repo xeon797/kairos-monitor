@@ -33,7 +33,7 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
   Create `src/styles/tokens.css` (exact copy of DESIGN.md §2.7), `src/styles/fonts.css` (DESIGN.md §2.4), `App.tsx` with `react-router-dom`, four empty routes (Today, Check, Trends, Mission), top bar with the "Kairos Monitor" wordmark and orbit mark (DESIGN.md §9) and "Mission day N / 17" placeholder, tab bar (bottom on mobile, top on desktop), and the footer disclaimer constant.
   **Done when:** four routes render at 360 px and 1100 px with Deep Ink background, Satoshi (or fallback), footer visible, no hex values outside `tokens.css`.
 
-- [ ] **T03 First deploy**
+- [x] **T03 First deploy**
   Deploy to Vercel (personal GitHub repo or Vercel CLI; Hobby cannot import org-owned repos). The user sets `GEMINI_API_KEY` and `GEMINI_MODEL` in the Vercel project's environment variables (placeholders are fine until the key exists).
   **Done when:** the public URL loads the shell and the four routes work after a hard refresh (SPA rewrite configured in `vercel.json`).
 
@@ -215,6 +215,8 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
 ---
 
 ## Log
+
+T03 — Vercel production READY, public shell and four hard-refresh routes verified at 360/1100 px; API paths excluded, deployed assets match local build — vercel.json, .vercelignore, README, NOTES.
 
 T02 — Exact tokens, font fallback, responsive four-route shell and footer; typecheck/build and 2 foundation browser checks passed, all route screenshots inspected — styles, shell/screens/components, routing dependency, Playwright checks, README, NOTES.
 

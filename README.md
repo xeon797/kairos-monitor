@@ -123,3 +123,7 @@ Future Gemini configuration uses server-only `GEMINI_API_KEY` and `GEMINI_MODEL`
 The P1 shell now has Today, Check, Trends and Mission placeholder routes. The mission simulator is not connected yet. About is visibly unavailable until P7. Satoshi files are still absent; the system fallback is used.
 
 For foundation browser checks, run `npx playwright install chromium`, `npm run build`, then `npm run e2e`. The two shell checks exercise every route at 360 px and 1100 px and save screenshots to ignored `test-results/`. They do not exercise the future demo, engine, cognitive tests or offline PWA.
+
+The verified P1 production shell is at https://kairos-monitor-gamma.vercel.app. Vercel builds with `npm ci` and `npm run build`, serves `dist/`, and rewrites the four shell routes for direct entry and refresh. `/api/*` is excluded; Gemini integration remains a later milestone.
+
+For an already linked project, deploy with `vercel deploy --prod --scope team_DUWOMMwlvCPNLaA6EusnFka2`. Verify the public site with `PLAYWRIGHT_BASE_URL` set to its production URL and `npm run e2e` (the checks use a fresh browser context with no protection bypass). Local Vercel metadata and environment files are ignored. Deployment details and outstanding document/font gaps are recorded in NOTES.md.

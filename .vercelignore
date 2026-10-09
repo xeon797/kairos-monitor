@@ -1,0 +1,11 @@
+.git/
+.env
+.env.*
+node_modules/
+dist/
+.local/
+test-results/
+playwright-report/
+blob-report/
+coverage/
+Kairos Monitor/
