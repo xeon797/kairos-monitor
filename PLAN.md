@@ -154,7 +154,7 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
   Build `ReactionTest.tsx` (25 trials, random 1.5–4.0 s delay, tap or Space) and output a `CheckObservation` via `scoring.ts`. Record tab-blur events as `interruptions`.
   **Done when:** a full run produces a result object; Space and pointer both work; cancelling returns to the Check screen.
 
-- [ ] **T24 Go/No-Go test UI**
+- [x] **T24 Go/No-Go test UI**
   Build `GoNoGoTest.tsx` (40 stimuli, 25% no-go, 800 ms stimulus + 400 ms gap) with scoring. The no-go stimulus is a square and go is a circle (shape, not color alone).
   **Done when:** a full run produces commission and omission counts; interruptions are tracked.
 
@@ -282,3 +282,5 @@ P7 landing addition — Standalone root introduction, lazy mission/Trends bounda
 T22 — Pure measured-trial reaction/attention scoring and seeded schedules; null unmeasured metrics, explicit denominators and quality/exclusion reasons. Documented SPEC timing constants added without changing existing thresholds. 523 unit tests and typecheck pass; go/no-go false-start quality policy remains an explicit unresolved prerequisite for valid live attention persistence, never filled with a fabricated zero.
 
 T23 — Full-viewport reaction interface, 25 seeded waits with measured monotonic RT, keyboard/pointer guards, frame-gated onset, interruptions/cancel/restart cleanup, raw summaries and explicit idempotent live saving. 529 unit tests, typecheck/build and 3 controlled-timing browser checks pass. T24 follows; T25 has not begun.
+
+T24 — Measured 30-go/10-no-go interface with 800 ms exposure/400 ms gaps, shape cues, focused error denominators and common SPEC false-start quality rule. Final P8: 542 unit tests, 32 local browser checks and typecheck/build pass; four opt-in provider/deployment checks skipped. Typed live saves, reload, duplicate prevention and unchanged synthetic baseline/day-12 task results verified. No deployment; next P9, T25 has not begun.

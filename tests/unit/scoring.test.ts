@@ -32,18 +32,37 @@ describe('reaction scoring',()=>{
 });
 describe('attention scoring and deterministic schedules',()=>{
   it('counts commissions and omissions independently for measured focused stimuli',()=>{
-    const score=scoreGoNoGo([{stimulus:'no_go',responded:true,focused:true},{stimulus:'go',responded:false,focused:true},{stimulus:'go',responded:true,focused:true},{stimulus:'no_go',responded:false,focused:true}]);
+    const score=scoreGoNoGo([{stimulus:'no_go',responded:true,rtMs:99,focused:true},{stimulus:'go',responded:false,rtMs:null,focused:true},{stimulus:'go',responded:true,rtMs:100,focused:true},{stimulus:'no_go',responded:false,rtMs:null,focused:true}]);
     expect(score.commissionErrors).toBe(1);expect(score.omissionErrors).toBe(1);expect(score.validTrials).toBe(4);
-    expect(score.medianRtMs).toBeNull();expect(score.lapses).toBeNull();expect(score.falseStarts).toBeNull();
+    expect(score.medianRtMs).toBeNull();expect(score.lapses).toBeNull();expect(score.falseStarts).toBe(1);
   });
   it('leaves empty metrics missing and excludes unfocused stimuli',()=>{
-    expect(scoreGoNoGo([]).commissionErrors).toBeNull();expect(scoreGoNoGo([{stimulus:'no_go',responded:true,focused:false}]).commissionErrors).toBeNull();
+    expect(scoreGoNoGo([]).commissionErrors).toBeNull();expect(scoreGoNoGo([{stimulus:'no_go',responded:true,rtMs:250,focused:false}]).commissionErrors).toBeNull();
   });
   it('rejects malformed, interrupted and composition-invalid sessions honestly',()=>{
     expect(scoreGoNoGo([],0.5).validInput).toBe(false);
-    const trials=createGoNoGoStimuli(createSeededRandom(1)).map(stimulus=>({stimulus,responded:stimulus==='go',focused:true}));
+    const trials=createGoNoGoStimuli(createSeededRandom(1)).map(stimulus=>({stimulus,responded:stimulus==='go',rtMs:stimulus==='go'?250:null,focused:true}));
     const score=scoreGoNoGo(trials,3);expect(score.complete).toBe(true);expect(score.reasons).toContain('More than 2 interruptions.');
     expect(scoreGoNoGo(trials.map(trial=>({...trial,stimulus:'go' as const}))).reasons.join(' ')).toContain('exactly 10');
+  });
+  it('uses the common measured false-start definition without removing no-go commissions',()=>{
+    const trials=createGoNoGoStimuli(createSeededRandom(1)).map(stimulus=>({stimulus,responded:true,rtMs:100,focused:true}));
+    expect(scoreGoNoGo(trials)).toMatchObject({quality:'good',commissionErrors:10,omissionErrors:0,falseStarts:0,validTrials:40});
+    for(let index=0;index<5;index++)trials[index].rtMs=99;
+    expect(scoreGoNoGo(trials).quality).toBe('good');trials[5].rtMs=99;
+    expect(scoreGoNoGo(trials)).toMatchObject({quality:'poor',falseStarts:6,commissionErrors:10});
+  });
+  it.each([-1,NaN,Infinity,800])('rejects invalid attention response timing %s',rtMs=>{
+    expect(scoreGoNoGo([{stimulus:'go',responded:true,rtMs,focused:true}]).validInput).toBe(false);
+  });
+  it('uses exactly the focused-stimulus minimum and does not fill missing response timing',()=>{
+    const trials=createGoNoGoStimuli(createSeededRandom(1)).map((stimulus,index)=>({stimulus,responded:false,rtMs:null,focused:index<30}));
+    expect(scoreGoNoGo(trials).quality).toBe('good');trials[29].focused=false;expect(scoreGoNoGo(trials).quality).toBe('poor');
+    expect(scoreGoNoGo([{stimulus:'go',responded:true,rtMs:null,focused:true}]).commissionErrors).toBeNull();
+  });
+  it('keeps an entirely unobserved stimulus type missing rather than declaring zero errors',()=>{
+    const trials=createGoNoGoStimuli(createSeededRandom(1)).map(stimulus=>({stimulus,responded:false,rtMs:null,focused:stimulus==='go'}));
+    expect(scoreGoNoGo(trials)).toMatchObject({commissionErrors:null,omissionErrors:30,noGoTrials:0,goTrials:30,quality:'missing'});
   });
   it('generates a repeatable 25-delay protocol within documented bounds',()=>{
     const delays=createReactionDelays(createSeededRandom(123));expect(delays).toEqual(createReactionDelays(createSeededRandom(123)));

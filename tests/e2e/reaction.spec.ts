@@ -48,7 +48,8 @@ for(const width of [360,1100])test(`Reaction complete keyboard/pointer and persi
   await page.goto('/mission');await expect(page.getByRole('article',{name:'EVA-07'})).toContainText('Review recommended');await expect(page.getByRole('article',{name:'INV-03'})).toContainText('Change noted');expect(errors).toEqual([]);
 });
 
-test('Reaction premature/held/repeated input, visibility exclusion, timeout and cancellation',async({page})=>{
+for(const width of [360,1100])test(`Reaction premature/held/repeated input, visibility exclusion, timeout and cancellation at ${width}px`,async({page})=>{
+  await page.setViewportSize({width,height:900});
   await page.goto('/check');await page.getByRole('button',{name:'Open reaction check'}).click();await page.getByRole('button',{name:'Start reaction check'}).click();
   await page.keyboard.down('Space');await page.keyboard.down('Space');await page.keyboard.down('Space');
   await expect(page.locator('.trial-progress')).toHaveText('Trial 2 of 25');await page.keyboard.up('Space');

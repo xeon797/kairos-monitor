@@ -36,4 +36,8 @@ describe('reaction timing owner and records',()=>{
     expect(createLiveRecord(scoreReaction([]),'reaction','none','2026-10-09T00:00:00.000Z')).toBeNull();
     expect(createLiveRecord(scoreReaction(Array.from({length:25},()=>({outcome:'timeout',rtMs:null,focused:true}))),'reaction','none','2026-10-09T00:00:00.000Z')).toBeNull();
   });
+  it('cannot relabel a reaction score as an attention record',()=>{
+    const score=scoreReaction(Array.from({length:25},()=>({outcome:'response',rtMs:250,focused:true})));
+    expect(createLiveRecord(score,'go_no_go','wrong-kind','2026-10-09T00:00:00.000Z')).toBeNull();
+  });
 });

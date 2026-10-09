@@ -13,6 +13,7 @@
 .check-target.target-go { background: var(--color-sky); border-color: var(--color-sky); }
 .check-target.target-no-go { background: var(--color-lavender); border-color: var(--color-lavender); border-radius: var(--radius-icon); }
 .check-target:disabled { display: none; }
+.check-target[data-phase="gap"], .check-target[data-phase="paused"] { visibility: hidden; }
 .check-timing-note { max-width: 620px; margin: var(--space-8) auto var(--space-4); color: var(--text-muted); font-size: var(--text-caption); }
 .progress-dots { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-2); max-width: 500px; margin: var(--space-6) auto 0; }
 .progress-dots span { width: 8px; height: 8px; border: 1px solid var(--text-muted); border-radius: var(--radius-pill); }

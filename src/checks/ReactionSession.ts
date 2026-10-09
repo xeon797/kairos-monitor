@@ -44,8 +44,9 @@ export class ReactionSession {
     if(this.view.phase!=='rendering'||this.frame!==null||!this.focused)return;
     const generation=this.generation,trial=this.trials.length;
     this.frame=this.clock.frame(()=>{
+      if(generation!==this.generation||trial!==this.trials.length)return;
       this.frame=null;
-      if(generation!==this.generation||trial!==this.trials.length||!this.focused||this.view.phase!=='rendering')return;
+      if(!this.focused||this.view.phase!=='rendering')return;
       this.onsetMs=this.clock.now();this.emit('stimulus');this.schedule(()=>this.finish('timeout',null),REACTION_TIMEOUT_MS);
     });
   }

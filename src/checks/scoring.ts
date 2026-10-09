@@ -1,12 +1,12 @@
-import { GO_NO_GO_COUNT, MAX_INTERRUPTION_COUNT, MIN_VALID_TRIALS, REACTION_DELAY_MAX_MS, REACTION_DELAY_MIN_MS, REACTION_FALSE_START_MS, REACTION_LAPSE_MS, REACTION_TIMEOUT_MS, TOTAL_TRIALS } from '../engine/config';
+import { GO_NO_GO_COUNT, GO_NO_GO_STIMULUS_MS, REACTION_DELAY_MAX_MS, REACTION_DELAY_MIN_MS, REACTION_FALSE_START_MS, REACTION_LAPSE_MS, REACTION_TIMEOUT_MS, TOTAL_TRIALS } from '../engine/config';
 import { getCheckQuality } from '../engine/quality';
-import type { CheckObservation, Quality } from '../engine/types';
+import type { CheckObservation, Quality, TestKind } from '../engine/types';
 
 export interface ReactionTrial { outcome:'response'|'premature'|'timeout'; rtMs:number|null; focused:boolean }
 export type Stimulus = 'go'|'no_go';
-export interface GoNoGoTrial { stimulus:Stimulus; responded:boolean; focused:boolean }
+export interface GoNoGoTrial { stimulus:Stimulus; responded:boolean; rtMs:number|null; focused:boolean }
 export type ScoredMetrics = Pick<CheckObservation,'medianRtMs'|'lapses'|'falseStarts'|'commissionErrors'|'omissionErrors'|'validTrials'|'interruptions'|'quality'>;
-export interface CheckScore extends ScoredMetrics { complete:boolean; validInput:boolean; presentedTrials:number; expectedTrials:number; medianTrials:number; reasons:string[] }
+export interface CheckScore extends ScoredMetrics { kind:TestKind; complete:boolean; validInput:boolean; presentedTrials:number; expectedTrials:number; medianTrials:number; goTrials:number|null; noGoTrials:number|null; reasons:string[] }
 
 function isCount(value:number):boolean {return Number.isSafeInteger(value)&&value>=0;}
 function missingMetrics(interruptions:number):ScoredMetrics {
@@ -44,26 +44,30 @@ export function scoreReaction(trials:readonly ReactionTrial[],interruptions=0):C
   }
   const quality=mergeQuality(metrics.quality,reasons);
   if(trials.some(trial=>!trial.focused))reasons.push('Unfocused trials are excluded from measurements.');
-  return {...metrics,quality,complete:trials.length===total,validInput,presentedTrials:trials.length,expectedTrials:total,medianTrials,reasons};
+  return {...metrics,kind:'reaction',quality,complete:trials.length===total,validInput,presentedTrials:trials.length,expectedTrials:total,medianTrials,goTrials:null,noGoTrials:null,reasons};
 }
 
 export function scoreGoNoGo(trials:readonly GoNoGoTrial[],interruptions=0):CheckScore {
   const total=TOTAL_TRIALS.go_no_go;
   const reasons=sessionReasons(trials.length,total,interruptions);
-  const validInput=isCount(interruptions)&&trials.length<=total&&trials.every(trial=>['go','no_go'].includes(trial.stimulus)&&typeof trial.responded==='boolean'&&typeof trial.focused==='boolean');
+  const compositionValid=trials.length!==total||trials.filter(trial=>trial.stimulus==='no_go').length===GO_NO_GO_COUNT;
+  const validInput=isCount(interruptions)&&trials.length<=total&&compositionValid&&trials.every(trial=>['go','no_go'].includes(trial.stimulus)&&typeof trial.responded==='boolean'&&typeof trial.focused==='boolean'&&(trial.responded?trial.rtMs!==null&&Number.isFinite(trial.rtMs)&&trial.rtMs>=0&&trial.rtMs<GO_NO_GO_STIMULUS_MS:trial.rtMs===null));
   if(!validInput)reasons.push('Invalid attention trial data; no aggregate measurement is available.');
   if(trials.length===total&&trials.filter(trial=>trial.stimulus==='no_go').length!==GO_NO_GO_COUNT)reasons.push(`The session must contain exactly ${GO_NO_GO_COUNT} no-go stimuli.`);
   const eligible=validInput?trials.filter(trial=>trial.focused):[];
+  const goTrials=eligible.filter(trial=>trial.stimulus==='go').length,noGoTrials=eligible.filter(trial=>trial.stimulus==='no_go').length;
   let metrics=missingMetrics(interruptions);
   if(eligible.length){
-    metrics={...metrics,commissionErrors:eligible.filter(trial=>trial.stimulus==='no_go'&&trial.responded).length,
-      omissionErrors:eligible.filter(trial=>trial.stimulus==='go'&&!trial.responded).length,validTrials:eligible.length};
-    // SPEC §11.2 never measures false starts; do not fabricate a zero.
-    reasons.push('Go/no-go false-start quality policy is unresolved; falseStarts is not measured.');
-    if(eligible.length<MIN_VALID_TRIALS.go_no_go)reasons.push(`Fewer than ${MIN_VALID_TRIALS.go_no_go} focused stimuli.`);
-    if(interruptions>MAX_INTERRUPTION_COUNT)reasons.push(`More than ${MAX_INTERRUPTION_COUNT} interruptions.`);
+    metrics={...metrics,commissionErrors:noGoTrials?eligible.filter(trial=>trial.stimulus==='no_go'&&trial.responded).length:null,
+      omissionErrors:goTrials?eligible.filter(trial=>trial.stimulus==='go'&&!trial.responded).length:null,validTrials:eligible.length,
+      // Common CheckObservation definition in SPEC §4; commission counts still include early no-go taps.
+      falseStarts:eligible.filter(trial=>trial.responded&&trial.rtMs!<REACTION_FALSE_START_MS).length,quality:'good'};
+    const quality=getCheckQuality({id:'scoring-only',day:null,timestamp:null,source:'live',...metrics},'go_no_go');
+    reasons.push(...quality.reasons);metrics.quality=quality.quality;
   }
-  return {...metrics,complete:trials.length===total,validInput,presentedTrials:trials.length,expectedTrials:total,medianTrials:0,reasons};
+  const quality=mergeQuality(metrics.quality,reasons);
+  if(trials.some(trial=>!trial.focused))reasons.push('Unfocused stimuli are excluded from error counts.');
+  return {...metrics,kind:'go_no_go',quality,complete:trials.length===total,validInput,presentedTrials:trials.length,expectedTrials:total,medianTrials:0,goTrials,noGoTrials,reasons};
 }
 
 /** xorshift32: caller supplies the seed; no clock, browser or randomness dependency. */
