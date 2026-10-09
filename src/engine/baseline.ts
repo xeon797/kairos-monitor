@@ -1,6 +1,6 @@
-import { BASELINE_WINDOW, MIN_BASELINE_CHECKS, MIN_BASELINE_SLEEP_NIGHTS } from './config';
-import { isCheckValid, isSleepValid } from './quality';
-import type { Baseline, BaselineWindow, CheckObservation, SleepObservation, TestKind } from './types';
+import { BASELINE_WINDOW, MIN_BASELINE_CHECKS, MIN_BASELINE_SLEEP_NIGHTS } from './config.js';
+import { isCheckValid, isSleepValid } from './quality.js';
+import type { Baseline, BaselineWindow, CheckObservation, SleepObservation, TestKind } from './types.js';
 
 type BaselineSleep = SleepObservation & { sleepHours: number; midpointMinutes: number };
 type BaselineCheck = CheckObservation & { day: number; medianRtMs: number; lapses: number; commissionErrors: number };

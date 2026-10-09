@@ -265,3 +265,5 @@ T16 — Pure conservative explanation validation and versioned canonical cache m
 T17 — Server-only Gemini REST endpoint with exact synthetic packet validation, bounded per-IP limiting, deadlines and output validation. 434 unit tests, typecheck and build pass; real calls deferred to T19.
 
 T18 — Immediate templates plus validated synthetic-only AI/cache integration, metadata, bounded requests/cache, stale guards and accessible toggles. 465 unit tests and 16 Chromium checks pass; typecheck/build pass; all original tests intact.
+
+T19 — Deployment/verification attempted on the existing project/domain; local work committed, but task remains unchecked. Public route/font/persistence/fallback checks pass at both widths; real Gemini acceptance fails (upstream errors/deadlines/rejected output), so no validated EVA/Inventory samples are claimed. T20 has not begun.

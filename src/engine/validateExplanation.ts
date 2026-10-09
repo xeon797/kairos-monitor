@@ -1,6 +1,6 @@
-import { MAX_EXPLANATION_WORDS } from './config';
-import { CONCERN_LABELS, STATUS_LABELS } from './templates';
-import type { EvidencePacket, MeasurementEvidence } from './types';
+import { MAX_EXPLANATION_WORDS } from './config.js';
+import { CONCERN_LABELS, STATUS_LABELS } from './templates.js';
+import type { EvidencePacket, MeasurementEvidence } from './types.js';
 
 export const EXPLANATION_CONTRACT_VERSION = 'kairos-explanation-v1';
 const banned = /\b(?:cleared|clearance|fit\s+for\s+duty|unfit|safe|unsafe|diagnos\w*|impaired|fatigued|disorder|prescribe|treat|medicate|dangerous|risk\s+of\s+accident|predict)\b/i;

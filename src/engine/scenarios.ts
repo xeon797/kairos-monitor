@@ -1,4 +1,4 @@
-import type { CheckObservation, SleepObservation, TaskProfile, ScheduledTask } from './types';
+import type { CheckObservation, SleepObservation, TaskProfile, ScheduledTask } from './types.js';
 
 // Adopted synthetic demo fixture: exact DEMO §1 measurements, not recorded trials.
 const missionRows: readonly (readonly [day: number, sleepHours: number, midpointMinutes: number, medianRtMs: number, lapses: number, commissionErrors: number])[] = [

@@ -1,10 +1,10 @@
-import { BASELINE_WINDOW, SIMULATION_MAX_DAY, SIMULATION_MIN_DAY, WINDOW_DAYS } from '../src/engine/config';
-import { computeBaseline } from '../src/engine/baseline';
-import { evaluateDomains } from '../src/engine/detect';
-import { buildEvidencePacket } from '../src/engine/evidence';
-import { missionSchedule, syntheticChecks, syntheticSleep, taskLibrary } from '../src/engine/scenarios';
-import type { EvidencePacket } from '../src/engine/types';
-import { explanationCacheKey } from '../src/engine/validateExplanation';
+import { BASELINE_WINDOW, SIMULATION_MAX_DAY, SIMULATION_MIN_DAY, WINDOW_DAYS } from '../src/engine/config.js';
+import { computeBaseline } from '../src/engine/baseline.js';
+import { evaluateDomains } from '../src/engine/detect.js';
+import { buildEvidencePacket } from '../src/engine/evidence.js';
+import { missionSchedule, syntheticChecks, syntheticSleep, taskLibrary } from '../src/engine/scenarios.js';
+import type { EvidencePacket } from '../src/engine/types.js';
+import { explanationCacheKey } from '../src/engine/validateExplanation.js';
 
 type ObjectValue = Record<string,unknown>;
 function object(value:unknown,required:string[],optional:string[] = []): value is ObjectValue {

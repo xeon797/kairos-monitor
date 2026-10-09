@@ -1,8 +1,8 @@
-import { domainsEstablished } from './detect';
-import type { Concern, Domain, DomainResult, EvidencePacket, ResponseLog, Status } from './types';
+import { domainsEstablished } from './detect.js';
+import type { Concern, Domain, DomainResult, EvidencePacket, ResponseLog, Status } from './types.js';
 
 // Re-export the sole existing declaration, keeping the foundation's import intact.
-export { FOOTER_DISCLAIMER } from '../content';
+export { FOOTER_DISCLAIMER } from '../content.js';
 
 export const STATUS_LABELS: Readonly<Record<Status, string>> = {
   INSUFFICIENT_DATA: 'Insufficient data', WITHIN_USUAL: 'Within your usual range',

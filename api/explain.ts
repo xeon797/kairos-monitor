@@ -1,13 +1,13 @@
-import { EXPLANATION_BODY_BYTES, EXPLANATION_OUTPUT_TOKENS, EXPLANATION_RATE_MAX_ENTRIES, EXPLANATION_RATE_WINDOW_MS, EXPLANATION_REQUESTS_PER_MINUTE, EXPLANATION_SERVER_TIMEOUT_MS, EXPLANATION_TEMPERATURE } from '../src/engine/config';
-import { CONCERN_LABELS, explain, STATUS_LABELS } from '../src/engine/templates';
-import { validateExplanation } from '../src/engine/validateExplanation';
-import { validatePacket } from '../server/validatePacket';
+import { EXPLANATION_BODY_BYTES, EXPLANATION_OUTPUT_TOKENS, EXPLANATION_RATE_MAX_ENTRIES, EXPLANATION_RATE_WINDOW_MS, EXPLANATION_REQUESTS_PER_MINUTE, EXPLANATION_SERVER_TIMEOUT_MS, EXPLANATION_TEMPERATURE } from '../src/engine/config.js';
+import { CONCERN_LABELS, explain, STATUS_LABELS } from '../src/engine/templates.js';
+import { validateExplanation } from '../src/engine/validateExplanation.js';
+import { validatePacket } from '../server/validatePacket.js';
 
 declare const process: {env:Record<string,string | undefined>};
 
 export interface ExplainRequest { method?:string; headers:Record<string,string | string[] | undefined>; body?:unknown; socket?:{remoteAddress?:string} }
 export interface ExplainResponse { status(code:number):ExplainResponse; json(value:unknown):unknown; setHeader(name:string,value:string):unknown }
-interface Dependencies { fetch:typeof fetch; now:() => number; env:() => {GEMINI_API_KEY?:string;GEMINI_MODEL?:string} }
+interface Dependencies { fetch:typeof fetch; now:() => number; env:() => {GEMINI_API_KEY?:string;GEMINI_MODEL?:string}; diagnostic?:(metadata:{reason:'upstream'|'deadline'|'invalid_output';model:string;status:number | null}) => void }
 function record(value:unknown):value is Record<string,unknown> { return !!value && typeof value === 'object' && !Array.isArray(value); }
 function generated(value:unknown):{text:string;model?:string} | null {
   if (!record(value) || !Array.isArray(value.candidates) || value.candidates.length !== 1) return null;
@@ -50,9 +50,11 @@ export function createExplainHandler(dependencies:Dependencies) {
     if (!key || !model || !/^gemini-[a-zA-Z0-9._-]+$/.test(model)) { fail(503,'not_configured'); return; }
     const controller = new AbortController();
     let timer:ReturnType<typeof setTimeout> | undefined;
+    let failureReason:'upstream'|'deadline'|'invalid_output' = 'upstream';
+    let upstreamStatus:number | null = null;
     try {
       // Race also bounds an uncooperative fetch mock/runtime; abort covers real IO.
-      const deadline = new Promise<never>((_resolve,reject) => { timer = setTimeout(() => { controller.abort(); reject(new Error('deadline')); },EXPLANATION_SERVER_TIMEOUT_MS); });
+      const deadline = new Promise<never>((_resolve,reject) => { timer = setTimeout(() => { failureReason='deadline';controller.abort(); reject(new Error('deadline')); },EXPLANATION_SERVER_TIMEOUT_MS); });
       const call = async () => {
         const upstream = await dependencies.fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,{
           method:'POST',headers:{'Content-Type':'application/json','x-goog-api-key':key},signal:controller.signal,
@@ -63,15 +65,16 @@ export function createExplainHandler(dependencies:Dependencies) {
               ...(model.startsWith('gemini-2.5-flash') ? {thinkingConfig:{thinkingBudget:0}} : {})},
           }),
         });
+        upstreamStatus=upstream.status;
         if (!upstream.ok) throw new Error('upstream');
         const output = generated(await upstream.json() as unknown);
-        if (!output || !validateExplanation(output.text,packet).ok || output.model && !/^gemini-[a-zA-Z0-9._-]+$/.test(output.model)) throw new Error('invalid_output');
+        if (!output || !validateExplanation(output.text,packet).ok || output.model && !/^gemini-[a-zA-Z0-9._-]+$/.test(output.model)) {failureReason='invalid_output';throw new Error('invalid_output');}
         return {text:output.text,model:output.model ?? model};
       };
       res.status(200).json(await Promise.race([call(),deadline]));
-    } catch { fail(502,'upstream'); }
+    } catch { dependencies.diagnostic?.({reason:failureReason,model,status:upstreamStatus});fail(502,'upstream'); }
     finally { if (timer !== undefined) clearTimeout(timer); }
   };
 }
 
-export default createExplainHandler({fetch:(...args) => fetch(...args),now:() => Date.now(),env:() => ({GEMINI_API_KEY:process.env.GEMINI_API_KEY,GEMINI_MODEL:process.env.GEMINI_MODEL})});
+export default createExplainHandler({fetch:(...args) => fetch(...args),now:() => Date.now(),env:() => ({GEMINI_API_KEY:process.env.GEMINI_API_KEY,GEMINI_MODEL:process.env.GEMINI_MODEL}),diagnostic:metadata => console.warn('Kairos explanation fallback',metadata)});

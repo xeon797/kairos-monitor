@@ -1,4 +1,4 @@
-import type { BaselineWindow, TaskDemand, TestKind } from './types';
+import type { BaselineWindow, TaskDemand, TestKind } from './types.js';
 
 // Detection thresholds: experimental, illustrative (SPEC §7); not validated criteria.
 export const SLEEP_DEFICIT_HOURS = 1.0;

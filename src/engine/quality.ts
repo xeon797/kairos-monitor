@@ -1,5 +1,5 @@
-import { MAX_FALSE_START_COUNT, MAX_INTERRUPTION_COUNT, MAX_SLEEP_HOURS, MIN_NONNEGATIVE_VALUE, MIN_SLEEP_HOURS, MIN_VALID_TRIALS } from './config';
-import type { CheckObservation, Quality, SleepObservation, TestKind } from './types';
+import { MAX_FALSE_START_COUNT, MAX_INTERRUPTION_COUNT, MAX_SLEEP_HOURS, MIN_NONNEGATIVE_VALUE, MIN_SLEEP_HOURS, MIN_VALID_TRIALS } from './config.js';
+import type { CheckObservation, Quality, SleepObservation, TestKind } from './types.js';
 
 export interface QualityResult {
   quality: Quality;

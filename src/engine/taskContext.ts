@@ -1,6 +1,6 @@
-import { LOW_DEMAND_CONCERN_CAP, TASK_CHANGE_MIN_DOMAINS, TASK_REVIEW_MIN_DOMAINS } from './config';
-import { domainsEstablished } from './detect';
-import type { Baseline, Concern, DomainResult, ScheduledTask, TaskProfile, TaskResult } from './types';
+import { LOW_DEMAND_CONCERN_CAP, TASK_CHANGE_MIN_DOMAINS, TASK_REVIEW_MIN_DOMAINS } from './config.js';
+import { domainsEstablished } from './detect.js';
+import type { Baseline, Concern, DomainResult, ScheduledTask, TaskProfile, TaskResult } from './types.js';
 
 export function evaluateTask(profile: TaskProfile, domains: readonly DomainResult[], baseline: Baseline | null, instance?: ScheduledTask): TaskResult {
   const relevantDomains = [...new Set(profile.relevantDomains)];

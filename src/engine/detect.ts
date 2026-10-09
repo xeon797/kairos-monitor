@@ -1,6 +1,6 @@
-import { ERRORS_INCREASE, LAPSES_INCREASE, MIDPOINT_SHIFT_MIN, MIN_MET_DAYS, MIN_VALID_DAYS, OVERALL_CHANGE_MIN_DOMAINS, OVERALL_REVIEW_MIN_DOMAINS, RT_INCREASE_FACTOR, SLEEP_DEFICIT_HOURS, WINDOW_DAYS } from './config';
-import { getCheckMeasurementQuality, getSleepMeasurementQuality } from './quality';
-import type { Baseline, CheckObservation, Domain, DomainResult, MeasurementEvidence, SleepObservation, Status } from './types';
+import { ERRORS_INCREASE, LAPSES_INCREASE, MIDPOINT_SHIFT_MIN, MIN_MET_DAYS, MIN_VALID_DAYS, OVERALL_CHANGE_MIN_DOMAINS, OVERALL_REVIEW_MIN_DOMAINS, RT_INCREASE_FACTOR, SLEEP_DEFICIT_HOURS, WINDOW_DAYS } from './config.js';
+import { getCheckMeasurementQuality, getSleepMeasurementQuality } from './quality.js';
+import type { Baseline, CheckObservation, Domain, DomainResult, MeasurementEvidence, SleepObservation, Status } from './types.js';
 
 export const DOMAINS: readonly Domain[] = ['sleep', 'reaction', 'attention'];
 

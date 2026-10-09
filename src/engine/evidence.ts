@@ -1,8 +1,8 @@
-import { WINDOW_DAYS } from './config';
-import { DOMAINS, evaluateDomains, overallStatus } from './detect';
-import { evaluateTask } from './taskContext';
-import { reviewPromptFor } from './templates';
-import type { Baseline, DomainResult, EvidencePacket, ScheduledTask, TaskProfile } from './types';
+import { WINDOW_DAYS } from './config.js';
+import { DOMAINS, evaluateDomains, overallStatus } from './detect.js';
+import { evaluateTask } from './taskContext.js';
+import { reviewPromptFor } from './templates.js';
+import type { Baseline, DomainResult, EvidencePacket, ScheduledTask, TaskProfile } from './types.js';
 
 export function buildEvidencePacket(day: number, baseline: Baseline | null, domains: readonly DomainResult[],
   task?: { profile: TaskProfile; instance?: ScheduledTask }): EvidencePacket {
