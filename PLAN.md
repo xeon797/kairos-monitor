@@ -47,10 +47,10 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
   Create `src/engine/types.ts` (all types from SPEC.md §4 and §9) and `src/engine/config.ts` (all thresholds from SPEC.md §7 and §8, each commented `experimental, illustrative`).
   **Done when:** typecheck passes; config exports `SLEEP_DEFICIT_HOURS=1.0`, `MIDPOINT_SHIFT_MIN=90`, `RT_INCREASE_FACTOR=1.08`, `LAPSES_INCREASE=2`, `ERRORS_INCREASE=2`, `WINDOW_DAYS=5`, `MIN_MET_DAYS=3`, `MIN_VALID_DAYS=3`.
 
-- [ ] **T05 Synthetic scenario data**
+- [x] **T05 Synthetic scenario data**
   Create `src/engine/scenarios.ts` with the 17-day table from DEMO.md §1 as typed arrays of `SleepObservation` and `CheckObservation` (source `synthetic`, quality `good`), plus the task schedule from SPEC.md §8.3 and the task library from §8.1.
   **Done when:** a unit test asserts 17 sleep rows, 17 check rows, and exact values for days 1, 12, and 17.
-  **P2 dependency:** blocked — DEMO.md and its authoritative 17-day table are absent. T06/T07 may proceed independently under the P2 prompt; fixtures are not mission scenario data.
+  **P2 dependency resolved:** user-adopted synthetic v1 DEMO.md supplies the exact 17-day table and aggregate metadata. All rows, provenance, task profiles and schedule are tested; this fixture is not measured mission data.
 
 - [x] **T06 Quality rules**
   Implement `isCheckValid(check)` and `isSleepValid(sleep)` per SPEC.md §5 in `src/engine/quality.ts`.
@@ -217,6 +217,8 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
 ---
 
 ## Log
+
+T05 — Adopted supplied DEMO.md verbatim; exact 17-day synthetic records, task library and schedule; 9 new data tests (81 total) and typecheck/build passed — DEMO copies, engine/scenarios.ts, tests/unit/scenario-data.test.ts, NOTES, PLAN.
 
 T07 — Pure caller-timed baseline with full-precision means, source/quality/window/metric exclusions and immutable inputs; 25 fixture baseline tests (72 total) and typecheck/build passed; official scenario verification blocked — engine/baseline.ts, tests/unit/baseline.test.ts, NOTES, PLAN.
 
