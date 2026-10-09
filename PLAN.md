@@ -119,7 +119,7 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
   POST only. Hand-validate the body against the `EvidencePacket` shape (no new dependencies); cap body at 8 KB; reject any packet whose provenance contains `live` (live check data is never sent). Build the prompt with the rules from SPEC.md §10 (use only packet numbers, never change status, no diagnosis, no clearance language, at most about 70 words, end with a review prompt). Call the Gemini REST API with plain `fetch` (no SDK): key from `GEMINI_API_KEY`, model from `GEMINI_MODEL` (verify the current endpoint and model name in the Gemini API docs), temperature 0.2, `maxOutputTokens` about 160, server timeout 3.5 s. Best-effort in-memory per-IP rate limit (about 20 requests per minute, respond 429). Never log the key or packet contents. Responses: `200 {text, model}`, `503 {error:"not_configured"}` without a key, `502 {error:"upstream"}` on failure.
   **Done when:** unit tests with a mocked `fetch` cover success, missing key, upstream failure, oversized body, live-provenance rejection, and rate limiting.
 
-- [ ] **T18 Client service and UI integration**
+- [x] **T18 Client service and UI integration**
   Create `src/ai/explainClient.ts`: call `/api/explain` only when `navigator.onLine`, with `AbortController` and a 4 s timeout; look up and store results in the Dexie `explanations` table by `explanationCacheKey` so repeated visits (and offline use after a first success) show the same text; run `validateExplanation` on every response and fall back to the template on any failure, silently. Update Today and Mission explanation boxes: show the template text immediately, swap to the AI text when it arrives (reserve height, no layout shift), show the tag `Template explanation` or `AI-rephrased from the same evidence`, and add a `Show template version` toggle. Never send live-check data.
   **Done when:** with the API unreachable the template shows with no error UI; with a mocked good response the AI text shows and is cached; a response with a banned word or a foreign number is rejected and the template shows; the toggle switches text; plain `npm run dev` (no `/api`) still works.
 
@@ -263,3 +263,5 @@ T02 — Exact design tokens, local font declarations, responsive shell and four 
 T16 — Pure conservative explanation validation and versioned canonical cache material added. All original tests preserved; 396 unit tests, typecheck and build pass.
 
 T17 — Server-only Gemini REST endpoint with exact synthetic packet validation, bounded per-IP limiting, deadlines and output validation. 434 unit tests, typecheck and build pass; real calls deferred to T19.
+
+T18 — Immediate templates plus validated synthetic-only AI/cache integration, metadata, bounded requests/cache, stale guards and accessible toggles. 465 unit tests and 16 Chromium checks pass; typecheck/build pass; all original tests intact.

@@ -11,7 +11,7 @@ export type PersistedCheck = CheckObservation & (
 );
 export type LiveCheck = Extract<PersistedCheck,{ source:'live' }>;
 export type PersistedResponse = ResponseLog & { source:'synthetic' };
-export interface CachedExplanation { key:string; text:string; model:string; createdAt:string }
+export interface CachedExplanation { key:string; text:string; model:string; createdAt:string; contractVersion?:string }
 export interface AppSettings {
   key:'app'; currentDay:number; baseline:Baseline | null; scenarioLoaded:boolean; schemaVersion:number;
 }

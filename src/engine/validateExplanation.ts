@@ -42,7 +42,8 @@ function numericClaims(text: string, packet: EvidencePacket): boolean {
     if (/\b(?:last|window(?:\s+of)?)\s*$/i.test(before) && /^\s*days\b/i.test(after)) { if (n !== packet.dataQuality.windowDays) return false; continue; }
     const domain = [...packet.domains].reverse().find(d => new RegExp(`\\b${d.domain}\\b`,'i').test(before));
     if (domain && /\b(?:criterion|criteria|met|valid|on)\b/i.test(clause) && /\b(?:days|of|out of)\b|\//i.test(clause)) {
-      if ([domain.metDaysInWindow,domain.validDaysInWindow,domain.windowDays].includes(n)) continue;
+      const expected = /\bof(?:\s+the)?\s*$/i.test(before) || /\/\s*$/.test(before) ? domain.windowDays : /\bvalid\b/i.test(clause) ? domain.validDaysInWindow : domain.metDaysInWindow;
+      if (n === expected) continue;
       return false;
     }
     if (/\b(?:sustained|relevant)\b/i.test(clause) && /^\s*(?:relevant\s+)?(?:sustained\s+)?domains\b/i.test(after) && n === (packet.task?.r ?? packet.domains.filter(d => d.sustained).length)) continue;
@@ -74,15 +75,20 @@ export function validateExplanation(text: string, packet: EvidencePacket): { ok:
   if ([...new Set([...Object.values(STATUS_LABELS),...Object.values(CONCERN_LABELS)])].some(label => label !== expected && text.toLowerCase().includes(label.toLowerCase()))) reasons.push('contradictory_label');
   const changed = state === 'CHANGE_NOTED' || state === 'REVIEW_RECOMMENDED';
   if ((changed || state === 'INSUFFICIENT_DATA') && /\b(?:no sustained change|all (?:good|normal)|everything is normal|no concerns|no review (?:is )?needed|ready for|can proceed)\b/i.test(text)) reasons.push('contradictory_status');
+  if (requiresReviewState(state,packet) && /\b(?:review (?:is )?not (?:recommended|required|needed)|no need (?:for|to) (?:a )?review)\b/i.test(text)) reasons.push('contradictory_status');
   if ((state === 'WITHIN_USUAL' || state === 'NO_RELEVANT_CHANGE') && /\b(?:sustained changes?|review is (?:needed|required))\b/i.test(text) && !/\bno sustained change\b/i.test(text)) reasons.push('contradictory_status');
   if (state === 'INSUFFICIENT_DATA' && !/\b(?:insufficient|missing|not enough|unavailable|excluded)\b/i.test(text)) reasons.push('missing_availability');
   if (packet.taskId && !text.includes(packet.taskId)) reasons.push('missing_task_identity');
-  const requiresReview = state === 'INSUFFICIENT_DATA' || (changed && packet.task?.demand !== 'low');
+  const requiresReview = requiresReviewState(state,packet);
   const prompt = /\b(?:review (?:recent sleep|current evidence|the evidence|missing|excluded)|repeat (?:the |a )?check)\b/i;
   if (requiresReview && (!prompt.test(text) || /\b(?:no|not|without|avoid|skip|do not)\b[^.;]{0,35}\b(?:review|repeat)\b/i.test(text))) reasons.push('missing_review_prompt');
   if (packet.task?.demand === 'low' && /\b(?:repeat (?:the |a )?check|review recent sleep|review recommended)\b/i.test(text)) reasons.push('unsupported_low_demand_prompt');
   if (/\b(?:take medication|you should|you must|recommend (?:sleeping|taking)|increase your|reduce your|caused (?:by|the)|will recover|will improve)\b/i.test(text)) reasons.push('unsupported_recommendation');
   return {ok:reasons.length === 0,reasons:[...new Set(reasons)]};
+}
+
+function requiresReviewState(state:string,packet:EvidencePacket):boolean {
+  return state === 'INSUFFICIENT_DATA' || (['CHANGE_NOTED','REVIEW_RECOMMENDED'].includes(state) && packet.task?.demand !== 'low');
 }
 
 function canonical(value: unknown): string {

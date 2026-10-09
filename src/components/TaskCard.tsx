@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom';
-import { DOMAIN_LABELS, explain } from '../engine/templates';
+import { DOMAIN_LABELS } from '../engine/templates';
 import type { EvidencePacket } from '../engine/types';
 import { ConcernChip } from './ConcernChip';
 import { SyntheticBadge } from './SyntheticBadge';
+import { Explanation } from './Explanation';
 
 export function taskTiming(scheduledDay:number,currentDay:number):string {
   const difference = scheduledDay-currentDay;
@@ -20,7 +21,7 @@ export function TaskCard({packet}:{packet:EvidencePacket}) {
     <p className="task-schedule">Mission day {task.scheduledDay} <span>· {task.scheduledDay === null ? 'Schedule unavailable' : taskTiming(task.scheduledDay,packet.day)}</span></p>
     <ConcernChip concern={task.concern} />
     <p className="task-domains">{task.r} relevant sustained {task.r === 1 ? 'domain' : 'domains'}{task.sustainedDomains.length ? ` · ${task.sustainedDomains.map(domain => DOMAIN_LABELS[domain]).join(', ')}` : ''}</p>
-    <p className="task-explanation">{explain(packet)}</p>
+    <Explanation packet={packet} task />
     <Link className="pill-button repeat-check" to="/check">Repeat check</Link>
   </article>;
 }
