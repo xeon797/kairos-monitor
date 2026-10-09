@@ -146,7 +146,7 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
 
 ## P8 — Checks (scoring and test UIs)
 
-- [ ] **T22 Scoring functions**
+- [x] **T22 Scoring functions**
   Create `src/checks/scoring.ts` with pure functions `scoreReaction(trials)` and `scoreGoNoGo(trials)` per SPEC.md §11 plus a seeded PRNG helper for delays.
   **Done when:** unit tests cover median with false starts excluded, lapse counting (>500 ms), timeout handling, commission/omission counting, and quality flags.
 
@@ -278,3 +278,5 @@ T20 — Recharts evidence charts with saved baseline/config references, separate
 T21 — Inverted lavender About modal with limitations, NASA references, explicit focus wrap/native inertness, Escape/Close/trigger restoration; existing provenance tags now keyboard/tap disclosures. 498 unit tests pass; original 18 browser checks plus 2 About checks pass; typecheck/build pass. Authorized landing addition follows; T22 has not begun.
 
 P7 landing addition — Standalone root introduction, lazy mission/Trends boundaries, preserved console routes/state, real isolated day-12 preview and original static orbit fallback. No supplied clip: looping video asset pending. 498 unit tests, 24 local browser checks, 8 public mocked-AI P7 checks and public route/API/font/image HTTP checks pass; typecheck/build pass; deployed existing Vercel project at https://kairos-monitor-gamma.vercel.app. Screenshots/asset provenance/routing documented. P7 complete; next P8/T22, which has not begun.
+
+T22 — Pure measured-trial reaction/attention scoring and seeded schedules; null unmeasured metrics, explicit denominators and quality/exclusion reasons. Documented SPEC timing constants added without changing existing thresholds. 523 unit tests and typecheck pass; go/no-go false-start quality policy remains an explicit unresolved prerequisite for valid live attention persistence, never filled with a fabricated zero.

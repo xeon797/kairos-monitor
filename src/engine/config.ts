@@ -26,6 +26,15 @@ export const MAX_INTERRUPTION_COUNT = 2;
 export const MAX_FALSE_START_COUNT = 5;
 export const MIN_VALID_TRIALS: Readonly<Record<TestKind, number>> = Object.freeze({ reaction: 20, go_no_go: 30 });
 export const TOTAL_TRIALS: Readonly<Record<TestKind, number>> = Object.freeze({ reaction: 25, go_no_go: 40 });
+// Browser-check protocol (SPEC §11): experimental, illustrative; not clinical criteria.
+export const REACTION_FALSE_START_MS = 100;
+export const REACTION_LAPSE_MS = 500;
+export const REACTION_TIMEOUT_MS = 2000;
+export const REACTION_DELAY_MIN_MS = 1500;
+export const REACTION_DELAY_MAX_MS = 4000;
+export const GO_NO_GO_COUNT = 10;
+export const GO_NO_GO_STIMULUS_MS = 800;
+export const GO_NO_GO_GAP_MS = 400;
 // Technical numeric validity: experimental, illustrative; quantities/counts cannot be negative.
 export const MIN_NONNEGATIVE_VALUE = 0;
 
