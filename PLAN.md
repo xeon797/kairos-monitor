@@ -56,9 +56,10 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
   Implement `isCheckValid(check)` and `isSleepValid(sleep)` per SPEC.md §5 in `src/engine/quality.ts`.
   **Done when:** unit tests cover poor (interruptions 3, validTrials 10, falseStarts 6) and missing cases.
 
-- [ ] **T07 Baseline**
+- [x] **T07 Baseline**
   Implement `computeBaseline(sleep[], checks[], window)` per SPEC.md §6 in `src/engine/baseline.ts`, returning `Baseline | null` (null when under 5 valid nights or 5 valid checks).
   **Done when:** for the synthetic data the baseline equals 7.214 (±0.001), 265.0, 1.000, 1.286; a test with only 4 valid nights returns null.
+  **P2 verification:** independent calculation and fixture tests completed under the missing-DEMO exception. Official scenario-baseline acceptance remains blocked on T05/DEMO.md and is not marked passed. Caller supplies `frozenAt` and explicit check kind; no baseline storage or automatic update is implemented.
 
 ---
 
@@ -216,6 +217,8 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
 ---
 
 ## Log
+
+T07 — Pure caller-timed baseline with full-precision means, source/quality/window/metric exclusions and immutable inputs; 25 fixture baseline tests (72 total) and typecheck/build passed; official scenario verification blocked — engine/baseline.ts, tests/unit/baseline.test.ts, NOTES, PLAN.
 
 T06 — Pure quality/exclusion helpers with explicit test kind, preserved flags and numeric validation; 47 unit tests and typecheck/build passed — engine/quality.ts, tests/unit/quality.test.ts, NOTES, PLAN.
 
