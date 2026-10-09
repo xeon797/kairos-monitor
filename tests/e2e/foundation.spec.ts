@@ -53,7 +53,7 @@ for (const width of [360, 1100]) {
       await expect(page.getByRole('heading', { name: screen, exact: true })).toBeVisible();
       const navigation = page.getByRole('navigation', { name: 'Main navigation' });
       await expect(navigation.getByRole('link', { name: screen, exact: true })).toHaveAttribute('aria-current', 'page');
-      await expect(page.getByRole('button', { name: 'About unavailable until P7' })).toBeDisabled();
+      await expect(page.getByRole('button', { name: 'About',exact:true })).toBeEnabled();
       expect(await page.locator('.topbar').evaluate((element) => element.getBoundingClientRect().height)).toBe(width < 900 ? 64 : 80);
       expect(await page.locator('html').evaluate((element) => element.scrollWidth)).toBeLessThanOrEqual(width);
       const mainWidth = await page.locator('main').evaluate((element) => element.getBoundingClientRect().width);

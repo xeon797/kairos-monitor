@@ -1,0 +1,23 @@
+.about-button:enabled { color: var(--text); cursor: pointer; }
+.about-button:hover:enabled { background: var(--surface-2); }
+.about-dialog { width: min(calc(100% - var(--space-8)), 680px); max-height: calc(100svh - var(--space-8)); overflow-y: auto; padding: var(--space-6); border: none; border-radius: var(--radius-card-elevated); background: var(--surface-inverse); color: var(--text-on-inverse); overscroll-behavior: contain; }
+.about-dialog::backdrop { background: color-mix(in srgb, var(--color-ink) 70%, transparent); }
+.about-dialog :focus-visible { outline: 2px solid var(--link-on-inverse); outline-offset: 3px; }
+.about-heading { display: flex; align-items: start; justify-content: space-between; gap: var(--space-3); }
+.about-heading h2 { font-size: var(--text-heading-sm); line-height: var(--leading-heading-sm); letter-spacing: -0.03em; margin-top: var(--space-2); }
+.about-dialog .eyebrow { color: var(--text-on-inverse); }
+.about-dialog .inverted-button { color: var(--color-lavender); background: var(--color-ink); border-color: var(--color-ink); padding-inline: var(--space-5); }
+.about-dialog .inverted-button:hover { background: var(--color-ink); }
+.about-intro { margin-top: var(--space-6); font-weight: var(--weight-medium); }
+.about-limitations { padding-left: var(--space-5); margin-block: var(--space-6); }
+.about-dialog li + li { margin-top: var(--space-4); }
+.about-dialog a { color: var(--link-on-inverse); text-underline-offset: 3px; overflow-wrap: anywhere; }
+.about-dialog section { border-top: 1px solid color-mix(in srgb, var(--color-ink) 25%, transparent); padding-top: var(--space-6); }
+.about-dialog section > p { margin-top: var(--space-3); }
+.about-dialog section ul { padding-left: var(--space-5); }
+.external-label, .about-credit { font-size: var(--text-caption); }
+.about-credit { margin-top: var(--space-6); }
+.provenance-tag summary { cursor: pointer; min-height: 44px; padding-block: var(--space-2); color: var(--link); }
+.provenance-details { padding: var(--space-3); border: 1px solid var(--border); border-radius: var(--radius-icon); background: var(--surface-2); overflow-wrap: anywhere; }
+.provenance-details p + p { margin-top: var(--space-2); }
+@media (min-width: 900px) { .about-dialog { padding: var(--space-8); } }

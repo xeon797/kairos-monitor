@@ -197,3 +197,9 @@ Three Recharts cards use the saved frozen baseline and engine outputs. No engine
 
 Independent day 7/12/15/16 oracle checks, saved baseline precision, future exclusion, live exclusion, missing/poor data and separate markers covered by 11 new unit tests. All 496 unit tests and 18 local Chromium checks pass, including original 16 browser checks. Typecheck/build pass. Recharts 3.10.1 installed as authorized; the existing console bundle now exceeds Vite's advisory 500 kB size. Routing work in the authorized landing section will isolate console code from the landing route. No T22/P8 work.
 
+# P7 / T21 — About and provenance (2026-10-09)
+
+About uses a native modal dialog (background inert) plus explicit Tab wrapping to keep focus within its controls rather than allowing browser chrome to receive it. Escape and Close restore the trigger. Lavender surface, ink text/button, deep-indigo links, 70% ink backdrop and bounded scrolling follow DESIGN §8. All requested limitations and the two SPEC §18 NASA references are present. Replaced the conflicting explanatory disclaimer with “Task decisions remain with the crew and mission team.” in DESIGN; the exact footer is still the only banned-word exemption. A unit wording audit covers the dialog text.
+
+Each existing provenance tag is now one native details/summary disclosure, showing source, quality and day plus accessible unit/origin/quality details. Existing evidence values, reasons and tag placement remain. 498 unit tests pass, typecheck/build pass; 18 existing browser checks passed, and both new About checks pass after fixing focus wrap (20 total). Checks cover keyboard/tap provenance, both directions of focus wrap, inert background, Escape/Close/trigger focus, NASA links and mobile content scrolling. Screenshots: `.local/p7-screenshots/about-360.png`, `about-1100.png`. No AI/provider/state/engine changes and no T22 work.
+

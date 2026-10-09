@@ -135,7 +135,7 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
   Build `Trends.tsx` with three Recharts charts per DESIGN.md §4.3 (baseline line, criterion line, baseline-window band, highlighted criterion-met dots, "N of last 5 days" captions, HRV placeholder card).
   **Done when:** charts plot up to the current day only, show the correct criterion lines (6.21 h, 286.2 ms, 3.0 lapses), and render at 360 px without horizontal scroll.
 
-- [ ] **T21 About dialog and provenance tags**
+- [x] **T21 About dialog and provenance tags**
   Implement `AboutDialog` per DESIGN.md §8 and make sure every limitation in SPEC.md §17 appears. Add this disclosure: explanations may be rephrased by Google's Gemini model from the same synthetic evidence, and the classification always comes from the deterministic engine. Add the `ProvenanceTag` to each evidence row (hover/tap shows source and quality).
   **Done when:** the dialog opens from the top bar, contains the references, all limitations, and the AI disclosure.
 
@@ -271,3 +271,5 @@ T19 — Deployment/verification attempted on the existing project/domain; local 
 T19 repair — Completed the task's real day-12 EVA/Inventory acceptance at both widths: validated provider text, accurate source tags, both template toggles and cached reload. Published guarded extraction/prompt/validator repairs; verified free-tier/account generation before changing Production model to gemini-3.5-flash-lite. 485 unit tests, 16 local browser checks and 2 public core checks pass; typecheck/build pass. Broader desktop real-flow assertion for a separate overall AI call hit the client deadline and correctly retained template; detailed outcomes/limits in NOTES.md. T20 has not begun.
 
 T20 — Recharts evidence charts with saved baseline/config references, separate attention criteria, quality gaps, engine window counts and accessible tables; 496 unit tests and 18 local browser checks pass; typecheck/build pass. T21 is next under the sequential P7 authorization; T22 has not begun.
+
+T21 — Inverted lavender About modal with limitations, NASA references, explicit focus wrap/native inertness, Escape/Close/trigger restoration; existing provenance tags now keyboard/tap disclosures. 498 unit tests pass; original 18 browser checks plus 2 About checks pass; typecheck/build pass. Authorized landing addition follows; T22 has not begun.

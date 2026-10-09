@@ -309,7 +309,7 @@ All components take data via props from the engine's `EvidencePacket`; no compon
 ---
 
 ## 8. About dialog content
-Title: "About Kairos Monitor". Inverted lavender surface. Bullets: synthetic data; experimental thresholds; not NASA Cognition; not a clearance tool; recovery scenario is illustrative; references (two links from SPEC.md §18). Close button: inverted pill.
+Title: "About Kairos Monitor". Inverted lavender surface. Bullets: synthetic data; experimental thresholds and task classifications; browser checks are not NASA Cognition or validated flight assessments; device timing, practice effects and interruptions; non-causal recovery comparisons; novelty to investigate; HRV unavailable; Gemini synthetic rephrasing with deterministic classification; live browser results never sent to Gemini; references (two links from SPEC.md §18). Use “Task decisions remain with the crew and mission team.” for the explanatory disclaimer to comply with §5.3. The exact footer remains the only banned-word exemption. Close button: inverted pill. Native modal semantics, background inertness, explicit keyboard focus wrap, Escape/Close and trigger focus restoration are required; content scrolls on mobile.
 
 ---
 

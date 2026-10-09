@@ -1,4 +1,6 @@
+import { useRef, useState } from 'react';
 import { BrowserRouter, Navigate, NavLink, Route, Routes, useLocation } from 'react-router-dom';
+import { AboutDialog } from './components/AboutDialog';
 import { NavigationIcon, type ScreenName } from './components/NavigationIcon';
 import { FOOTER_DISCLAIMER } from './content';
 import Today from './screens/Today';
@@ -12,6 +14,8 @@ import { SimControls } from './components/SimControls';
 const screens: ScreenName[] = ['Today', 'Check', 'Trends', 'Mission'];
 
 function AppShell() {
+  const [aboutOpen,setAboutOpen]=useState(false);
+  const aboutTrigger=useRef<HTMLButtonElement>(null);
   const { pathname } = useLocation();
   const app = useApp();
   const missionDay = `Mission day ${app.currentDay ?? '—'} / ${SIMULATION_MAX_DAY}`;
@@ -33,7 +37,7 @@ function AppShell() {
             <span className="mission-day">{missionDay}</span>
             <span className="simulator-note">{storageNote}</span>
           </div>
-          <button className="about-button" disabled aria-label="About unavailable until P7">About <span>unavailable</span></button>
+          <button className="about-button" ref={aboutTrigger} onClick={()=>setAboutOpen(true)} aria-haspopup="dialog">About</button>
         </div>
         <div className="mobile-mission-context">
           <span className="mission-day">{missionDay}</span>
@@ -63,6 +67,7 @@ function AppShell() {
         </main>
         <footer className="app-footer page-width"><p>{FOOTER_DISCLAIMER}</p></footer>
       </div>
+      {aboutOpen&&<AboutDialog onClose={()=>setAboutOpen(false)} trigger={aboutTrigger}/>}
     </div>
   );
 }
