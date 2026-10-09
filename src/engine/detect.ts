@@ -34,8 +34,9 @@ function branches(domain: Domain, day: number, baseline: Baseline | null, obs?: 
     const usable = quality.quality === 'good' && raw !== null;
     // Excluded values remain visible with their quality; never use them in arithmetic.
     const delta = usable && usual !== null ? raw - usual : null;
-    return { evidence: { metric, value: raw, unit, baseline: usual, deltaAbs: delta,
-      deltaPct: delta !== null && usual !== null && usual !== 0 ? delta / usual * 100 : null,
+    const percentage = delta !== null && usual !== null && usual !== 0 ? delta / usual * 100 : null;
+    return { evidence: { metric, value: raw !== null && Number.isFinite(raw) ? raw : null, unit, baseline: usual, deltaAbs: delta,
+      deltaPct: percentage !== null && Number.isFinite(percentage) ? percentage : null,
       day, source: obs?.source ?? null, quality: raw === null ? 'missing' : quality.quality, reasons },
       met: usable && usual !== null ? meets(raw, usual) : null };
   }

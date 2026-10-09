@@ -33,3 +33,6 @@ export const MIN_NONNEGATIVE_VALUE = 0;
 export const TASK_CHANGE_MIN_DOMAINS = 1;
 export const TASK_REVIEW_MIN_DOMAINS: Readonly<Record<Exclude<TaskDemand, 'low'>, number>> = Object.freeze({ high: 2, medium: 2 });
 export const LOW_DEMAND_CONCERN_CAP = 'CHANGE_NOTED' as const;
+
+// Technical performance target: experimental, illustrative prototype budget (SPEC §15).
+export const ENGINE_TARGET_MS = 20;

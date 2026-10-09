@@ -77,11 +77,11 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
   Implement `evaluateTask(task, domains)` per SPEC.md §8.2 in `src/engine/taskContext.ts`, including the low-demand cap and the insufficient-data rule.
   **Done when:** tests reproduce the EVA and INV columns (concern and `r`) for days 7–17.
 
-- [ ] **T11 Evidence packet and templates**
+- [x] **T11 Evidence packet and templates**
   Implement `buildEvidencePacket(...)` (SPEC.md §9) and `src/engine/templates.ts` with `explain(packet)` using the exact patterns in DESIGN.md §5.2, plus the trend-chip logic from SPEC.md §7.4. Put the disclaimer string in one exported constant.
   **Done when:** tests pass for: day 12 EVA text differs from day 12 INV text and each names its own task; trend chip appears on days 15 and 16 (response logged day 13) and not on day 14; **no template output contains a banned word** (DESIGN.md §5.3 list).
 
-**Checkpoint A:** `npm run test` fully green; commit; engine complete.
+**Checkpoint A:** PASS for P3 engine scope: all DEMO day-table rows and applicable additional pure-engine checks pass (266 unit tests); typecheck/build pass. Persistence, simulator/screens, API, live scoring/history, browser demo flow and offline/PWA acceptance remain deferred to their planned milestones.
 
 ---
 
@@ -217,6 +217,8 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
 ---
 
 ## Log
+
+T11 — Full-precision nullable evidence packets, task-specific neutral templates, exact-footer exemption and non-causal trend guard; 89 added tests (266 total), Checkpoint A engine PASS, typecheck/build passed — evidence.ts, templates.ts, types/config/detection evidence, packet/template/integration tests, NOTES, PLAN.
 
 T10 — Current-evidence task classification, relevant-domain isolation, low-demand cap and instance metadata; 22 added tests (177 total), typecheck/build passed — taskContext.ts, types.ts, domain guard, task tests, NOTES, PLAN.
 

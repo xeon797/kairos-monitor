@@ -110,16 +110,11 @@ export interface TaskResult {
 export interface EvidencePacket {
   day: number;
   status: Status;
+  baseline: Baseline | null;
   taskId?: string;
   taskConcern?: Concern;
-  domains: Array<{
-    domain: Domain;
-    sustained: boolean;
-    evaluable: boolean;
-    metDaysInWindow: number;
-    windowDays: number;
-    latest: { value: number; unit: string; baseline: number; deltaPct?: number; deltaAbs?: number };
-  }>;
+  task?: TaskResult;
+  domains: DomainResult[];
   dataQuality: { validSleepDays: number; validCheckDays: number; windowDays: number; notes: string[] };
   provenance: Array<{ label: string; source: Source }>;
   reviewPrompt: string;
