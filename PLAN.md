@@ -52,7 +52,7 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
   **Done when:** a unit test asserts 17 sleep rows, 17 check rows, and exact values for days 1, 12, and 17.
   **P2 dependency:** blocked — DEMO.md and its authoritative 17-day table are absent. T06/T07 may proceed independently under the P2 prompt; fixtures are not mission scenario data.
 
-- [ ] **T06 Quality rules**
+- [x] **T06 Quality rules**
   Implement `isCheckValid(check)` and `isSleepValid(sleep)` per SPEC.md §5 in `src/engine/quality.ts`.
   **Done when:** unit tests cover poor (interruptions 3, validTrials 10, falseStarts 6) and missing cases.
 
@@ -216,6 +216,8 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
 ---
 
 ## Log
+
+T06 — Pure quality/exclusion helpers with explicit test kind, preserved flags and numeric validation; 47 unit tests and typecheck/build passed — engine/quality.ts, tests/unit/quality.test.ts, NOTES, PLAN.
 
 T04 — Strict specification types and centralized detection/baseline/quality/task constants; typecheck/build passed, test command ran (0 unit tests); T05 missing-data dependency recorded — engine/types.ts, engine/config.ts, NOTES, PLAN.
 
