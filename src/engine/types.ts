@@ -93,6 +93,20 @@ export interface DomainResult {
   exclusions: Array<{ day: number; reasons: string[] }>;
 }
 
+export interface TaskResult {
+  instanceId: string | null;
+  taskId: TaskId;
+  name: string;
+  demand: TaskDemand;
+  scheduledDay: number | null;
+  day: number | null;
+  relevantDomains: Domain[];
+  sustainedDomains: Domain[];
+  r: number;
+  concern: Concern;
+  reasons: string[];
+}
+
 export interface EvidencePacket {
   day: number;
   status: Status;

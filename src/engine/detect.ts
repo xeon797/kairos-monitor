@@ -5,7 +5,7 @@ import type { Baseline, CheckObservation, Domain, DomainResult, MeasurementEvide
 export const DOMAINS: readonly Domain[] = ['sleep', 'reaction', 'attention'];
 
 /** Absent/duplicate/mixed-day results cannot establish an evaluation. */
-export function domainsEstablished(results: readonly DomainResult[], required: readonly Domain[] = DOMAINS, day = results[0]?.day): boolean {
+export function domainsEstablished(results: readonly DomainResult[], required: readonly Domain[] = DOMAINS, day = results.find(result => required.includes(result.domain))?.day): boolean {
   return required.length > 0 && required.every(domain => {
     const matches = results.filter(result => result.domain === domain);
     return matches.length === 1 && matches[0].baselineEstablished && matches[0].evaluable && matches[0].day === day;

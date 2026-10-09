@@ -73,7 +73,7 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
   Implement `overallStatus(domains, baseline)` per SPEC.md §7.3 with the `INSUFFICIENT_DATA` precedence rule.
   **Done when:** tests reproduce the "Overall status" column for days 7–17, plus the missing-data case from DEMO.md §2 check 3.
 
-- [ ] **T10 Task context**
+- [x] **T10 Task context**
   Implement `evaluateTask(task, domains)` per SPEC.md §8.2 in `src/engine/taskContext.ts`, including the low-demand cap and the insufficient-data rule.
   **Done when:** tests reproduce the EVA and INV columns (concern and `r`) for days 7–17.
 
@@ -217,6 +217,8 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
 ---
 
 ## Log
+
+T10 — Current-evidence task classification, relevant-domain isolation, low-demand cap and instance metadata; 22 added tests (177 total), typecheck/build passed — taskContext.ts, types.ts, domain guard, task tests, NOTES, PLAN.
 
 T09 — Overall status with missing-baseline/domain precedence and complete day-table coverage; 23 added tests (155 total), typecheck/build passed — detect.ts, config.ts, status tests, NOTES, PLAN.
 
