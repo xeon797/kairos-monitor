@@ -65,7 +65,7 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
 
 ## P3 — Engine core
 
-- [ ] **T08 Domain detection**
+- [x] **T08 Domain detection**
   Implement `criterionMet(domain, day, baseline, obs)` and `evaluateDomains(day, baseline, sleep[], checks[])` per SPEC.md §7.1–7.2 in `src/engine/detect.ts`, returning for each domain: `sustained`, `evaluable`, `metDaysInWindow`, `latest` values. Poor and missing days never count as met.
   **Done when:** unit tests reproduce the sustained columns of the DEMO.md §2 table for days 7–17.
 
@@ -217,6 +217,8 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
 ---
 
 ## Log
+
+T08 — Pure calendar-window detection, tri-state partial OR criteria and current-day evidence/exclusions; 46 new tests (132 total), typecheck/build passed — detect.ts, types.ts, shared quality filters, detection tests/oracle, NOTES, PLAN.
 
 T07 acceptance completion — Adopted DEMO baseline oracle verified under both explicit quality kinds; source isolation/immutability and insufficient-count tests passed; 5 added tests (86 total), typecheck/build passed — tests/unit/scenario-baseline.test.ts, NOTES, PLAN.
 

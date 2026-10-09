@@ -66,6 +66,33 @@ export interface ScheduledTask {
   scheduledDay: number;
 }
 
+export interface MeasurementEvidence {
+  metric: 'sleepHours' | 'midpointMinutes' | 'medianRtMs' | 'lapses' | 'commissionErrors';
+  value: number | null;
+  unit: 'h' | 'min' | 'ms' | 'count';
+  baseline: number | null;
+  deltaAbs: number | null;
+  deltaPct: number | null;
+  day: number;
+  source: Source | null;
+  quality: Quality;
+  reasons: string[];
+}
+
+export interface DomainResult {
+  domain: Domain;
+  day: number;
+  baselineEstablished: boolean;
+  evaluable: boolean;
+  sustained: boolean;
+  metDaysInWindow: number;
+  validDaysInWindow: number;
+  windowDays: number;
+  latest: MeasurementEvidence;
+  measurements: MeasurementEvidence[];
+  exclusions: Array<{ day: number; reasons: string[] }>;
+}
+
 export interface EvidencePacket {
   day: number;
   status: Status;

@@ -14,9 +14,10 @@ function isNonnegativeNumber(value: number): boolean {
   return Number.isFinite(value) && value >= MIN_NONNEGATIVE_VALUE;
 }
 
-export function getSleepQuality(sleep: SleepObservation): QualityResult {
+function sleepQuality(sleep: SleepObservation, requireDuration: boolean): QualityResult {
   const reasons = provenanceReasons(sleep.quality);
-  if (sleep.sleepHours === null) reasons.push('Sleep duration is missing.');
+  if (sleep.sleepHours === null && requireDuration) reasons.push('Sleep duration is missing.');
+  else if (sleep.sleepHours === null) { /* Domain OR evaluation checks availability separately. */ }
   else if (!Number.isFinite(sleep.sleepHours)) reasons.push('Sleep duration must be finite.');
   else if (sleep.sleepHours < MIN_SLEEP_HOURS || sleep.sleepHours > MAX_SLEEP_HOURS) {
     reasons.push(`Sleep duration is outside ${MIN_SLEEP_HOURS}–${MAX_SLEEP_HOURS} h.`);
@@ -26,14 +27,14 @@ export function getSleepQuality(sleep: SleepObservation): QualityResult {
   if (sleep.midpointMinutes !== null && !isNonnegativeNumber(sleep.midpointMinutes)) {
     reasons.push('Sleep midpoint must be finite and nonnegative.');
   }
-  const missing = sleep.quality === 'missing' || sleep.sleepHours === null;
+  const missing = sleep.quality === 'missing' || (requireDuration && sleep.sleepHours === null);
   return { quality: missing ? 'missing' : reasons.length ? 'poor' : 'good', reasons };
 }
 
-export function getCheckQuality(check: CheckObservation, testKind: TestKind): QualityResult {
+function checkQuality(check: CheckObservation, testKind: TestKind, requireMetrics: boolean): QualityResult {
   const reasons = provenanceReasons(check.quality);
   let missing = check.quality === 'missing';
-  const requiredMetrics = testKind === 'reaction'
+  const requiredMetrics = !requireMetrics ? ['falseStarts'] as const : testKind === 'reaction'
     ? ['medianRtMs', 'lapses', 'falseStarts'] as const
     : ['commissionErrors', 'omissionErrors', 'falseStarts'] as const;
   for (const field of requiredMetrics) {
@@ -62,6 +63,24 @@ export function getCheckQuality(check: CheckObservation, testKind: TestKind): Qu
     reasons.push(`More than ${MAX_FALSE_START_COUNT} false starts.`);
   }
   return { quality: missing ? 'missing' : reasons.length ? 'poor' : 'good', reasons };
+}
+
+export function getSleepQuality(sleep: SleepObservation): QualityResult {
+  return sleepQuality(sleep, true);
+}
+
+export function getCheckQuality(check: CheckObservation, testKind: TestKind): QualityResult {
+  return checkQuality(check, testKind, true);
+}
+
+// Share technical filters without requiring an unrelated metric. Domain detection
+// separately decides whether each observed branch establishes a criterion.
+export function getSleepMeasurementQuality(sleep: SleepObservation): QualityResult {
+  return sleepQuality(sleep, false);
+}
+
+export function getCheckMeasurementQuality(check: CheckObservation, testKind: TestKind): QualityResult {
+  return checkQuality(check, testKind, false);
 }
 
 export function isSleepValid(sleep: SleepObservation): boolean {
