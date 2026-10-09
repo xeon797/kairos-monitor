@@ -111,7 +111,7 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
 
 ## P6 — Gemini explanation layer (core)
 
-- [ ] **T16 Explanation validator (pure, in the engine)**
+- [x] **T16 Explanation validator (pure, in the engine)**
   Create `src/engine/validateExplanation.ts`: `validateExplanation(text, packet)` returns `{ ok, reasons }`. Reject if the text contains any banned word (DESIGN.md §5.3), contains a number not derivable from the packet (day, values, baselines, deltas, counts; allow rounding to the packet's displayed precision), exceeds 90 words, or (when status is `CHANGE_NOTED` or `REVIEW_RECOMMENDED`) lacks a review or repeat-check prompt. Also export `explanationCacheKey(packet)` (stable string from day, status, taskId, concern, domain values).
   **Done when:** unit tests cover good text, banned word, foreign number, too long, missing review prompt, and that the same packet always yields the same cache key.
 
@@ -259,3 +259,5 @@ T02 — Exact design tokens, local font declarations, responsive shell and four 
 2. Run `git log --oneline -10` and `npm run test` to see the current state.
 3. Resume at the first unchecked task. Do not redo ticked tasks.
 4. If the last commit left tests failing, fix those first.
+
+T16 — Pure conservative explanation validation and versioned canonical cache material added. All original tests preserved; 396 unit tests, typecheck and build pass.

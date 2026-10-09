@@ -43,3 +43,6 @@ export const SIMULATION_MIN_DAY = 7;
 export const SIMULATION_MAX_DAY = 17;
 export const SCHEDULE_CHANGE_MIN_DAY = 12;
 export const MAX_RESPONSE_NOTE_LENGTH = 200;
+
+// Explanation limits: experimental, illustrative prototype safeguards, not clinical criteria.
+export const MAX_EXPLANATION_WORDS = 90;
