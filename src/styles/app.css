@@ -47,6 +47,36 @@ h1 { margin-top: var(--space-3); font-size: var(--text-heading); line-height: va
 .app-footer { flex-shrink: 0; padding-block: var(--space-6); border-top: 1px solid var(--border); color: var(--text-muted); font-size: var(--text-caption); line-height: var(--leading-caption); letter-spacing: var(--tracking-caption); }
 .skip-link { position: fixed; top: var(--space-2); left: var(--space-4); z-index: 3; padding: var(--space-3) var(--space-5); min-height: 44px; border-radius: var(--radius-pill); background: var(--surface-2); transform: translateY(-150%); }
 .skip-link:focus { transform: translateY(0); }
+.foundation-tools { display: grid; gap: var(--space-6); margin-top: var(--space-8); }
+.engine-preview, .simulation-panel { min-width: 0; padding: var(--card-padding); border-radius: var(--radius-card); border: 1px solid var(--border); background: var(--surface-1); }
+.simulation-panel { background: var(--surface-2); border: 1px dashed var(--synthetic); }
+.simulation-heading { display: flex; align-items: center; flex-wrap: wrap; gap: var(--space-3); }
+.simulation-heading h2 { flex: 1; min-width: 0; font-size: var(--text-subheading); line-height: var(--leading-subheading); letter-spacing: var(--tracking-subheading); }
+.synthetic-badge { display: inline-flex; align-items: center; padding: var(--space-1) var(--space-3); border: 1px dashed var(--synthetic); border-radius: var(--radius-pill); color: var(--synthetic); font-size: var(--text-caption); font-weight: var(--weight-medium); }
+.simulation-description, .response-entry, .recovery-preview > p:not(.recovery-chip) { margin-top: var(--space-3); color: var(--text-muted); font-size: var(--text-body-sm); overflow-wrap: anywhere; }
+.simulation-controls { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: end; gap: var(--space-3); margin-top: var(--space-5); }
+.pill-button { min-height: 44px; padding: var(--space-3); border: 1px solid color-mix(in srgb, var(--color-lavender) 40%, transparent); border-radius: var(--radius-pill); color: var(--text); background: transparent; cursor: pointer; font-weight: var(--weight-medium); }
+.pill-button:hover:enabled { background: color-mix(in srgb, var(--color-lavender) 6%, var(--surface-2)); }
+.primary-button { border-color: var(--action); background: var(--action); color: var(--action-text); box-shadow: var(--action-glow); }
+.primary-button:hover:enabled { background: color-mix(in srgb, var(--color-lavender) 6%, var(--action)); }
+.pill-button:disabled, .jump-control select:disabled { cursor: not-allowed; color: var(--text-muted); background: var(--surface-2); border-color: var(--border); box-shadow: none; }
+.jump-control { grid-column: 1 / -1; display: flex; align-items: center; gap: var(--space-3); font-size: var(--text-body-sm); font-weight: var(--weight-medium); }
+.jump-control select { flex: 1; min-width: 0; min-height: 44px; padding: var(--space-2) var(--space-3); font: inherit; border: 1px solid var(--border); border-radius: var(--radius-input); background: var(--surface-2); color: var(--text); }
+.simulation-controls > button:last-child { grid-column: 1 / -1; }
+.engine-status { margin-top: var(--space-5); font-size: var(--text-heading-sm); font-weight: var(--weight-bold); }
+.status-within_usual { color: var(--status-usual); }
+.status-change_noted { color: var(--status-change); }
+.status-review_recommended { color: var(--status-review); }
+.status-insufficient_data, .storage-error { color: var(--status-insufficient); }
+.storage-error { margin-top: var(--space-3); overflow-wrap: anywhere; }
+.domain-preview { display: grid; gap: var(--space-3); padding: 0; margin: var(--space-5) 0 0; list-style: none; }
+.domain-preview li { display: flex; flex-direction: column; gap: var(--space-1); font-size: var(--text-body-sm); }
+.domain-preview li span { color: var(--text-muted); }
+.recovery-preview { margin-top: var(--space-5); }
+.recovery-chip { display: inline-block; padding: var(--space-2) var(--space-3); border: 1px solid var(--status-usual); border-radius: var(--radius-pill); color: var(--status-usual); font-size: var(--text-body-sm); }
+@media (min-width: 900px) {
+  .foundation-tools { grid-template-columns: 1fr 1fr; align-items: start; margin-top: var(--space-12); }
+}
 @media (min-width: 900px) {
   .app-shell { height: auto; min-height: 100svh; }
   .content-region { order: 3; overflow: visible; padding-bottom: 0; }

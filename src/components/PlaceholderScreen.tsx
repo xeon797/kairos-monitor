@@ -31,7 +31,7 @@ export function PlaceholderScreen({ screen, subtitle, purpose, description }: Pl
         <aside className="preview-card" aria-labelledby="preview-heading">
           <p className="eyebrow">Prototype preview</p>
           <h2 id="preview-heading">A foundation for the mission</h2>
-          <p>Only navigation is available in this preview. Mission data and browser checks will be added in later milestones.</p>
+          <p>These screens remain placeholders. Use the temporary simulator below to verify local mission state. Browser checks will be added in a later milestone.</p>
           <p className="team-credit">Team Requiem_SUST</p>
         </aside>
       </div>

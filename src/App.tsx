@@ -5,11 +5,18 @@ import Today from './screens/Today';
 import Check from './screens/Check';
 import Trends from './screens/Trends';
 import Mission from './screens/Mission';
+import { AppProvider, useApp } from './state/useApp';
+import { SIMULATION_MAX_DAY } from './engine/config';
+import { EnginePreview } from './components/EnginePreview';
+import { SimControls } from './components/SimControls';
 
 const screens: ScreenName[] = ['Today', 'Check', 'Trends', 'Mission'];
 
 function AppShell() {
   const { pathname } = useLocation();
+  const app = useApp();
+  const missionDay = `Mission day ${app.currentDay ?? '—'} / ${SIMULATION_MAX_DAY}`;
+  const storageNote = app.loading ? 'Loading local mission storage…' : app.error ? 'Local mission storage unavailable' : 'Synthetic · stored on this device';
   return (
     <div className="app-shell">
       <a className="skip-link" href="#main-content">Skip to content</a>
@@ -24,14 +31,14 @@ function AppShell() {
             <span>Kairos Monitor</span>
           </div>
           <div className="mission-context">
-            <span className="mission-day">Mission day — / 17</span>
-            <span className="simulator-note">Simulator not connected yet</span>
+            <span className="mission-day">{missionDay}</span>
+            <span className="simulator-note">{storageNote}</span>
           </div>
           <button className="about-button" disabled aria-label="About unavailable until P7">About <span>unavailable</span></button>
         </div>
         <div className="mobile-mission-context">
-          <span className="mission-day">Mission day — / 17</span>
-          <span className="simulator-note">Simulator not connected yet</span>
+          <span className="mission-day">{missionDay}</span>
+          <span className="simulator-note">{storageNote}</span>
         </div>
       </header>
       <nav className="primary-navigation" aria-label="Main navigation">
@@ -53,6 +60,7 @@ function AppShell() {
           <Route path="/mission" element={<Mission />} />
           <Route path="*" element={<Navigate to="/today" replace />} />
         </Routes>
+        <div className="foundation-tools"><EnginePreview /><SimControls /></div>
         </main>
         <footer className="app-footer page-width"><p>{FOOTER_DISCLAIMER}</p></footer>
       </div>
@@ -61,5 +69,5 @@ function AppShell() {
 }
 
 export default function App() {
-  return <BrowserRouter><AppShell /></BrowserRouter>;
+  return <AppProvider><BrowserRouter><AppShell /></BrowserRouter></AppProvider>;
 }

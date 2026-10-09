@@ -91,7 +91,7 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
   Create `src/db/db.ts` with Dexie tables `sleep`, `checks`, `responses`, `settings`, and `explanations` (key, text, model, createdAt; used by T18). On first run, seed days 1–17 of synthetic data, set `currentDay = 7`, and freeze the baseline into `settings`. Export helpers: `getState()`, `setDay(n)`, `addResponse()`, `addLiveCheck()`, `resetSimulation()`.
   **Done when:** a Vitest test using `fake-indexeddb` seeds, reads, and resets correctly; reset returns to day 7 and clears responses but keeps live checks and cached explanations.
 
-- [ ] **T13 App state and simulator**
+- [x] **T13 App state and simulator**
   Create `src/state/useApp.ts` (loads DB state, runs the engine for the current day, exposes `packet`, `taskPackets`, `advance`, `back`, `jump`, `reset`, `logResponse`) and the `SimControls` component (DESIGN.md §6). Wire the day indicator in the top bar.
   **Done when:** advancing and going back changes the day indicator and recomputed status; reload keeps the day; Reset returns to day 7.
 
@@ -217,6 +217,8 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
 ---
 
 ## Log
+
+T13 — One shared React store/provider, serialized persisted simulator mutations, filtered engine packets and temporary shell preview; 22 added unit tests (326 total), 5 production/3 StrictMode browser checks, typecheck/build passed — state, preview/controls/badge, shell/CSS, state/browser tests, NOTES, PLAN.
 
 T12 — Transactional Dexie seed/frozen baseline, explicit persisted check kinds, validated helpers and unavailable-storage state; 38 added tests (304 total), typecheck/build passed — db.ts, config input limits, persistence tests, package/lock, NOTES, PLAN.
 
