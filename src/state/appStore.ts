@@ -1,4 +1,4 @@
-import { addResponse, getState, initialize, resetSimulation, setDay, type ReadyState, type StoredState } from '../db/db';
+import { addLiveCheck, addResponse, getState, initialize, resetSimulation, setDay, type LiveCheck, type ReadyState, type StoredState } from '../db/db';
 import { SCHEDULE_CHANGE_MIN_DAY, SIMULATION_MAX_DAY, SIMULATION_MIN_DAY } from '../engine/config';
 import { evaluateDomains } from '../engine/detect';
 import { buildEvidencePacket } from '../engine/evidence';
@@ -13,10 +13,12 @@ export interface StorageAdapter {
   setDay:(day:number) => Promise<ReadyState>;
   reset:() => Promise<ReadyState>;
   addResponse:(response:ResponseLog) => Promise<ReadyState>;
+  addLiveCheck?:(check:LiveCheck) => Promise<ReadyState>;
 }
 const storage:StorageAdapter = {
   initialize:() => initialize(new Date().toISOString()), getState:() => getState(),
   setDay:day => setDay(day), reset:() => resetSimulation(), addResponse:response => addResponse(response),
+  addLiveCheck:check=>addLiveCheck(check),
 };
 export interface AppSnapshot {
   loading:boolean; mutating:boolean; error:string | null;
@@ -51,6 +53,7 @@ export class AppStore {
   private queue:Promise<void> = Promise.resolve();
   private pending = 0;
   private revision = 0;
+  private liveSaves=new Map<string,{record:LiveCheck;promise:Promise<void>}>();
   constructor(private adapter:StorageAdapter = storage, private responseId:() => string = () => crypto.randomUUID()) {}
 
   getSnapshot = ():AppSnapshot => this.snapshot;
@@ -102,4 +105,23 @@ export class AppStore {
     if (state.currentDay < SCHEDULE_CHANGE_MIN_DAY) throw new Error(`Schedule changes are available from day ${SCHEDULE_CHANGE_MIN_DAY}.`);
     return this.adapter.addResponse({id:this.responseId(),day:state.currentDay,type:'rest_adjustment',note:DEFAULT_RESPONSE_NOTE});
   });
+  saveLiveCheck = (check:LiveCheck):Promise<void> => {
+    const same=(saved:LiveCheck):boolean=>(Object.keys(check) as (keyof LiveCheck)[]).every(key=>saved[key]===check[key]);
+    const pending=this.liveSaves.get(check.id);
+    if(pending)return same(pending.record)?pending.promise:Promise.reject(new Error('This result ID already belongs to another record.'));
+    const record={...check};
+    const operation=this.queue.then(async()=>{
+      await this.load();
+      const state=await this.adapter.getState();
+      if(state.status!=='ready')throw new Error(state.error);
+      const existing=state.checks.find(saved=>saved.id===record.id);
+      if(existing){if(existing.source==='live'&&same(existing))return;throw new Error('This result ID already exists.');}
+      if(!this.adapter.addLiveCheck)throw new Error('Live result storage is unavailable.');
+      this.accept(await this.adapter.addLiveCheck(record));
+    });
+    this.liveSaves.set(record.id,{record,promise:operation});
+    this.queue=operation.catch(()=>{});
+    void operation.catch(()=>{this.liveSaves.delete(record.id);});
+    return operation;
+  };
 }

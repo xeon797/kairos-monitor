@@ -12,5 +12,5 @@ export function useApp() {
   const store = useContext(AppContext);
   if (!store) throw new Error('AppProvider is required.');
   const snapshot = useSyncExternalStore(store.subscribe,store.getSnapshot,store.getSnapshot);
-  return {...snapshot,advance:store.advance,back:store.back,jump:store.jump,reset:store.reset,logResponse:store.logResponse};
+  return {...snapshot,advance:store.advance,back:store.back,jump:store.jump,reset:store.reset,logResponse:store.logResponse,saveLiveCheck:store.saveLiveCheck};
 }

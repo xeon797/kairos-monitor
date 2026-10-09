@@ -150,7 +150,7 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
   Create `src/checks/scoring.ts` with pure functions `scoreReaction(trials)` and `scoreGoNoGo(trials)` per SPEC.md §11 plus a seeded PRNG helper for delays.
   **Done when:** unit tests cover median with false starts excluded, lapse counting (>500 ms), timeout handling, commission/omission counting, and quality flags.
 
-- [ ] **T23 Reaction test UI**
+- [x] **T23 Reaction test UI**
   Build `ReactionTest.tsx` (25 trials, random 1.5–4.0 s delay, tap or Space) and output a `CheckObservation` via `scoring.ts`. Record tab-blur events as `interruptions`.
   **Done when:** a full run produces a result object; Space and pointer both work; cancelling returns to the Check screen.
 
@@ -280,3 +280,5 @@ T21 — Inverted lavender About modal with limitations, NASA references, explici
 P7 landing addition — Standalone root introduction, lazy mission/Trends boundaries, preserved console routes/state, real isolated day-12 preview and original static orbit fallback. No supplied clip: looping video asset pending. 498 unit tests, 24 local browser checks, 8 public mocked-AI P7 checks and public route/API/font/image HTTP checks pass; typecheck/build pass; deployed existing Vercel project at https://kairos-monitor-gamma.vercel.app. Screenshots/asset provenance/routing documented. P7 complete; next P8/T22, which has not begun.
 
 T22 — Pure measured-trial reaction/attention scoring and seeded schedules; null unmeasured metrics, explicit denominators and quality/exclusion reasons. Documented SPEC timing constants added without changing existing thresholds. 523 unit tests and typecheck pass; go/no-go false-start quality policy remains an explicit unresolved prerequisite for valid live attention persistence, never filled with a fabricated zero.
+
+T23 — Full-viewport reaction interface, 25 seeded waits with measured monotonic RT, keyboard/pointer guards, frame-gated onset, interruptions/cancel/restart cleanup, raw summaries and explicit idempotent live saving. 529 unit tests, typecheck/build and 3 controlled-timing browser checks pass. T24 follows; T25 has not begun.

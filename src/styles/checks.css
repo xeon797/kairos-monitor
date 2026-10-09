@@ -1,0 +1,25 @@
+.check-dialog { width: 100%; height: 100svh; max-width: none; max-height: none; margin: 0; border: none; background: var(--surface-0); color: var(--text); padding: var(--space-5); overflow-y: auto; }
+.check-dialog::backdrop { background: var(--surface-0); }
+.check-test-header { display: flex; justify-content: space-between; align-items: center; gap: var(--space-3); }
+.live-check-label { color: var(--link); font-size: var(--text-caption); }
+.check-dialog h2 { text-align: center; font-size: var(--text-heading-sm); margin-top: var(--space-6); }
+.check-instructions, .check-summary { max-width: 620px; margin: var(--space-6) auto 0; }
+.check-instructions p + p, .check-summary p, .check-instructions button { margin-top: var(--space-4); }
+.check-instructions p, .check-summary p, .check-summary li { color: var(--text-muted); font-size: var(--text-body-sm); }
+.check-active { text-align: center; margin-top: var(--space-8); }
+.trial-progress { color: var(--text-muted); font-size: var(--text-caption); }
+.stimulus-instruction { min-height: 2.88em; font-size: var(--text-subheading); font-weight: var(--weight-medium); margin-top: var(--space-5); }
+.check-target { display: block; width: min(56vw, 240px); aspect-ratio: 1; margin: var(--space-6) auto; padding: 0; border: 2px solid var(--border-accent); border-radius: var(--radius-pill); background: var(--surface-2); cursor: pointer; touch-action: manipulation; }
+.check-target.target-go { background: var(--color-sky); border-color: var(--color-sky); }
+.check-target.target-no-go { background: var(--color-lavender); border-color: var(--color-lavender); border-radius: var(--radius-icon); }
+.check-target:disabled { display: none; }
+.check-timing-note { max-width: 620px; margin: var(--space-8) auto var(--space-4); color: var(--text-muted); font-size: var(--text-caption); }
+.progress-dots { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-2); max-width: 500px; margin: var(--space-6) auto 0; }
+.progress-dots span { width: 8px; height: 8px; border: 1px solid var(--text-muted); border-radius: var(--radius-pill); }
+.progress-dots .recorded { background: var(--color-sky); border-color: var(--color-sky); }
+.check-summary dl { margin-block: var(--space-5); }
+.check-summary dl > div { display: flex; justify-content: space-between; flex-wrap: wrap; gap: var(--space-2); padding-block: var(--space-3); border-bottom: 1px solid var(--border); }
+.check-summary dd { margin: 0; color: var(--link); font-weight: var(--weight-medium); }
+.check-actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-5); }
+.check-launchers { display: flex; flex-wrap: wrap; gap: var(--space-4); margin-top: var(--space-6); }
+@media (min-width: 900px) { .check-dialog { padding: var(--space-8); } }
