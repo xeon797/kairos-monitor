@@ -26,9 +26,19 @@ describe('conservative explanation contract', () => {
   it('rejects a negated recommendation even with a separate review phrase', () => expect(validateExplanation('Review is not recommended. Review current evidence.',overall).ok).toBe(false));
   it('rejects missing and negated review', () => { expect(validateExplanation('Review recommended.',overall).ok).toBe(false); expect(validateExplanation('Do not review current evidence.',overall).ok).toBe(false); });
   it('does not apply overall review to Inventory', () => expect(validateExplanation('INV-03: Change noted. Routine monitoring.',inv).ok).toBe(true));
+  it('accepts Inventory no-review wording without treating it as reassurance', () => expect(validateExplanation('INV-03: Change noted. No review is needed for this task. Routine monitoring.',inv).ok).toBe(true));
+  it('accepts the explicit no-task-specific-review exception without a label substring rejection', () => expect(validateExplanation('INV-03: Change noted. Routine monitoring. No task-specific review recommended.',inv).ok).toBe(true));
+  it('keeps explicitly scoped overall status separate from task concern', () => expect(validateExplanation('INV-03. Overall status: Review recommended. Task concern: Change noted. Routine monitoring. No task-specific review is prompted.',inv).ok).toBe(true));
+  it.each(['INV-03. Overall status: Within your usual range. Task concern: Change noted. Routine monitoring.','INV-03: Review recommended. Routine monitoring.','INV-03: Change noted. Review current evidence.'])('rejects wrong status and inherited review: %s', text => expect(validateExplanation(text,inv).ok).toBe(false));
+  it('still rejects a high-demand denial of review', () => expect(validateExplanation('EVA-07: Review recommended. No review is needed. Review current evidence.',eva).ok).toBe(false));
   it('rejects an inherited EVA instruction', () => expect(validateExplanation('INV-03: Change noted. Repeat the check.',inv).ok).toBe(false));
   it('requires the correct task ID', () => expect(validateExplanation('EVA-99: Review recommended. Review current evidence.',eva).ok).toBe(false));
   it('accepts task digits without treating 07 as a measurement', () => expect(validateExplanation('EVA-07: Review recommended. Review current evidence.',eva).ok).toBe(true));
+  it.each([eva,inv])('accepts the actual day-12 packet units, supported rounding and task-ID digits', packet => {
+    const label=packet.taskConcern==='CHANGE_NOTED'?'Change noted':'Review recommended';
+    const ending=packet.task?.demand==='low'?'Routine monitoring. No task-specific review is prompted.':'Review current evidence.';
+    expect(validateExplanation(`${packet.taskId}: ${label}. Sleep is 5.4 hours; sleep baseline is 7.214 hours; reaction time is 312 milliseconds; reaction baseline is 265 ms; commission errors baseline is 1.286 count. ${ending}`,packet).ok).toBe(true);
+  });
   it('rejects empty/long output', () => { expect(validateExplanation('',overall).ok).toBe(false); expect(validateExplanation(`${'evidence '.repeat(91)} Review current evidence.`,overall).reasons).toContain('too_long'); });
   it('requires missing-evidence wording', () => { const missing = buildEvidencePacket(12,null,evaluateDomains(12,null,[],[])); expect(validateExplanation('Insufficient data. Review missing evidence.',missing).ok).toBe(true); expect(validateExplanation('All good.',missing).ok).toBe(false); });
   it('has a stable key independent of object insertion order', () => { const reordered = JSON.parse(JSON.stringify(overall,(_key,value:unknown) => value && typeof value === 'object' && !Array.isArray(value) ? Object.fromEntries(Object.entries(value).reverse()) : value)) as typeof overall; expect(explanationCacheKey(reordered)).toBe(explanationCacheKey(overall)); });

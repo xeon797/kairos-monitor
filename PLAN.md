@@ -123,7 +123,7 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
   Create `src/ai/explainClient.ts`: call `/api/explain` only when `navigator.onLine`, with `AbortController` and a 4 s timeout; look up and store results in the Dexie `explanations` table by `explanationCacheKey` so repeated visits (and offline use after a first success) show the same text; run `validateExplanation` on every response and fall back to the template on any failure, silently. Update Today and Mission explanation boxes: show the template text immediately, swap to the AI text when it arrives (reserve height, no layout shift), show the tag `Template explanation` or `AI-rephrased from the same evidence`, and add a `Show template version` toggle. Never send live-check data.
   **Done when:** with the API unreachable the template shows with no error UI; with a mocked good response the AI text shows and is cached; a response with a banned word or a foreign number is rejected and the template shows; the toggle switches text; plain `npm run dev` (no `/api`) still works.
 
-- [ ] **T19 Gemini verification on the deployed site**
+- [x] **T19 Gemini verification on the deployed site**
   Redeploy, confirm the env vars are set in Vercel, and check day 12 EVA and INV return real AI text with the correct tag. Grep the built `dist/` for the key prefix (`AIza`) and confirm it is absent. Check 429 and fallback behavior with a bad key. Record two sample outputs and the model name in `NOTES.md`.
   **Done when:** the deployed day 12 shows AI-rephrased text that passes validation, `dist/` has no key, and a bad key still shows the template.
 
@@ -267,3 +267,5 @@ T17 — Server-only Gemini REST endpoint with exact synthetic packet validation,
 T18 — Immediate templates plus validated synthetic-only AI/cache integration, metadata, bounded requests/cache, stale guards and accessible toggles. 465 unit tests and 16 Chromium checks pass; typecheck/build pass; all original tests intact.
 
 T19 — Deployment/verification attempted on the existing project/domain; local work committed, but task remains unchecked. Public route/font/persistence/fallback checks pass at both widths; real Gemini acceptance fails (upstream errors/deadlines/rejected output), so no validated EVA/Inventory samples are claimed. T20 has not begun.
+
+T19 repair — Completed the task's real day-12 EVA/Inventory acceptance at both widths: validated provider text, accurate source tags, both template toggles and cached reload. Published guarded extraction/prompt/validator repairs; verified free-tier/account generation before changing Production model to gemini-3.5-flash-lite. 485 unit tests, 16 local browser checks and 2 public core checks pass; typecheck/build pass. Broader desktop real-flow assertion for a separate overall AI call hit the client deadline and correctly retained template; detailed outcomes/limits in NOTES.md. T20 has not begun.

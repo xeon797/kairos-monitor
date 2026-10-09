@@ -72,17 +72,26 @@ export function validateExplanation(text: string, packet: EvidencePacket): { ok:
   if (!numericClaims(text,packet)) reasons.push('unsupported_numeric_claim');
   const state = packet.taskConcern ?? packet.status;
   const expected = packet.taskConcern ? CONCERN_LABELS[packet.taskConcern] : STATUS_LABELS[packet.status];
-  if ([...new Set([...Object.values(STATUS_LABELS),...Object.values(CONCERN_LABELS)])].some(label => label !== expected && text.toLowerCase().includes(label.toLowerCase()))) reasons.push('contradictory_label');
+  // A packet can carry different overall/task labels. Exempt only an explicitly
+  // scoped, correct overall label when its task concern is also stated exactly.
+  let statusText = text;
+  if (packet.taskConcern && new RegExp(`\\btask concern:\\s*${expected}\\b`,'i').test(text)) {
+    statusText = statusText.replace(new RegExp(`\\boverall status:\\s*${STATUS_LABELS[packet.status]}\\b`,'gi'),'');
+  }
+  // This explicit low-demand exception is supplied by the engine, not a denial
+  // of the overall status. Never exempt an unscoped negated recommendation.
+  if (packet.task?.demand === 'low') statusText = statusText.replace(/\bno task-specific review (?:is )?(?:recommended|needed|prompted)\b/gi,'');
+  if ([...new Set([...Object.values(STATUS_LABELS),...Object.values(CONCERN_LABELS)])].some(label => label !== expected && new RegExp(`\\b${label}\\b`,'i').test(statusText))) reasons.push('contradictory_label');
   const changed = state === 'CHANGE_NOTED' || state === 'REVIEW_RECOMMENDED';
-  if ((changed || state === 'INSUFFICIENT_DATA') && /\b(?:no sustained change|all (?:good|normal)|everything is normal|no concerns|no review (?:is )?needed|ready for|can proceed)\b/i.test(text)) reasons.push('contradictory_status');
-  if (requiresReviewState(state,packet) && /\b(?:review (?:is )?not (?:recommended|required|needed)|no need (?:for|to) (?:a )?review)\b/i.test(text)) reasons.push('contradictory_status');
+  if ((changed || state === 'INSUFFICIENT_DATA') && /\b(?:no sustained change|all (?:good|normal)|everything is normal|no concerns|ready for|can proceed)\b/i.test(text)) reasons.push('contradictory_status');
+  if (requiresReviewState(state,packet) && /\b(?:no review (?:is )?needed|review (?:is )?not (?:recommended|required|needed)|no need (?:for|to) (?:a )?review)\b/i.test(text)) reasons.push('contradictory_status');
   if ((state === 'WITHIN_USUAL' || state === 'NO_RELEVANT_CHANGE') && /\b(?:sustained changes?|review is (?:needed|required))\b/i.test(text) && !/\bno sustained change\b/i.test(text)) reasons.push('contradictory_status');
   if (state === 'INSUFFICIENT_DATA' && !/\b(?:insufficient|missing|not enough|unavailable|excluded)\b/i.test(text)) reasons.push('missing_availability');
   if (packet.taskId && !text.includes(packet.taskId)) reasons.push('missing_task_identity');
   const requiresReview = requiresReviewState(state,packet);
   const prompt = /\b(?:review (?:recent sleep|current evidence|the evidence|missing|excluded)|repeat (?:the |a )?check)\b/i;
   if (requiresReview && (!prompt.test(text) || /\b(?:no|not|without|avoid|skip|do not)\b[^.;]{0,35}\b(?:review|repeat)\b/i.test(text))) reasons.push('missing_review_prompt');
-  if (packet.task?.demand === 'low' && /\b(?:repeat (?:the |a )?check|review recent sleep|review recommended)\b/i.test(text)) reasons.push('unsupported_low_demand_prompt');
+  if (packet.task?.demand === 'low' && /\b(?:repeat (?:the |a )?check|review (?:recent sleep|current evidence|the evidence|recommended))\b/i.test(statusText)) reasons.push('unsupported_low_demand_prompt');
   if (/\b(?:take medication|you should|you must|recommend (?:sleeping|taking)|increase your|reduce your|caused (?:by|the)|will recover|will improve)\b/i.test(text)) reasons.push('unsupported_recommendation');
   return {ok:reasons.length === 0,reasons:[...new Set(reasons)]};
 }
