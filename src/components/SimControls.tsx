@@ -2,8 +2,9 @@ import { SIMULATION_MAX_DAY, SIMULATION_MIN_DAY } from '../engine/config';
 import { useApp } from '../state/useApp';
 import { SyntheticBadge } from './SyntheticBadge';
 import { LogScheduleChange } from './LogScheduleChange';
+import { ResponseHistory } from './ResponseLog';
 
-export function SimControls({showLogAction = true}:{showLogAction?:boolean}) {
+export function SimControls({showLogAction = true,showResponses = true}:{showLogAction?:boolean;showResponses?:boolean}) {
   const app = useApp();
   const disabled = app.loading || app.mutating || !!app.error || app.currentDay === null;
   const days = Array.from({length:SIMULATION_MAX_DAY-SIMULATION_MIN_DAY+1},(_,index) => SIMULATION_MIN_DAY+index);
@@ -21,8 +22,6 @@ export function SimControls({showLogAction = true}:{showLogAction?:boolean}) {
       <button className="pill-button" disabled={disabled} onClick={() => void app.reset()}>Reset</button>
       {showLogAction && <LogScheduleChange />}
     </div>
-    <p className="simulation-description" role="status">{app.mutating ? 'Saving local changes…' : `Schedule changes logged: ${app.responses.length}`}</p>
-    {app.responses.map(response => <p className="response-entry" key={response.id}>Day {response.day} · {response.note}</p>)}
-    {app.trend?.label && <div className="recovery-preview"><p className="recovery-chip">{app.trend.label}</p><p>{app.trend.nonCausation}</p></div>}
+    {showResponses ? <ResponseHistory responses={app.responses} currentDay={app.currentDay} mutating={app.mutating} trend={app.trend} /> : app.mutating && <p className="simulation-description" role="status">Saving local changes…</p>}
   </section>;
 }

@@ -168,3 +168,26 @@ h3 { margin: 0; font-weight: var(--weight-medium); }
   .simulation-controls > button:last-child { grid-column: auto; }
 }
 @media (prefers-reduced-motion: reduce) { .status-card { animation: none; } }
+
+.mission-context-strip { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-4); padding-block: var(--space-5); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.mission-status { margin-top: var(--space-2); font-size: var(--text-subheading); font-weight: var(--weight-medium); }
+.mission-guidance { color: var(--text-muted); font-size: var(--text-body-sm); margin-top: var(--space-4); max-width: 75ch; }
+.mission-task-list { display: grid; gap: var(--space-5); margin-top: var(--space-8); }
+.mission-task-list .task-card { display: flex; flex-direction: column; align-items: start; }
+.mission-task-list .card-heading, .mission-task-list .task-title { width: 100%; }
+.mission-task-list .repeat-check { margin-top: auto; }
+.mission-task-list .task-explanation { margin-bottom: var(--space-5); }
+.response-log { margin-top: var(--space-8); }
+.response-description { margin-top: var(--space-3); font-size: var(--text-body-sm); color: var(--text-muted); max-width: 70ch; }
+.response-history { list-style: none; padding: 0; margin: 0; }
+.response-history li { border-top: 1px solid var(--border); padding-top: var(--space-4); margin-top: var(--space-4); }
+.response-metadata { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-4); font-size: var(--text-caption); color: var(--text-muted); }
+.future-response { color: var(--status-change); }
+.response-empty { margin-top: var(--space-4); color: var(--text-muted); font-size: var(--text-body-sm); }
+.response-action { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); margin-top: var(--space-5); }
+.response-action > span { color: var(--text-muted); font-size: var(--text-caption); }
+@media (min-width: 900px) {
+  .mission-task-list { grid-template-columns: repeat(2,minmax(0,1fr)); gap: var(--space-6); }
+  .mission-task-list .task-card { padding: var(--space-6); }
+  .response-log { margin-top: var(--space-12); }
+}

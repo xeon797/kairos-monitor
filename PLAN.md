@@ -103,7 +103,7 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
   Build `Today.tsx` and components `StatusCard`, `EvidenceRow`, `TaskCard`, `ConcernChip`, `SyntheticBadge`, per DESIGN.md §4.1. The explanation box shows the template text for now (T18 adds the AI text).
   **Done when:** advancing from day 7 to day 12 shows `Change noted` at day 11 and `Review recommended` at day 12 with the correct evidence rows and the next task card.
 
-- [ ] **T15 Mission screen**
+- [x] **T15 Mission screen**
   Build `Mission.tsx` per DESIGN.md §4.4: all four tasks, days-until, concern chips, per-task explanation, response log, **Log schedule change** (enabled from day 12), and the trend chip with the non-causation line.
   **Done when:** at day 12, EVA-07 shows "Review recommended" and INV-03 shows "Change noted" with different explanations; logging a response on day 13 and advancing to day 15 shows the chip.
 
@@ -217,6 +217,8 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
 ---
 
 ## Log
+
+T15 — Mission renders the sorted current-evidence task comparison, persisted response history/future-entry labels and guarded recovery. 342 unit tests and 12 Chromium checks pass; typecheck/build pass. Screenshots saved, no redeployment; T16/P6 has not begun.
 
 T14 — Today now renders packet status, separate measurement evidence/provenance, next task, template explanation and actual availability; official Satoshi installed locally. 338 unit tests and 8 Chromium checks pass; typecheck/build pass. No T15/P6 work in this commit.
 

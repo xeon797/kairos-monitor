@@ -59,7 +59,7 @@ function AppShell() {
           <Route path="/mission" element={<Mission />} />
           <Route path="*" element={<Navigate to="/today" replace />} />
         </Routes>
-        <div className="simulator-region"><SimControls showLogAction={pathname !== '/today'} /></div>
+        <div className="simulator-region"><SimControls showLogAction={pathname !== '/today' && pathname !== '/mission'} showResponses={pathname !== '/mission'} /></div>
         </main>
         <footer className="app-footer page-width"><p>{FOOTER_DISCLAIMER}</p></footer>
       </div>
