@@ -29,7 +29,7 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
   Create a Vite + React + TypeScript (strict) app in the current folder, titled "Kairos Monitor". Add scripts: `dev`, `build`, `typecheck`, `test`, `e2e`, `preview`. Install only the allowed dependencies. Add `.gitignore` (node_modules, dist, .env). Add `NOTES.md` (empty with header) and `.env.example` listing `GEMINI_API_KEY=` and `GEMINI_MODEL=`.
   **Done when:** `npm run dev` shows a placeholder page, `npm run typecheck` and `npm run build` pass, first commit exists.
 
-- [ ] **T02 Tokens, fonts and app shell**
+- [x] **T02 Tokens, fonts and app shell**
   Create `src/styles/tokens.css` (exact copy of DESIGN.md §2.7), `src/styles/fonts.css` (DESIGN.md §2.4), `App.tsx` with `react-router-dom`, four empty routes (Today, Check, Trends, Mission), top bar with the "Kairos Monitor" wordmark and orbit mark (DESIGN.md §9) and "Mission day N / 17" placeholder, tab bar (bottom on mobile, top on desktop), and the footer disclaimer constant.
   **Done when:** four routes render at 360 px and 1100 px with Deep Ink background, Satoshi (or fallback), footer visible, no hex values outside `tokens.css`.
 
@@ -217,6 +217,7 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
 ## Log
 
 T01 — React 18 scaffold, strict app/config typecheck, separate test runners, empty unit suite (0 tests), production build and Chrome dev-page check passed — app/config files, package lock, canonical docs, README, NOTES.
+T02 — Exact design tokens, local font declarations, responsive shell and four placeholder routes; typecheck/build and 2 foundation browser checks passed at 360/1100 px — src, package lock, Playwright config/checks, NOTES.
 (Agent: add one line per completed task: `T## — what changed — files touched`.)
 
 ---

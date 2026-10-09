@@ -1,0 +1,79 @@
+:root {
+  /* Team palette */
+  --color-ink: #171D1C;
+  --color-lavender: #EFE9F4;
+  --color-sky: #5FBFF9;
+  --color-teal: #16BAC5;
+  --color-indigo: #5863F8;
+
+  /* Surfaces */
+  --surface-0: var(--color-ink);
+  --surface-1: #1F2827;
+  --surface-2: #283332;
+  --surface-metric: color-mix(in srgb, var(--color-indigo) 16%, var(--surface-1));
+  --surface-inverse: var(--color-lavender);
+
+  /* Lines and text */
+  --border: #3A3E3F;
+  --border-accent: color-mix(in srgb, var(--color-sky) 35%, var(--surface-1));
+  --text: var(--color-lavender);
+  --text-muted: #B3B0B8;
+  --text-faint: #8E8D93;
+  --text-on-inverse: var(--color-ink);
+  --link: var(--color-sky);
+  --link-on-inverse: #3F49D1;
+  --focus-ring: 2px solid var(--color-sky);
+
+  /* Actions */
+  --action: var(--color-indigo);
+  --action-text: #FFFFFF;
+  --action-glow: 0 0 20px rgba(88, 99, 248, 0.4);
+
+  /* Status */
+  --status-usual: var(--color-teal);
+  --status-change: #F2C35B;
+  --status-review: #FF9E5E;
+  --status-insufficient: #9AA6A5;
+  --synthetic: var(--color-sky);
+
+  /* Chart series */
+  --chart-series-1: var(--color-sky);
+  --chart-series-2: var(--color-lavender);
+  --chart-baseline: var(--text-muted);
+  --chart-criterion: var(--status-change);
+  --chart-baseline-band: color-mix(in srgb, var(--color-teal) 12%, transparent);
+  --chart-grid: var(--border);
+
+  /* Typography */
+  --font-sans: "Satoshi", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-bold: 700;
+  --text-caption: 12px;  --leading-caption: 1.44;  --tracking-caption: 0.02em;
+  --text-body-sm: 14px;  --leading-body-sm: 1.44;  --tracking-body-sm: 0.02em;
+  --text-body: 16px;     --leading-body: 1.5;      --tracking-body: 0;
+  --text-subheading: 18px; --leading-subheading: 1.44; --tracking-subheading: -0.02em;
+  --text-heading-sm: 24px; --leading-heading-sm: 1.3;  --tracking-heading-sm: -0.03em;
+  --text-heading: 32px;    --leading-heading: 1.1;     --tracking-heading: -0.04em;
+  --text-metric: 48px;     --leading-metric: 1;        --tracking-metric: -0.05em;
+
+  /* Spacing */
+  --space-1: 4px;  --space-2: 8px;  --space-3: 12px; --space-4: 16px; --space-5: 20px;
+  --space-6: 24px; --space-8: 32px; --space-10: 40px; --space-12: 48px; --space-16: 64px;
+
+  /* Radius */
+  --radius-pill: 9999px;
+  --radius-card: 24px;
+  --radius-card-elevated: 32px;
+  --radius-input: 16px;
+  --radius-icon: 8px;
+
+  /* Layout */
+  --page-max: 1100px;
+  --card-padding: 20px;
+  --element-gap: 8px;
+}
+@media (min-width: 900px) {
+  :root { --text-metric: 64px; --card-padding: 24px; }
+}
+html { background: var(--surface-0); color: var(--text); font-family: var(--font-sans); font-size: var(--text-body); line-height: var(--leading-body); font-variant-numeric: tabular-nums; }

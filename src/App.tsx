@@ -1,3 +1,65 @@
+import { BrowserRouter, Navigate, NavLink, Route, Routes, useLocation } from 'react-router-dom';
+import { NavigationIcon, type ScreenName } from './components/NavigationIcon';
+import { FOOTER_DISCLAIMER } from './content';
+import Today from './screens/Today';
+import Check from './screens/Check';
+import Trends from './screens/Trends';
+import Mission from './screens/Mission';
+
+const screens: ScreenName[] = ['Today', 'Check', 'Trends', 'Mission'];
+
+function AppShell() {
+  const { pathname } = useLocation();
+  return (
+    <div className="app-shell">
+      <a className="skip-link" href="#main-content">Skip to content</a>
+      <header className="app-header page-width">
+        <div className="topbar">
+          <div className="wordmark">
+            <svg className="orbit-mark" viewBox="0 0 32 32" aria-hidden="true">
+              <circle cx="16" cy="17" r="11" fill="none" stroke="var(--color-sky)" strokeWidth="1.5" />
+              <path d="M16 2v7" stroke="var(--color-sky)" strokeWidth="1.5" strokeLinecap="round" />
+              <circle cx="26" cy="21.6" r="2.5" fill="var(--color-teal)" />
+            </svg>
+            <span>Kairos Monitor</span>
+          </div>
+          <div className="mission-context">
+            <span className="mission-day">Mission day — / 17</span>
+            <span className="simulator-note">Simulator not connected yet</span>
+          </div>
+          <button className="about-button" disabled aria-label="About unavailable until P7">About <span>unavailable</span></button>
+        </div>
+        <div className="mobile-mission-context">
+          <span className="mission-day">Mission day — / 17</span>
+          <span className="simulator-note">Simulator not connected yet</span>
+        </div>
+      </header>
+      <nav className="primary-navigation" aria-label="Main navigation">
+        <div className="navigation-track">
+          {screens.map((screen) => (
+            <NavLink key={screen} to={`/${screen.toLowerCase()}`} className="navigation-link">
+              <NavigationIcon screen={screen} /><span>{screen}</span>
+            </NavLink>
+          ))}
+        </div>
+      </nav>
+      <div className="content-region" key={pathname}>
+        <main className="page-content page-width" id="main-content" tabIndex={-1}>
+        <Routes>
+          <Route path="/" element={<Navigate to="/today" replace />} />
+          <Route path="/today" element={<Today />} />
+          <Route path="/check" element={<Check />} />
+          <Route path="/trends" element={<Trends />} />
+          <Route path="/mission" element={<Mission />} />
+          <Route path="*" element={<Navigate to="/today" replace />} />
+        </Routes>
+        </main>
+        <footer className="app-footer page-width"><p>{FOOTER_DISCLAIMER}</p></footer>
+      </div>
+    </div>
+  );
+}
+
 export default function App() {
-  return <main><h1>Kairos Monitor</h1><p>The application foundation is being prepared.</p></main>;
+  return <BrowserRouter><AppShell /></BrowserRouter>;
 }
