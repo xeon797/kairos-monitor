@@ -1,10 +1,10 @@
 # Kairos Monitor
 
-Personalized Astronaut Functional Readiness & Early-Warning System ? NASA Space Apps prototype by **Team Requiem_SUST**.
+Personalized Astronaut Functional Readiness & Early-Warning System - NASA Space Apps prototype by **Team Requiem_SUST**.
 
 Compare observations with a frozen personal baseline, identify sustained changes and explain their relevance to upcoming tasks. **All mission telemetry is synthetic; thresholds and task classifications are experimental and illustrative.** Task decisions remain with the crew and mission team.
 
-[Open the demo](https://kairos-monitor-gamma.vercel.app) ? [Scenario and 90-second script](DEMO.md) ? [Verification and limitations](NOTES.md) ? [Third-party materials](THIRD_PARTY.md)
+[Open the demo](https://kairos-monitor-gamma.vercel.app) | [Scenario and 90-second script](DEMO.md) | [Verification and limitations](NOTES.md) | [Third-party materials](THIRD_PARTY.md)
 
 ## Run from a fresh checkout
 
@@ -43,11 +43,11 @@ Playwright starts production preview automatically for `npm run e2e`; build firs
 
 The landing `/` opens independently of mission storage; **Launch demo** enters Today and preserves existing saved state. Console routes `/today`, `/mission`, `/trends`, `/check` support direct loads and hard refreshes. About discloses provenance and limitations.
 
-Synthetic days 1?7 establish one frozen baseline: sleep **7.214285714 h**, midpoint **180 min**, reaction **265 ms**, lapses **1**, commission errors **1.285714286**. Full-precision calculations, not rounded displayed cutoffs, drive the engine. Advancing days does not roll or replace the baseline. Reset returns to day 7 and clears schedule-change responses, retaining the frozen baseline, live results and explanation cache.
+Synthetic days 1-7 establish one frozen baseline: sleep **7.214285714 h**, midpoint **180 min**, reaction **265 ms**, lapses **1**, commission errors **1.285714286**. Full-precision calculations, not rounded displayed cutoffs, drive the engine. Advancing days does not roll or replace the baseline. Reset returns to day 7 and clears schedule-change responses, retaining the frozen baseline, live results and explanation cache.
 
 A criterion must be met on at least **3 of the last 5 days**, with at least 3 evaluable observations per domain. Poor/missing data is excluded with a reason; unavailable evidence shows **Insufficient data**. At day 11: **Change noted**. Day 12: **Review recommended**, with sleep/reaction/attention counts **4/5, 3/5, 3/5**. On Mission, **EVA-07: Review recommended**, **INV-03: Change noted**, both in 2 days: task demands/relevant domains differ. Log a schedule change on day 13; day 15 has 2 sustained domains, day 16 has 0 and Today shows **Within your usual range**. The recovery chip says **Measures moving toward baseline**, alongside **This comparison does not show that the adjustment caused the change.**
 
-Checks measure on this browser: 25 reaction trials with random 1.5?4 s waits; 40 attention stimuli (circle go, square no-go; 800 ms exposure/400 ms gap). Reaction duration varies; do not promise a 45-second run. A result is stored only after **Save result**; practice and cancelled/unfinished sessions are never saved. Blur/visibility interruptions affect quality; missing results are not normal results. Live records keep actual UTC timestamps, explicit test kinds and no mission day. Separate live comparison baselines use the first three valid results **of that same kind**. Live results never enter the synthetic baseline, charts, task calculations or Gemini requests.
+Checks measure on this browser: 25 reaction trials with random 1.5-4 s waits; 40 attention stimuli (circle go, square no-go; 800 ms exposure/400 ms gap). Reaction duration varies; do not promise a 45-second run. A result is stored only after **Save result**; practice and cancelled/unfinished sessions are never saved. Blur/visibility interruptions affect quality; missing results are not normal results. Live records keep actual UTC timestamps, explicit test kinds and no mission day. Separate live comparison baselines use the first three valid results **of that same kind**. Live results never enter the synthetic baseline, charts, task calculations or Gemini requests.
 
 ## Gemini and deployment
 

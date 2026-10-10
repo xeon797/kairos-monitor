@@ -1,4 +1,4 @@
-# Kairos Monitor ? Third-party materials
+# Kairos Monitor - Third-party materials
 
 Verified 2026-10-10 against the installed, pinned package metadata and actual package LICENSE files (local evidence `.local/p11-thirdparty-licenses.json`). Versions match package-lock.json; source/license links below identify upstream projects. This table covers all direct dependencies, generated-worker libraries, project assets and referenced services. Transitive dependency declarations remain in package-lock.json and their upstream distributions; keep their notices when redistributing built dependencies. This project does not own or relicense those materials.
 

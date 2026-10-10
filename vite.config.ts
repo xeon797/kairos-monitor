@@ -7,7 +7,9 @@ export default defineConfig({ plugins: [react(), VitePWA({
   injectRegister: false,
   // Development has no service worker; offline tests use the production build.
   devOptions: { enabled: false },
-  includeAssets: ['fonts/*.woff2', 'images/kairos-day12.jpg'],
+  // Let Workbox enumerate local assets together; the plugin's appended
+  // includeAssets/icon entries otherwise bypass manifestTransforms sorting.
+  includeManifestIcons: false,
   manifest: {
     id: '/', name: 'Kairos Monitor', short_name: 'Kairos Monitor',
     description: 'Synthetic research prototype with local browser checks.',
@@ -18,7 +20,7 @@ export default defineConfig({ plugins: [react(), VitePWA({
     })),
   },
   workbox: {
-    globPatterns: ['**/*.{js,css,html}'],
+    globPatterns: ['**/*.{js,css,html}', 'fonts/*.woff2', 'icons/*.png', 'images/kairos-day12.jpg'],
     // Filesystem enumeration differs on Windows/Linux. Stable ordering makes
     // the reviewed worker bytes reproducible on the existing Vercel builder.
     manifestTransforms: [async entries => ({

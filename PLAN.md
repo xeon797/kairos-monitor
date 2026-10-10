@@ -224,11 +224,11 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
 
 ## Log
 
-T32 partial ? README, verified third-party table and isolated recording checklist prepared; typecheck/583 unit tests pass. Required LICENSE remains pending the owner?s MIT/Apache-2.0 choice; task stays unchecked. Authorized independent T33 verification proceeds with this blocker visible.
+T32 partial - README, verified third-party table and isolated recording checklist prepared; typecheck/583 unit tests pass. Required LICENSE remains pending the owner's MIT/Apache-2.0 choice; task stays unchecked. Authorized independent T33 verification proceeds with this blocker visible.
 
-T31 ? Completed DESIGN checklist at 360/1100 px; fixed landing disclaimer, chart-axis units and offline-notice layout. 583 unit tests/typecheck/build, 15 affected browser cases and two final polish cases pass; no supplied video, static fallback retained.
+T31 - Completed DESIGN checklist at 360/1100 px; fixed landing disclaimer, chart-axis units and offline-notice layout. 583 unit tests/typecheck/build, 15 affected browser cases and two final polish cases pass; no supplied video, static fallback retained.
 
-T30 ? Production-only manifest/generated icons and precached shell/fonts; API excluded, updates wait for all tabs to close. 583 unit tests, typecheck/build and actual network-blocked offline/check/update browser evidence pass; NOTES records first-visit and device limits.
+T30 - Production-only manifest/generated icons and precached shell/fonts; API excluded, updates wait for all tabs to close. 583 unit tests, typecheck/build and actual network-blocked offline/check/update browser evidence pass; NOTES records first-visit and device limits.
 
 T27 — Mapped every DEMO acceptance row/additional check to existing evidence; added scenario.test.ts for full-sequence packet values/provenance, poor-window reasons/AI exclusion and persisted later-edit baseline freeze. Typecheck and 574 unit tests pass; current engine timings below 20 ms recorded in NOTES. T28 follows.
 T28 — Added fixed-response full journeys at 360/1100 px and API-failure fallback; both complete checks, cache/live isolation, reloads and reset verified. Typecheck, 574 unit tests, build and 46 local browser checks pass; eight opt-ins explained in NOTES. T29 follows.
