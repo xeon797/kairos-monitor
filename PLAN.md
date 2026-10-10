@@ -183,7 +183,7 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
   Write `tests/unit/scenario.test.ts` covering **every row and every additional check** in DEMO.md §2 (including poor-quality, frozen baseline, live-check isolation, banned words).
   **Done when:** all pass and are included in `npm run test`.
 
-- [ ] **T28 E2E flow**
+- [x] **T28 E2E flow**
   Write one Playwright test (`tests/e2e/demo.spec.ts`) against `npm run preview` that routes `/api/explain` to a fixed mocked response so it is deterministic: load → advance to day 12 → assert "Review recommended" → open EVA-07 and INV-03 and assert different text → assert the AI tag, then the toggle → log schedule change → advance to day 16 → assert "Within your usual range" and the trend chip → reload and assert persistence. Add a second short case where `/api/explain` fails and the template tag shows.
   **Done when:** `npm run e2e` passes headless.
 
@@ -225,6 +225,7 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
 ## Log
 
 T27 — Mapped every DEMO acceptance row/additional check to existing evidence; added scenario.test.ts for full-sequence packet values/provenance, poor-window reasons/AI exclusion and persisted later-edit baseline freeze. Typecheck and 574 unit tests pass; current engine timings below 20 ms recorded in NOTES. T28 follows.
+T28 — Added fixed-response full journeys at 360/1100 px and API-failure fallback; both complete checks, cache/live isolation, reloads and reset verified. Typecheck, 574 unit tests, build and 46 local browser checks pass; eight opt-ins explained in NOTES. T29 follows.
 
 T26 audit — User-requested review fixed reaction duplicate input, live record validation/ordering/comparison quality and contrast/cursor defects; removed unused scaffold/CSS/save cache and corrected README. Typecheck/build, 558 unit tests, 43 local browser checks and 16 public checks pass; nine relevant local checks repeated after final wording changes. Redeployed the existing demo; T27 remains next.
 
