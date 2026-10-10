@@ -166,11 +166,11 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
   Build `Check.tsx` per DESIGN.md §4.2: two test cards, result view with quality chip, save live check to Dexie, history list, the three notes (not NASA Cognition, device effects, not comparable with synthetic data), and the "compare after 3 checks" logic.
   **Done when:** a saved live check appears in history after reload and does not change any synthetic status on Today.
 
-- [ ] **T26 Redeploy and full-script check**
+- [x] **T26 Redeploy and full-script check**
   Redeploy. Run the full DEMO.md §3 script on the deployed URL at phone width and desktop width.
   **Done when:** every step of the script works live (including the AI explanation tag on day 12), and any defects are logged in `NOTES.md`.
 
-**Checkpoint B:** the full demo works on the deployed site.
+**Checkpoint B:** PASS — the full DEMO script works on the deployed site at 360/1100 px, including validated real day-12 EVA/Inventory AI tags and template toggles. Complete real-clock browser checks save/reload separately from synthetic telemetry. T27/P10 remains unstarted.
 
 ---
 
@@ -286,3 +286,5 @@ T23 — Full-viewport reaction interface, 25 seeded waits with measured monotoni
 T24 — Measured 30-go/10-no-go interface with 800 ms exposure/400 ms gaps, shape cues, focused error denominators and common SPEC false-start quality rule. Final P8: 542 unit tests, 32 local browser checks and typecheck/build pass; four opt-in provider/deployment checks skipped. Typed live saves, reload, duplicate prevention and unchanged synthetic baseline/day-12 task results verified. No deployment; next P9, T25 has not begun.
 
 T25 - Completed Check cards, full-protocol unsaved practice, quality/history/provenance and separate first-three live baselines; focus restoration and reduced-motion interaction feedback. 546 unit tests, 39 local browser checks, typecheck/build pass; four opt-in public/provider checks skipped locally. T26 follows.
+
+T26 — Redeployed the existing public project; full real-provider pitch passes at both widths, five public mocked-AI checks and two real-clock protocol/history checks pass. 546 unit tests, 39 local browser checks and typecheck/build pass; assets/fonts match production. Harness defects corrected and measured durations recorded in NOTES; next T27.
