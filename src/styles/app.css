@@ -204,3 +204,18 @@ h3 { margin: 0; font-weight: var(--weight-medium); }
   .overall-explanation { min-height: 7em; }
   .explanation-content > .task-explanation { min-height: 9em; }
 }
+
+/* Keep feedback brief; timed cognitive stimuli have no motion or transitions. */
+@media (prefers-reduced-motion: no-preference) {
+  .pill-button, .navigation-link, .about-button, .navigation-track, .sim-controls summary, select {
+    transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease, box-shadow 180ms ease, transform 140ms ease;
+  }
+  .pill-button:active:not(:disabled), .navigation-link:active, .about-button:active { transform: scale(.97); }
+  .screen-heading, .check-choice, .check-history { animation: briefing-enter 200ms ease-out; }
+  .navigation-link svg { transition: transform 180ms ease; }
+  @media (hover: hover) {
+    .pill-button:hover:not(:disabled), .about-button:hover { transform: translateY(-1px); border-color: var(--border-accent); }
+    .navigation-link:hover svg { transform: translateY(-2px); }
+    .navigation-track:hover { border-color: var(--border-accent); }
+  }
+}

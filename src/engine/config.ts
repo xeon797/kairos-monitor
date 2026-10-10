@@ -68,3 +68,8 @@ export const EXPLANATION_SETTLE_MS = 900;
 export const EXPLANATION_CLIENT_REQUESTS_PER_MINUTE = 12;
 export const EXPLANATION_CACHE_MAX_ENTRIES = 50;
 export const EXPLANATION_CACHE_MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000;
+
+// Live comparison minimum: experimental, illustrative (SPEC section 11.3).
+export const LIVE_BASELINE_CHECKS = 3;
+// History display limit: experimental, illustrative (DESIGN section 4.2).
+export const LIVE_HISTORY_LIMIT = 10;

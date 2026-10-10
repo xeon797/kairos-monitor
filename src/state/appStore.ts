@@ -21,6 +21,7 @@ const storage:StorageAdapter = {
   addLiveCheck:check=>addLiveCheck(check),
 };
 export interface AppSnapshot {
+  liveChecks:LiveCheck[];
   loading:boolean; mutating:boolean; error:string | null;
   currentDay:number | null; baseline:Baseline | null;
   packet:EvidencePacket | null; taskPackets:EvidencePacket[];
@@ -28,7 +29,7 @@ export interface AppSnapshot {
   visibleSleep:SleepObservation[]; visibleChecks:CheckObservation[];
 }
 function unavailable(loading:boolean,error:string | null,mutating = false): AppSnapshot {
-  return {loading,mutating,error,currentDay:null,baseline:null,packet:null,taskPackets:[],responses:[],trend:null,visibleSleep:[],visibleChecks:[]};
+  return {liveChecks:[],loading,mutating,error,currentDay:null,baseline:null,packet:null,taskPackets:[],responses:[],trend:null,visibleSleep:[],visibleChecks:[]};
 }
 export function deriveAppState(state:ReadyState): Omit<AppSnapshot,'loading'|'mutating'|'error'> {
   const day = state.currentDay;
@@ -37,7 +38,7 @@ export function deriveAppState(state:ReadyState): Omit<AppSnapshot,'loading'|'mu
   const domains = evaluateDomains(day,state.baseline,sleep,checks);
   const previous = evaluateDomains(day-1,state.baseline,sleep.filter(record => record.day < day),checks.filter(record => record.day !== null && record.day < day));
   const responses = state.responses.filter(response => response.source === 'synthetic');
-  return {currentDay:day,baseline:state.baseline,visibleSleep:sleep,visibleChecks:checks,responses,
+  return {liveChecks:state.checks.filter((record):record is LiveCheck=>record.source==='live'),currentDay:day,baseline:state.baseline,visibleSleep:sleep,visibleChecks:checks,responses,
     packet:buildEvidencePacket(day,state.baseline,domains),
     taskPackets:missionSchedule.map(instance => {
       const profile = taskLibrary.find(profile => profile.id === instance.taskId)!;

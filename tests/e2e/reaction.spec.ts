@@ -44,7 +44,7 @@ for(const width of [360,1100])test(`Reaction complete keyboard/pointer and persi
   expect(saved.settings.baseline).toEqual(before.settings.baseline);expect(saved.settings.currentDay).toBe(12);
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
   await page.screenshot({path:`.local/p8-screenshots/reaction-result-${width}.png`});
-  await page.getByRole('button',{name:'Return to Check'}).click();await page.reload();expect((await storage(page)).live).toEqual(saved.live);
+  await page.getByRole('button',{name:'Return to Check'}).click();await page.reload();expect((await storage(page)).live).toEqual(saved.live);await expect(page.getByRole('article',{name:'Reaction saved result',exact:true})).toHaveCount(1);await expect(page.getByRole('article',{name:'Reaction saved result',exact:true})).toContainText('Live browser test');
   await page.goto('/mission');await expect(page.getByRole('article',{name:'EVA-07'})).toContainText('Review recommended');await expect(page.getByRole('article',{name:'INV-03'})).toContainText('Change noted');expect(errors).toEqual([]);
 });
 
@@ -64,4 +64,11 @@ for(const width of [360,1100])test(`Reaction premature/held/repeated input, visi
   await expect(page.locator('.trial-progress')).toHaveText('Trial 2 of 25');
   await page.getByRole('button',{name:'Cancel',exact:true}).click();await expect(page.getByRole('dialog')).toHaveCount(0);await page.clock.runFor(10000);expect((await storage(page)).live).toHaveLength(0);
   await page.getByRole('button',{name:'Open reaction check'}).click();await page.getByRole('button',{name:'Start reaction check'}).click();await page.goto('/mission');await page.clock.runFor(10000);expect((await storage(page)).live).toHaveLength(0);
+});
+
+test('Reaction full practice cannot save a live record',async({page})=>{
+ await page.goto('/check');await page.getByRole('button',{name:'Practice reaction check'}).click();await page.getByRole('button',{name:'Start reaction check'}).click();
+ for(let i=0;i<25;i++){await go(page,i);await respond(page,i);}
+ await expect(page.locator('.check-summary')).toBeFocused();await expect(page.getByRole('button',{name:/Practice.*not saved/})).toBeDisabled();expect((await storage(page)).live).toHaveLength(0);
+ await page.getByRole('button',{name:'Return to Check'}).click();await expect(page.getByRole('button',{name:'Practice reaction check'})).toBeFocused();
 });

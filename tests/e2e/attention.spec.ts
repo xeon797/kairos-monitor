@@ -48,7 +48,7 @@ for(const width of [360,1100])test(`Attention full protocol, mixed responses and
   await page.getByRole('button',{name:'Save result',exact:true}).evaluate((button:HTMLButtonElement)=>{button.click();button.click();});await expect(page.getByRole('button',{name:'Saved on this device'})).toBeDisabled();
   const saved=await storage(page);expect(saved.live).toHaveLength(1);expect(saved.live[0]).toMatchObject({kind:'go_no_go',source:'live',day:null,quality:'good',commissionErrors:1,omissionErrors:1,falseStarts:0,medianRtMs:null,lapses:null,validTrials:40});expect(saved.settings.baseline).toEqual(before.settings.baseline);
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);await page.screenshot({path:`.local/p8-screenshots/attention-result-${width}.png`});
-  await page.getByRole('button',{name:'Return to Check'}).click();await page.reload();expect((await storage(page)).live).toEqual(saved.live);
+  await page.getByRole('button',{name:'Return to Check'}).click();await page.reload();expect((await storage(page)).live).toEqual(saved.live);await expect(page.getByRole('article',{name:'Attention saved result',exact:true})).toHaveCount(1);await expect(page.getByRole('article',{name:'Attention saved result',exact:true})).toContainText('Live browser test');
   await page.goto('/mission');await expect(page.getByRole('article',{name:'EVA-07'})).toContainText('Review recommended');await expect(page.getByRole('article',{name:'INV-03'})).toContainText('Change noted');expect(errors).toEqual([]);
 });
 
@@ -75,4 +75,11 @@ for(const width of [360,1100])test(`Attention repeated/gap inputs, interruption 
   await page.getByRole('button',{name:'Restart attention check'}).click();await page.clock.runFor(32);await expect(page.locator('.trial-progress')).toHaveText('Stimulus 1 of 40');
   await page.getByRole('button',{name:'Cancel',exact:true}).click();await page.clock.runFor(10000);expect((await storage(page)).live).toHaveLength(1);
   await page.getByRole('button',{name:'Open attention check'}).click();await page.getByRole('button',{name:'Start attention check'}).click();await page.goto('/today');await page.clock.runFor(10000);expect((await storage(page)).live).toHaveLength(1);
+});
+
+test('Attention full practice cannot save a live record',async({page})=>{
+ await page.goto('/check');await page.getByRole('button',{name:'Practice attention check'}).click();await page.getByRole('button',{name:'Start attention check'}).click();
+ for(let i=0;i<40;i++){await stimulusFrame(page);await exposureEnd(page,0);await gapEnd(page);}
+ await expect(page.locator('.check-summary')).toBeFocused();await expect(page.getByRole('button',{name:/Practice.*not saved/})).toBeDisabled();expect((await storage(page)).live).toHaveLength(0);
+ await page.getByRole('button',{name:'Return to Check'}).click();await expect(page.getByRole('button',{name:'Practice attention check'})).toBeFocused();
 });
