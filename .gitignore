@@ -12,3 +12,6 @@ coverage/
 *.log
 *.tsbuildinfo
 /public/fonts/*.woff2
+# Supplied reading copies stay local; official sources are linked in the app.
+/DATASETS/s41598-020-71929-4.pdf
+/DATASETS/20090029851.pdf

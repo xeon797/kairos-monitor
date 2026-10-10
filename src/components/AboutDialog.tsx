@@ -1,4 +1,5 @@
 import { useEffect, useRef, type RefObject } from 'react';
+import { ResearchSources } from './ResearchSources';
 import '../styles/about.css';
 
 export const ABOUT_LIMITATIONS = [
@@ -28,7 +29,9 @@ export function AboutDialog({onClose,trigger}:{onClose:()=>void;trigger:RefObjec
   return <dialog className="about-dialog" ref={dialog} aria-labelledby="about-title" onCancel={event=>{event.preventDefault();onClose();}} onClose={onClose} onKeyDown={event=>{
     if(event.key!=='Tab')return;
     // Native modal inertness covers the background; explicitly wrap before browser chrome.
-    const controls=event.currentTarget.querySelectorAll<HTMLElement>('button, a[href]');
+    // Closed disclosures hide their descendants; only visible controls belong
+    // in the modal wrap. Native summaries are keyboard controls too.
+    const controls=Array.from(event.currentTarget.querySelectorAll<HTMLElement>('button:not([disabled]), a[href], summary')).filter(element=>element.getClientRects().length>0);
     const first=controls[0],last=controls[controls.length-1];
     if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus();}
     else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus();}
@@ -36,6 +39,7 @@ export function AboutDialog({onClose,trigger}:{onClose:()=>void;trigger:RefObjec
     <header className="about-heading"><div><p className="eyebrow">Synthetic research prototype</p><h2 id="about-title">About Kairos Monitor</h2></div><button className="pill-button inverted-button" ref={close} onClick={onClose}>Close</button></header>
     <p className="about-intro">Personal changes, explained in mission context.</p>
     <ul className="about-limitations">{ABOUT_LIMITATIONS.map(text=><li key={text}>{text}</li>)}</ul>
+    <ResearchSources/>
     <section aria-labelledby="about-references"><h3 id="about-references">References and prior work</h3><p>These references inform the research context; they do not imply NASA endorsement of this prototype.</p><ul>{NASA_REFERENCES.map(reference=><li key={reference.href}><a href={reference.href} target="_blank" rel="noreferrer">{reference.label}<span className="external-label"> (opens a new tab)</span></a></li>)}</ul></section>
     <p className="about-credit">Kairos Monitor · By Requiem_SUST</p>
   </dialog>;

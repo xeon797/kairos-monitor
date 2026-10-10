@@ -27,7 +27,7 @@ Use this alongside DEMO.md §3–4. A full cognitive check belongs **outside** t
 
 Status: **unverified**. Existing automated local recordings do not establish that this rehearsal was performed.
 
-- [ ] Open [the public deployment](https://kairos-monitor-gamma.vercel.app) in a new isolated profile/context; record the date, browser, viewport and reviewed application revision (currently `7d07a85`). Never reset or clear a user's existing profile. Visit online, wait for offline readiness, and confirm day 7 with no response log.
+- [ ] Open [the public deployment](https://kairos-monitor-gamma.vercel.app) in a new isolated profile/context; record the date, browser, viewport and current deployed application revision from NOTES.md. Never reset or clear a user's existing profile. Visit online, wait for offline readiness, and confirm day 7 with no response log.
 - [ ] Start a screen capture and a 90-second timer. Follow the table above **by hand**: day 7 frozen baseline; day 11 **Change noted**; day 12 **Review recommended**, with **4/5, 3/5, 3/5** counts.
 - [ ] Compare **EVA-07: Review recommended** and **INV-03: Change noted**, both **In 2 days**. Read the actual explanation source; use **Show template version** only when available. A template or cached AI tag is not proof of a fresh Gemini call.
 - [ ] Log the day-13 schedule change; show day-15 two sustained domains and day-16 zero, **Within your usual range**, the recovery chip and its non-causation line. Open Check and explain **Live browser test** separation; do not squeeze a full protocol into the pitch.
@@ -63,3 +63,5 @@ Before sharing: check recordings play, text is readable, no data/credentials out
 Actual local captures are `.local/p11-recording/pitch.webm` (94.6 s file; 90.006 s walkthrough) and `offline-full-checks.webm` (146.76 s). Both decode/seek at 1100x900 and were visually inspected. Revision `35b7918` supplies unchanged application assets; later P11 fixes sort the same precache entries for reproducible worker bytes. The offline supplement used actual blocked network and real clocks: reaction 74.998 s, attention 48.901 s. Both saved good-quality kinds survive reload; frozen synthetic baseline/counts remain unchanged. `evidence.json` and `playback.json` contain hashes, timings and bounds.
 
 These are silent local recordings with automated inputs, no existing user profile and no real/mocked Gemini calls. They have not been published. Add narration using the checklist above. The repository's requested by-hand rehearsal on the public deployment remains unverified: interactive browser creation was unavailable. Do not substitute this automated local capture for a claimed human public rehearsal.
+
+The later research integration adds About source cards; these older captures do not verify that new interface. Their unchanged engine/check results retain their recorded scope. Use the latest deployed revision for any new manual public rehearsal.

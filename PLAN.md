@@ -217,6 +217,14 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
 
 ---
 
+## User-authorized research integration
+
+- [ ] **R01 Attributed NASA research context**
+  Read the two supplied HERA/ISS PDFs; add a structured presentation-only source catalogue, accessible About cards/details and exact published-study facts, page references, reuse/attribution and data-access documentation. No participant import or change to scenario/baseline/thresholds/check protocols/task rules/Gemini. Keep PDFs local and use official external links.
+  **Done when:** typecheck/unit/build and affected 360/1100 px browser checks pass; source details/facts render with real network blocked; frozen baseline/day-12 Mission outputs stay unchanged; existing-project deployment and changed public About verified. Does not close the unresolved T32/T33 license/manual-rehearsal items.
+
+---
+
 ## Stretch (only if all of the above is done)
 - [ ] S1 Re-baseline button with confirm dialog (SPEC.md §6)
 - [ ] S2 Working-memory (n-back) check (SPEC.md §14)

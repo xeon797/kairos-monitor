@@ -17,6 +17,20 @@
 .about-dialog section ul { padding-left: var(--space-5); }
 .external-label, .about-credit { font-size: var(--text-caption); }
 .about-credit { margin-top: var(--space-6); }
+.research-section { margin-bottom: var(--space-6); }
+.research-sources { display: grid; gap: var(--space-5); margin-top: var(--space-5); }
+.research-source { min-width: 0; border: 1px solid color-mix(in srgb, var(--color-ink) 25%, transparent); border-radius: var(--radius-card); padding: var(--space-4); overflow-wrap: anywhere; }
+.research-source h4 { font-size: var(--text-subheading); line-height: 1.44; font-weight: var(--weight-medium); margin-top: var(--space-2); letter-spacing: -0.02em; }
+.research-source p + p, .research-source h4 + p { margin-top: var(--space-3); }
+.research-byline, .research-attribution, .research-page { font-size: var(--text-body-sm); }
+.research-details { margin-top: var(--space-3); }
+.research-details summary { cursor: pointer; min-height: 44px; padding-block: var(--space-3); font-weight: var(--weight-medium); }
+.research-detail-content { padding-block: var(--space-2); }
+.research-detail-content h5 { font-size: var(--text-body); margin-top: var(--space-5); }
+.research-facts { width: 100%; table-layout: fixed; border-collapse: collapse; margin-top: var(--space-5); font-size: var(--text-body-sm); font-variant-numeric: tabular-nums; }
+.research-facts caption { text-align: left; font-weight: var(--weight-bold); margin-bottom: var(--space-3); }
+.research-facts th, .research-facts td { padding: var(--space-2); border-bottom: 1px solid color-mix(in srgb, var(--color-ink) 25%, transparent); text-align: left; vertical-align: top; }
+.research-facts td .research-page { display: block; margin-top: var(--space-2); }
 .provenance-tag summary { cursor: pointer; min-height: 44px; padding-block: var(--space-2); color: var(--link); }
 .provenance-details { padding: var(--space-3); border: 1px solid var(--border); border-radius: var(--radius-icon); background: var(--surface-2); overflow-wrap: anywhere; }
 .provenance-details p + p { margin-top: var(--space-2); }

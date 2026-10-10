@@ -20,7 +20,8 @@ for(const width of [360,1100])test(`About modal and provenance at ${width}px`,as
   await expect(close).toBeFocused();
   await page.getByRole('combobox',{name:'Jump to day'}).evaluate((element:HTMLSelectElement)=>element.focus());
   expect(await page.evaluate(()=>document.activeElement?.closest('dialog')!==null)).toBe(true);
-  await expect(dialog.getByRole('link')).toHaveCount(2);
+  await expect(dialog.locator('section[aria-labelledby="about-references"]').getByRole('link')).toHaveCount(2);
+  await expect(dialog.getByRole('heading',{name:'Research behind Kairos',exact:true})).toBeVisible();
   await expect(dialog).toContainText('Live browser-check results');
   if(width===360){
     expect(await dialog.evaluate(element=>element.scrollHeight>element.clientHeight)).toBe(true);
