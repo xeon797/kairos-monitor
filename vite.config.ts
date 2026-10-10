@@ -19,6 +19,12 @@ export default defineConfig({ plugins: [react(), VitePWA({
   },
   workbox: {
     globPatterns: ['**/*.{js,css,html}'],
+    // Filesystem enumeration differs on Windows/Linux. Stable ordering makes
+    // the reviewed worker bytes reproducible on the existing Vercel builder.
+    manifestTransforms: [async entries => ({
+      manifest: [...entries].sort((a, b) => a.url < b.url ? -1 : a.url > b.url ? 1 : 0),
+      warnings: [],
+    })],
     navigateFallback: '/index.html',
     navigateFallbackAllowlist: [/^\/$/, /^\/(today|mission|trends|check)\/?$/],
     navigateFallbackDenylist: [/^\/api(?:\/|$)/],
