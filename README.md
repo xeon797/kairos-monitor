@@ -1,126 +1,192 @@
+<div align="center">
+
+<img src="public/icons/kairos-192.png" width="88" height="88" alt="Kairos Monitor icon" />
+
 # Kairos Monitor
 
-Personalized Astronaut Functional Readiness & Early-Warning System - NASA Space Apps prototype by **Team Requiem_SUST**.
+**Personalized Astronaut Functional Readiness & Early-Warning System**
 
-Compare observations with a frozen personal baseline, identify sustained changes and explain their relevance to upcoming tasks. **All mission telemetry is synthetic; thresholds and task classifications are experimental and illustrative.** Task decisions remain with the crew and mission team.
+A NASA Space Apps prototype by **Team Requiem_SUST**.
 
-[Open the demo](https://kairos-monitor-gamma.vercel.app) | [Scenario and 90-second script](DEMO.md) | [Verification and limitations](NOTES.md) | [Third-party materials](THIRD_PARTY.md)
+[Live demo](https://kairos-monitor-gamma.vercel.app) · [Demo walkthrough](DEMO.md#3-the-90-second-demo-script) · [Development guide](docs/DEVELOPMENT.md) · [Contributing](CONTRIBUTING.md)
 
-## Run from a fresh checkout
+**Offline-first · Explainable · Synthetic mission telemetry**
 
-Use **Node.js >=22.12.0** and npm. The pinned versions are in package-lock.json.
+</div>
+
+---
+
+Kairos Monitor compares observations with a frozen personal baseline, highlights sustained changes in sleep, reaction and attention, and shows their relevance to upcoming mission tasks. A deterministic engine produces the evidence and classifications; optional Gemini rephrasing makes that evidence easier to read.
+
+> **Prototype scope:** All mission telemetry is synthetic. Thresholds and task classifications are experimental and illustrative. Task decisions remain with the crew and mission team. Kairos Monitor is not a validated clinical or flight assessment.
+
+![Kairos Monitor mission dashboard showing synthetic day-12 evidence](public/images/kairos-day12.jpg)
+
+*Synthetic day-12 dashboard. [Screenshot provenance](public/images/README.md).*
+
+## Capabilities
+
+| Capability | What it provides |
+|---|---|
+| Personal baseline | Frozen values from mission days 1–7; later observations never replace it automatically. |
+| Sustained-change detection | Domain criteria evaluated across the last five days, with explicit quality and availability checks. |
+| Task context | Separate concern levels and explanations for EVA, Docking, Maintenance and Inventory. |
+| Browser checks | Measured reaction and go/no-go attention checks with explicit saves, quality reasons and local history. |
+| Explainable results | Immediate deterministic templates; validated, optional AI rephrasing from the same synthetic evidence. |
+| Local persistence | IndexedDB storage for mission state, responses, live results and validated explanations. |
+| Offline operation | Production app shell and checks work after an initial online visit and completed precaching. |
+| Research context | Attributed HERA and ISS summaries, source links and published-study facts in About. |
+
+The application includes a landing page and four console screens: **Today**, **Check**, **Trends** and **Mission**. Synthetic observations carry visible provenance; real browser measurements are labeled **Live browser test** and remain separate from mission calculations and Gemini requests.
+
+## Quick start
+
+Use **Node.js 22.12.0 or newer** and npm. Install the exact dependency versions from the lockfile:
 
 ```sh
+git clone https://github.com/xeon797/kairos-monitor.git
+cd kairos-monitor
 npm ci
-npx playwright install chromium
+npm run dev
 ```
 
-Obtain your own official Satoshi webfonts before building/testing the final presentation. On Windows, from the repository root:
+Open the local URL printed by Vite, usually `http://localhost:5173`. No API key is required: deterministic explanations work immediately. Vite dev and preview do not execute `api/explain.ts`; the development server also has no service worker.
+
+For Satoshi typography, obtain the official Regular, Medium and Bold WOFF2 files from [Fontshare](https://www.fontshare.com/fonts/satoshi) and place them in `public/fonts/`. On Windows, the existing installer is available:
 
 ```powershell
 powershell -File scripts/install-satoshi.ps1
 ```
 
-On other systems, download [Satoshi from Fontshare](https://www.fontshare.com/fonts/satoshi), read its included ITF Free Font License, and copy the unmodified `Satoshi-Regular.woff2`, `Satoshi-Medium.woff2` and `Satoshi-Bold.woff2` to `public/fonts/`. Only weights 400/500/700 are used. The installer retains the license in `.local/satoshi-download/Satoshi_Complete/License/FFL.txt`. Binaries are Git-ignored: each recipient obtains their own copy. Self-hosting for the licensee's own app and normal logo/image use are permitted; repository redistribution/modification is restricted. See [font instructions](public/fonts/README.md) and [third-party terms](THIRD_PARTY.md). No runtime CDN fonts. Without fonts the app uses its system fallback, but final font/offline acceptance checks expect the three installed weights.
+Read the included font license. Font binaries are Git-ignored; each recipient obtains their own copy. Without them, the application uses its system font stack. Install the fonts before final font/offline acceptance checks. See the [font guide](public/fonts/README.md) and [third-party materials](THIRD_PARTY.md).
+
+## Commands
+
+| Command | Purpose |
+|---|---|
+| `npm run dev` | Start the Vite development server. |
+| `npm run typecheck` | Check strict TypeScript types. |
+| `npm run test` | Run the Vitest unit suite. |
+| `npm run build` | Typecheck and create the production build in `dist/`. |
+| `npm run e2e` | Run Playwright against production preview. Build first. |
+| `npm run preview` | Serve the production build locally. |
+
+To verify a checkout:
 
 ```sh
-npm run dev
-```
-
-Open the URL Vite prints (usually http://localhost:5173). Development deliberately has **no service worker**. Vite dev and preview are static client servers; neither runs `api/explain.ts`. They use templates unless a test explicitly mocks AI. Gemini is optional for explanations, never needed for classification.
-
-```sh
+npx playwright install chromium
 npm run typecheck
 npm run test
 npm run build
 npm run e2e
-npm run preview -- --host 127.0.0.1 --port 4173
 ```
 
-Playwright starts production preview automatically for `npm run e2e`; build first. Default checks use fresh browser storage, mocked AI and controlled cognitive clocks at 360/1100 px. The production worker remains enabled for offline tests. Tests never reset your regular browser's data. Unit tests cover the full scenario, scoring, malformed storage, quality exclusions, frozen baseline and explanation contracts. Offline cases use **actual browser network blocking**, remove AI mocks before disconnecting, and assert service-worker document responses.
+Default browser tests use isolated storage, mocked AI and controlled check timing. Real-provider and real-clock checks are explicit opt-ins; their commands and recorded evidence are in the [verification guide](docs/VERIFICATION.md).
 
-## What the demo shows
+## Demo walkthrough
 
-The landing `/` opens independently of mission storage; **Launch demo** enters Today and preserves existing saved state. Console routes `/today`, `/mission`, `/trends`, `/check` support direct loads and hard refreshes. About discloses provenance and limitations.
+Launch the demo and use the **Simulation** panel to navigate the 17-day synthetic timeline.
 
-Synthetic days 1-7 establish one frozen baseline: sleep **7.214285714 h**, midpoint **180 min**, reaction **265 ms**, lapses **1**, commission errors **1.285714286**. Full-precision calculations, not rounded displayed cutoffs, drive the engine. Advancing days does not roll or replace the baseline. Reset returns to day 7 and clears schedule-change responses, retaining the frozen baseline, live results and explanation cache.
+| Mission day | Expected behavior |
+|---|---|
+| 7 | **Within your usual range**; the personal baseline is established and frozen. |
+| 11 | **Change noted**; sleep is the first sustained domain. |
+| 12 | **Review recommended**; sleep, reaction and attention meet criteria on **4/5, 3/5 and 3/5** days. |
+| 12 — Mission | **EVA-07: Review recommended** and **INV-03: Change noted**, both scheduled in two days. |
+| 13 | Log a human-entered schedule change. |
+| 15 → 16 | Sustained domains fall from two to zero; the response comparison can show **Measures moving toward baseline**. |
 
-A criterion must be met on at least **3 of the last 5 days**, with at least 3 evaluable observations per domain. Poor/missing data is excluded with a reason; unavailable evidence shows **Insufficient data**. At day 11: **Change noted**. Day 12: **Review recommended**, with sleep/reaction/attention counts **4/5, 3/5, 3/5**. On Mission, **EVA-07: Review recommended**, **INV-03: Change noted**, both in 2 days: task demands/relevant domains differ. Log a schedule change on day 13; day 15 has 2 sustained domains, day 16 has 0 and Today shows **Within your usual range**. The recovery chip says **Measures moving toward baseline**, alongside **This comparison does not show that the adjustment caused the change.**
+The comparison always states: **This comparison does not show that the adjustment caused the change.** Poor or missing evidence produces **Insufficient data** when a domain cannot be evaluated.
 
-Checks measure on this browser: 25 reaction trials with random 1.5-4 s waits; 40 attention stimuli (circle go, square no-go; 800 ms exposure/400 ms gap). Reaction duration varies; do not promise a 45-second run. A result is stored only after **Save result**; practice and cancelled/unfinished sessions are never saved. Blur/visibility interruptions affect quality; missing results are not normal results. Live records keep actual UTC timestamps, explicit test kinds and no mission day. Separate live comparison baselines use the first three valid results **of that same kind**. Live results never enter the synthetic baseline, charts, task calculations or Gemini requests.
+The synthetic baseline is sleep **50.5 / 7 h**, midpoint **180 min**, reaction **265 ms**, lapses **1**, and commission errors **9 / 7**. Full-precision values drive calculations. Reset returns to day 7 and clears schedule-change responses while retaining the baseline, live results and explanation cache.
 
-## Gemini and deployment
+Live checks use **25 reaction trials** and **40 attention stimuli**. Reaction duration varies; a full check belongs before or after the 90-second pitch. Results are stored only after **Save result**. Separate live baselines use the first three valid results of the same test kind. See [DEMO.md](DEMO.md) for the complete scenario and acceptance contract.
 
-`api/explain.ts` calls Gemini REST with plain fetch, using server-only **GEMINI_API_KEY** and **GEMINI_MODEL**. `.env.example` lists names, never values. Never use a `VITE_` key, commit credentials or copy them into client build configuration. Plain Vite does not run this function; use the deployed Vercel project or a separately configured Vercel development environment for the endpoint.
+## Architecture
 
-The deterministic template renders immediately. The model can only rephrase structured synthetic evidence; client/server validation rejects changed statuses, foreign numbers, prohibited claims or excessive text. Bounded provider/client timeouts, rate limits and invalid/unavailable responses silently retain the template. A validated response is cached in Dexie by the versioned canonical evidence key with model/time metadata, at most 50 entries and seven days; cache entries are revalidated on read. UI tags are **Template explanation** or **AI-rephrased from the same evidence**, with **Show template version** when AI is available. Cached AI retains its AI source offline; an uncached packet uses the template. A tag is not proof of a fresh provider call.
-
-Deploy to the **existing** Vercel project `kairos-monitor`; preserve its Production server variables. Install fonts locally first. The Vercel CLI is an external deployment tool, not an app dependency:
-
-```sh
-vercel deploy --prod --yes --scope team_DUWOMMwlvCPNLaA6EusnFka2
+```text
+src/
+  engine/       Pure TypeScript baseline, detection, task rules and evidence
+  checks/       Browser test interfaces, scoring and live comparisons
+  db/           Dexie schema and local persistence
+  state/        Application state and mission controls
+  screens/      Landing, Today, Check, Trends and Mission
+  components/   Evidence, task, explanation and navigation interfaces
+  ai/           Validated explanation requests and local cache
+  research/     Presentation-only source catalogue
+  styles/       Design tokens, self-hosted fonts and plain CSS
+api/            Serverless Gemini REST endpoint
+server/         Evidence-packet validation
+tests/          Unit and browser verification
+docs/           Development, verification, recording and source guides
+public/         Icons, synthetic preview and local font directory
 ```
 
-The repository is already locally linked through ignored `.vercel/project.json`; a new machine must link/select that existing project before deploying, not create another one. `vercel.json` selects Vite/npm ci/build/dist and rewrites only the documented SPA routes; API/static/worker paths remain independent. CLI uploads include the locally installed fonts; a Git-based build must arrange its own permitted font installation or will use fallback. Verify the deployed index, hashed assets, fonts, icons, manifest and worker against the reviewed build. Do not expose environment values while checking configuration.
+**Stack:** React 18, strict TypeScript, Vite, React Router, Dexie, Recharts, vite-plugin-pwa, Vitest and Playwright. No UI framework or Gemini SDK is used.
 
-## Offline capabilities and updates
+Data flows from observations through the frozen baseline and deterministic rules into an `EvidencePacket`. The UI and template render that packet immediately. The model may rephrase it only after validation; it cannot select a status, introduce numbers or change task decisions. All thresholds live in `src/engine/config.ts`.
 
-**An initial online visit is required.** On HTTPS (or localhost), wait for **Available offline on this browser after the initial online visit.** The production worker precaches the app shell, every lazy route chunk, local fonts, icons, manifest and static preview. Then landing/console route reloads, navigation, simulator, Trends, About, both checks and explicit local saves work with the browser network blocked. Dexie state and the frozen baseline survive offline/online reloads. The worker never caches `/api/*`; no general runtime API/credential caching. Offline explanation retrieval uses the existing validated Dexie cache or deterministic templates.
+## Configuration and deployment
 
-A worker update waits while any controlled Kairos Monitor tab remains open. The notice asks you to finish/save checks, close **all** tabs and reopen online. The app does not force skipWaiting, activation or a reload during a test or unsaved result. Saved Dexie data is independent of shell cache cleanup. Keep an active check tab visible; opening other tabs can itself count as a check interruption.
+| Server variable | Purpose |
+|---|---|
+| `GEMINI_API_KEY` | Credential for the optional server-side Gemini call. |
+| `GEMINI_MODEL` | Model selected in the hosting environment. |
 
-A cold first offline visit cannot install the app. Clearing/evicting browser site storage removes cached access/local data; private sessions may be ephemeral. Installation availability varies by browser/platform. Verified Chromium viewport/PWA behavior is **not physical-device installation evidence**. Development has no offline shell. Large decorative video is not cached; no supplied looping-video asset currently exists, so the finished static orbit fallback remains.
+`.env.example` contains empty placeholders. Configure values only in a Git-ignored local environment or the hosting provider's server environment; never use a `VITE_` prefix for the key. Live browser results are never sent to Gemini. Failed, unavailable or rejected responses silently retain the template.
 
-## Verification and presentation
+The existing demo runs on Vercel. Deployment instructions cover linking the existing project, installing fonts, server configuration and asset verification in [Development & Operations](docs/DEVELOPMENT.md#gemini-and-deployment). A fresh checkout does not contain the original workspace's local Vercel link. Git-based builds must arrange permitted font installation or use the fallback stack.
 
-P11's recorded local gate: **583 unit tests /26 files and 54 browser checks PASS**, eight explained opt-ins skipped; typecheck/build PASS. Includes actual network-blocked offline journeys at both widths, two-version/multiple-tab worker lifecycle, cold-first-visit limit, contrast/focus/reduced motion/system-font fallback. The full-suite/deployment/recording result is recorded under [P11 in NOTES](NOTES.md#p11-offline-polish-documentation-and-recording-2026-10-10). Application `7d07a85` was verified then: **24 public browser checks PASS**, all 16 runtime asset hashes matched, and two isolated local recordings play. The research-context update `faf5189` is now deployed and verified: fresh typecheck/583 unit tests/build, 12 public browser checks at 360/1100 px and all 16 runtime asset hashes PASS; see R01 in NOTES for evidence and the earlier interrupted connection failures. The old captures do not demonstrate the new About cards. **P11 remains PARTIAL** pending the project LICENSE choice and by-hand public rehearsal. P10's 21 distinct public passing checks span recorded runs and retain their disclosed timing failures; they are not a fabricated single clean run.
+## Offline behavior
 
-Eight inherited opt-in cases remain explicit: two optional broad Gemini diagnostics, two older public diagnostics replaced by current equivalent evidence, two required bounded real-Gemini cases covered by unchanged-path evidence, and two real-clock checks covered by unchanged-protocol evidence. Default mocked AI is never counted as a real provider result. Required real day-12 EVA/Inventory outputs were verified at `45975f5` / `dpl_22HxNAPPvmeioDmN6nvfkvVJtcQN`; relevant AI/scoring behavior is unchanged. Exact samples, timing limits and dispositions are in NOTES. Provider calls are not routinely repeated for UI/PWA/docs changes.
+An **initial online visit is required**. On the production site, wait for **Available offline on this browser after the initial online visit.** Once installed, route reloads, navigation, simulation, charts, About, checks and local saves work without network access.
 
-PowerShell examples for intentional verification (environment variables for this process; enable provider calls only when needed):
+The service worker precaches the shell and local assets and never caches `/api/*`. Explanations use a validated local AI cache or immediate templates. Updates wait for all controlled tabs to close; save unfinished results before closing and reopening online. Clearing site storage removes cached access and local records. A first visit while offline cannot install the application. Physical-device installation remains unverified.
 
-```powershell
-$env:PLAYWRIGHT_BASE_URL='https://kairos-monitor-gamma.vercel.app'
-npx playwright test tests/e2e/demo.spec.ts tests/e2e/offline.spec.ts --workers=1
-# Bounded real provider: two task outputs per width, explicit quota use
-$env:PLAYWRIGHT_P9_PROVIDER='1'
-npx playwright test tests/e2e/p9Provider.spec.ts --workers=1
-Remove-Item Env:PLAYWRIGHT_P9_PROVIDER
-# Real clock: both complete protocols; optional rerun when timing changes
-$env:PLAYWRIGHT_P9_REALTIME='1'
-npx playwright test tests/e2e/p9Realtime.spec.ts --workers=1
-Remove-Item Env:PLAYWRIGHT_P9_REALTIME
-Remove-Item Env:PLAYWRIGHT_BASE_URL
-```
+## Verification status
 
-The broad legacy `deployedGemini.spec.ts`/`publicDeployment.spec.ts` gate is `PLAYWRIGHT_REAL_GEMINI=1`; it can consume additional provider quota and is not needed for normal verification. Follow [DEMO.md](DEMO.md) and [recording checklist](docs/RECORDING.md). Use an isolated profile/context, never reset a user's saved data for presentation. A full live check belongs before/after the 90-second pitch.
+The recorded research release passed **583 unit tests across 26 files**, typechecking, production build and **12 public browser checks at 360 / 1100 px**; all **16 runtime asset hashes** matched the reviewed build. These counts refer to the recorded application revision, not every later documentation commit.
 
-For closeout, use the [short manual public-rehearsal checklist](docs/RECORDING.md#short-manual-public-rehearsal-checklist). Recorded automated tests, matching deployment assets and playable local automated captures have separate evidence; the required by-hand public rehearsal and its capture/evidence remain **unverified**, so T33 stays partial. Physical-device installation is also unverified, but is not required for this browser-demo acceptance. The missing looping video is optional; retain the finished static fallback.
+**Project closeout remains partial:** the original-code license choice and a performed by-hand public rehearsal with capture are outstanding. Detailed results, earlier failures, skipped opt-ins and recording provenance remain in the [verification guide](docs/VERIFICATION.md) and [NOTES.md](NOTES.md). Automated tests establish software consistency, not clinical validity or mission suitability.
 
-## Honest limitations and references
+## Research and limitations
 
-This prototype is not NASA Cognition or a validated clinical/flight assessment. Browser/device latency, practice effects and interruptions affect measurements. Thresholds/task classifications are illustrative, not validated warning criteria. The recovery scenario does not establish causation or intervention effectiveness. HRV is unavailable and supporting context only. Novelty versus prior work remains a claim to investigate. Tests establish software consistency, not astronaut performance, accident prediction or mission suitability. Public loading and acceptable Gemini generation are not guaranteed on every network/request. Corrupt records are preserved and reported unavailable rather than silently erased.
+Browser/device latency, practice effects and interruptions affect short-test measurements. Thresholds and task rules are illustrative. The recovery scenario does not establish intervention effectiveness. HRV is unavailable and would be supporting context only; novelty versus prior work remains a claim to investigate.
 
-The About interface now includes **Research behind Kairos**: two attributed source cards with expandable findings, PDF page references, limitations, data-access notes and a small HERA published-study facts table. HERA studied sleep restriction/objective vigilance in a ground analog, with varied individual responses; the ISS Reaction Self Test presentation motivates brief monitoring in mission context. Scheduled sleep opportunity is explicitly separate from measured sleep. These facts stay outside every simulator, baseline, scoring and status calculation.
+HERA and ISS references provide published research context and protocol descriptions. **Participant-level NASA data are not imported.** Scheduled sleep opportunity is distinct from measured sleep. Kairos Monitor's browser checks are prototype adaptations, not validated replicas of NASA instruments. These research summaries never enter baseline, scoring, simulator or status calculations. No NASA endorsement is implied.
 
-**These PDFs provide published research evidence and protocol descriptions. Participant-level NASA data are not imported.** Kairos's browser checks are prototype adaptations, not validated replicas of NASA instruments. HERA's five-minute PVT and ISS's three-minute vigilance test plus two-minute questions differ from our unchanged browser protocols. The frozen personal baseline and EVA/Inventory rules are prototype design choices, not validated by these PDFs. There is no NASA-norm score, participant reconstruction or direct comparison of browser and study results.
+See [NASA source notes](docs/NASA_SOURCES.md) for authors, official links, PDF page references, reuse notices and data-access limits. Only attributed paraphrases and selected published facts are bundled; source PDFs, figures and participant records are excluded. Additional context is linked in the specification's [references](SPEC.md#18-references).
 
-See [NASA source details and page references](docs/NASA_SOURCES.md): [Flynn-Evans and coauthors, Scientific Reports (2020)](https://www.nature.com/articles/s41598-020-71929-4), adapted under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) with credit/change notices; [Dinges, Mollicone and Ecker, NASA NTRS 20090029851 (2009)](https://ntrs.nasa.gov/citations/20090029851), reuse status checked in NTRS. Only paraphrased summaries/selected published facts are bundled and render offline after initial installation. Reading PDFs, instrument screenshots and graph points are not bundled/cached; source links need a network. No NASA endorsement is implied.
+## Team and AI disclosure
 
-Additional external context remains [Risk from Inadequate Sleep and Irregular Schedules](https://www.nasa.gov/reference/risk-from-inadequate-sleep-and-irregular-schedules/) and [TechPort project 23228](https://techport.nasa.gov/projects/23228). No NASA imagery, logos or participant datasets are bundled.
+**Team Requiem_SUST** owns the project and presentation. Responsibilities include science/product review, design and demonstration, engineering and deployment, and independent review of logic, accessibility and evidence. Individual assignments and credentials are not supplied here.
 
-## Team roles and AI disclosure
+**Codex** assisted implementation, testing, review and documentation. **Google's Gemini** optionally rephrases synthetic evidence at runtime behind validation and template fallback. Neither provides clinical validation or determines classifications.
 
-Team **Requiem_SUST** owns the project and presentation. Responsibilities: science/product review of illustrative requirements; design/story and presentation; engineering/testing/deployment; independent review of logic, accessibility and evidence. Individual role assignments are not supplied in this repository, so names/credentials are not invented. Codex assisted implementation, tests, review and documentation under the project instructions. Google's Gemini rephrases synthetic evidence at runtime, always behind validation/template fallback. Neither supplies clinical validation or changes the deterministic classification. Earlier README's unsupported claim of Claude review was removed.
+## License and attribution
 
-## License and third-party materials
+**Original-code license selection is pending.** No project license grant is applied until the owner selects a license. Any chosen code license will remain separate from original artwork rights and third-party terms.
 
-**Project license selection is pending.** PLAN T32 allows MIT or Apache-2.0 but selects neither; the latest closeout request contains the unfilled placeholder `[LICENSE CHOICE]`. No license is applied until the owner supplies the actual choice. The chosen license will apply to original project code only; it will not grant artwork rights or relicense third-party materials. Preserve their license texts, copyright notices and attribution requirements when distributing source or builds. [Third-party materials](THIRD_PARTY.md) lists actual package versions, sources, licenses and asset/service restrictions. T32 stays partial until the required LICENSE is present.
+[THIRD_PARTY.md](THIRD_PARTY.md) records package versions, upstream licenses, font restrictions, service terms and research attribution. Preserve those notices when distributing source or builds. Satoshi binaries and supplied research PDFs are excluded from the repository.
 
 ## Future work
 
-Wearable integration, cloud sync, multiple crew members, authentication, real NASA data ingestion, model training, notifications, working-memory checks, HRV context, domain-expert validation and formal usability/physical-device testing remain outside this demo. A user-supplied licensed looping-video clip is optional polish, not an implemented feature.
+Wearable integration, cloud sync, multiple crew members, authentication, real NASA data ingestion, model training and push notifications remain outside the prototype. Other future work includes working-memory checks, HRV context, domain-expert validation and formal usability/physical-device testing. A licensed looping-video clip is optional presentation polish.
 
-## Project documents
+## Documentation
 
-[AGENTS.md](AGENTS.md) defines working rules; [SPEC.md](SPEC.md) is the behavioral/numeric source of truth; [DEMO.md](DEMO.md) gives the authoritative synthetic scenario and pitch; [DESIGN.md](DESIGN.md) records the UI/checklist; [PLAN.md](PLAN.md) tracks task status; [NOTES.md](NOTES.md) records evidence, fixes and limitations.
+| Document | Purpose |
+|---|---|
+| [Development & Operations](docs/DEVELOPMENT.md) | Setup, optional Gemini configuration, deployment, offline updates and troubleshooting. |
+| [Contributing](CONTRIBUTING.md) | Change workflow, verification and contributor requirements. |
+| [AGENTS.md](AGENTS.md) | Coding-agent instructions and mandatory engineering rules. |
+| [SPEC.md](SPEC.md) | Behavioral and numerical source of truth. |
+| [DEMO.md](DEMO.md) | Exact synthetic fixture, acceptance checks and pitch script. |
+| [DESIGN.md](DESIGN.md) | Screens, wording, tokens and accessibility rules. |
+| [PLAN.md](PLAN.md) | Ordered tasks and completion status. |
+| [Verification & Release Status](docs/VERIFICATION.md) | Recorded test evidence and remaining acceptance requirements. |
+| [Recording guide](docs/RECORDING.md) | Presentation recording and public rehearsal checklist. |
+| [NASA source notes](docs/NASA_SOURCES.md) | Research attribution, page references and usage limits. |
+| [NOTES.md](NOTES.md) | Detailed decisions, checks, failures and evidence. |
+
+The documents in `Kairos Monitor/MD files/` are historical planning copies. Use the root documents linked above for current implementation and task status.

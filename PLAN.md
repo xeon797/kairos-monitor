@@ -234,6 +234,8 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
 
 ## Log
 
+T32 — Owner-requested GitHub publication: polished the README and coding-agent instructions; added contributor, development/operations and verification guides. Preserved research attribution, recorded test evidence and prototype limitations. Documentation portion updated; license selection remains pending, so T32/T33 stay PARTIAL.
+
 R01 - Completed restored-session deployment acceptance for application faf5189: production READY, all 16 runtime assets match a fresh build, and 12 public browser checks pass at 360/1100 px, including accessible research details and genuinely offline summaries. Typecheck/583 unit tests/build pass; no runtime edits or provider calls. T32/T33 remain PARTIAL.
 
 T32/T33 closeout - Clarified code-only license scope; actual choice is still an unfilled placeholder, so no LICENSE applied. Added short manual public-rehearsal checklist and assessed each T33 condition separately; both tasks remain PARTIAL/unchecked. Typecheck/583 unit tests and capture hashes pass; documentation-only, no deployment; production stays 7d07a85. Static fallback retained, video optional, manual public rehearsal/device installation unverified.
