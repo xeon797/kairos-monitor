@@ -219,7 +219,7 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
 
 ## User-authorized research integration
 
-- [ ] **R01 Attributed NASA research context**
+- [x] **R01 Attributed NASA research context**
   Read the two supplied HERA/ISS PDFs; add a structured presentation-only source catalogue, accessible About cards/details and exact published-study facts, page references, reuse/attribution and data-access documentation. No participant import or change to scenario/baseline/thresholds/check protocols/task rules/Gemini. Keep PDFs local and use official external links.
   **Done when:** typecheck/unit/build and affected 360/1100 px browser checks pass; source details/facts render with real network blocked; frozen baseline/day-12 Mission outputs stay unchanged; existing-project deployment and changed public About verified. Does not close the unresolved T32/T33 license/manual-rehearsal items.
 
@@ -233,6 +233,8 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
 ---
 
 ## Log
+
+R01 - Completed restored-session deployment acceptance for application faf5189: production READY, all 16 runtime assets match a fresh build, and 12 public browser checks pass at 360/1100 px, including accessible research details and genuinely offline summaries. Typecheck/583 unit tests/build pass; no runtime edits or provider calls. T32/T33 remain PARTIAL.
 
 T32/T33 closeout - Clarified code-only license scope; actual choice is still an unfilled placeholder, so no LICENSE applied. Added short manual public-rehearsal checklist and assessed each T33 condition separately; both tasks remain PARTIAL/unchecked. Typecheck/583 unit tests and capture hashes pass; documentation-only, no deployment; production stays 7d07a85. Static fallback retained, video optional, manual public rehearsal/device installation unverified.
 
