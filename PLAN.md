@@ -206,10 +206,12 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
 - [ ] **T32 README, LICENSE and third-party table**
   Finish `README.md` (run, test, deploy, offline note, honesty notes, team roles, future work). Add a `LICENSE` file (MIT or Apache-2.0; the Space Apps terms require an OSI-approved license or free availability). Add a "Third-party materials" table with name, purpose and license for React, Vite, Dexie, Recharts, vite-plugin-pwa, react-router-dom, Vitest, Playwright, Satoshi (check the Fontshare license text), the Gemini API (service), and the NASA references. Add a disclosure that Codex and Gemini were used.
   **Done when:** a new reader can run the app from the README alone and every non-NASA material has a license listed.
+  **Current status:** PARTIAL. Documentation/third-party table prepared. The closeout request contains the literal placeholder `[LICENSE CHOICE]`, so no license was selected or applied. Await MIT/Apache-2.0 clarification; any chosen project license will cover original code only, with third-party terms/notices preserved and no artwork rights inferred.
 
 - [ ] **T33 Final check and recording**
   Run `npm run typecheck && npm run test && npm run build && npm run e2e`. Run the 90-second script by hand once on the deployed URL. Record the screen capture.
   **Done when:** everything passes, the deployed URL matches the local build, and the recording exists.
+  **Current status:** PARTIAL. Recorded application checks and deployment-asset match PASS; local automated recordings exist and play. The by-hand public rehearsal and its capture/evidence remain unverified. Individual conditions and the manual checklist are in NOTES.md and docs/RECORDING.md; automated artifact existence alone does not close T33. Physical-device installation stays unverified; missing video is optional and the static fallback is retained.
 
 **Checkpoint C:** PARTIAL - offline support and local recordings verified; project LICENSE choice and by-hand deployed rehearsal remain required and unverified. T32/T33 stay unchecked. Final verification evidence is in NOTES.md.
 
@@ -223,6 +225,8 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
 ---
 
 ## Log
+
+T32/T33 closeout - Clarified code-only license scope; actual choice is still an unfilled placeholder, so no LICENSE applied. Added short manual public-rehearsal checklist and assessed each T33 condition separately; both tasks remain PARTIAL/unchecked. Typecheck/583 unit tests and capture hashes pass; documentation-only, no deployment; production stays 7d07a85. Static fallback retained, video optional, manual public rehearsal/device installation unverified.
 
 T33 partial - Final application 7d07a85 deployed READY; 16 public asset hashes and 24 public browser checks pass. Local 583 unit/54 browser checks plus eight explained opt-ins; seven final affected cases pass. Two actual isolated recordings validated. By-hand public rehearsal remains unverified; T32 LICENSE decision still pending, Checkpoint C PARTIAL.
 

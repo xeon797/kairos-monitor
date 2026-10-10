@@ -95,6 +95,8 @@ Remove-Item Env:PLAYWRIGHT_BASE_URL
 
 The broad legacy `deployedGemini.spec.ts`/`publicDeployment.spec.ts` gate is `PLAYWRIGHT_REAL_GEMINI=1`; it can consume additional provider quota and is not needed for normal verification. Follow [DEMO.md](DEMO.md) and [recording checklist](docs/RECORDING.md). Use an isolated profile/context, never reset a user's saved data for presentation. A full live check belongs before/after the 90-second pitch.
 
+For closeout, use the [short manual public-rehearsal checklist](docs/RECORDING.md#short-manual-public-rehearsal-checklist). Recorded automated tests, matching deployment assets and playable local automated captures have separate evidence; the required by-hand public rehearsal and its capture/evidence remain **unverified**, so T33 stays partial. Physical-device installation is also unverified, but is not required for this browser-demo acceptance. The missing looping video is optional; retain the finished static fallback.
+
 ## Honest limitations and references
 
 This prototype is not NASA Cognition or a validated clinical/flight assessment. Browser/device latency, practice effects and interruptions affect measurements. Thresholds/task classifications are illustrative, not validated warning criteria. The recovery scenario does not establish causation or intervention effectiveness. HRV is unavailable and supporting context only. Novelty versus prior work remains a claim to investigate. Tests establish software consistency, not astronaut performance, accident prediction or mission suitability. Public loading and acceptable Gemini generation are not guaranteed on every network/request. Corrupt records are preserved and reported unavailable rather than silently erased.
@@ -107,7 +109,7 @@ Team **Requiem_SUST** owns the project and presentation. Responsibilities: scien
 
 ## License and third-party materials
 
-**Project license selection is pending.** PLAN T32 allows MIT or Apache-2.0 but selects neither; a proposed MIT text for original project code/artwork has been prepared for the owner's explicit choice. No existing project license is replaced and no third-party rights are relicensed. [Third-party materials](THIRD_PARTY.md) lists actual package versions, sources, licenses and asset/service restrictions.
+**Project license selection is pending.** PLAN T32 allows MIT or Apache-2.0 but selects neither; the latest closeout request contains the unfilled placeholder `[LICENSE CHOICE]`. No license is applied until the owner supplies the actual choice. The chosen license will apply to original project code only; it will not grant artwork rights or relicense third-party materials. Preserve their license texts, copyright notices and attribution requirements when distributing source or builds. [Third-party materials](THIRD_PARTY.md) lists actual package versions, sources, licenses and asset/service restrictions. T32 stays partial until the required LICENSE is present.
 
 ## Future work
 

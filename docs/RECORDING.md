@@ -23,6 +23,19 @@ Use this alongside DEMO.md §3–4. A full cognitive check belongs **outside** t
 | 65–80 s | Day 15, then 16; Today | Day 15 still has reaction/attention sustained (2 domains); day 16 has 0 and **Within your usual range**. **Measures moving toward baseline** / **This comparison does not show that the adjustment caused the change.** |
 | 80–90 s | Check choices/history | **Live browser test** results remain on this device, separate from synthetic mission data. A full check takes longer than this pitch; demonstrate it separately. |
 
+## Short manual public-rehearsal checklist
+
+Status: **unverified**. Existing automated local recordings do not establish that this rehearsal was performed.
+
+- [ ] Open [the public deployment](https://kairos-monitor-gamma.vercel.app) in a new isolated profile/context; record the date, browser, viewport and reviewed application revision (currently `7d07a85`). Never reset or clear a user's existing profile. Visit online, wait for offline readiness, and confirm day 7 with no response log.
+- [ ] Start a screen capture and a 90-second timer. Follow the table above **by hand**: day 7 frozen baseline; day 11 **Change noted**; day 12 **Review recommended**, with **4/5, 3/5, 3/5** counts.
+- [ ] Compare **EVA-07: Review recommended** and **INV-03: Change noted**, both **In 2 days**. Read the actual explanation source; use **Show template version** only when available. A template or cached AI tag is not proof of a fresh Gemini call.
+- [ ] Log the day-13 schedule change; show day-15 two sustained domains and day-16 zero, **Within your usual range**, the recovery chip and its non-causation line. Open Check and explain **Live browser test** separation; do not squeeze a full protocol into the pitch.
+- [ ] Separately, block the actual network, reload a console route, complete and explicitly save both full checks, reload saved results, then return online. Record durations, quality, source labels and persistence; preserve the frozen synthetic baseline. Keep the check tab visible. Physical-device installation is a separate, still-unverified activity.
+- [ ] Replay the public capture; record its local path, revision, actual duration, results and any failure. Keep credentials and unrelated data out; do not publish automatically. Update NOTES/PLAN only from the performed rehearsal and its evidence, leaving any unresolved condition visible.
+
+The finished static landing fallback is retained. A supplied looping video is optional and is not a rehearsal or T33 completion requirement.
+
 ## Separate live-check/offline supplement
 
 1. With online installation complete, block the **actual browser network** (DevTools Offline or Playwright `context.setOffline(true)`). Refresh `/check`; show that the document comes from the worker. An offline label alone is not evidence.
