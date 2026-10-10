@@ -115,7 +115,7 @@ Add a license of your choice (e.g. MIT) before publishing, as required by the ch
 
 ## Current implementation and verification
 
-Tasks T01–T26 are complete. The deployed demo is [Kairos Monitor](https://kairos-monitor-gamma.vercel.app). It includes all four console screens, the frozen synthetic baseline, task explanations with optional Gemini rephrasing, response logging, and complete live reaction and attention checks. Live history and separate first-three-valid-check baselines stay on this device and never enter mission calculations or Gemini requests.
+Tasks T01–T29 are complete; the P10 acceptance report is in [NOTES.md](NOTES.md#p10-acceptance-report--t27t29-2026-10-10). The deployed demo is [Kairos Monitor](https://kairos-monitor-gamma.vercel.app). It includes all four console screens, the frozen synthetic baseline, task explanations with optional Gemini rephrasing, response logging, and complete live reaction and attention checks. Live history and separate first-three-valid-check baselines stay on this device and never enter mission calculations or Gemini requests.
 
 Use Node.js 22.12 or newer, then `npm ci`. Install the test browser with `npx playwright install chromium`. Run `npm run typecheck`, `npm run test`, `npm run build`, then `npm run e2e`. Playwright starts the production preview automatically. Its default suite uses mocked AI and controlled clocks; explicit opt-in provider and real-clock tests are documented in their test files and NOTES.md. Unit tests cover engine scenario acceptance, scoring, persistence and explanation validation. Browser tests cover both 360 px and 1100 px layouts, navigation, full checks and the demo script.
 

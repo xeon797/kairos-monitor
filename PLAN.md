@@ -187,7 +187,7 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
   Write one Playwright test (`tests/e2e/demo.spec.ts`) against `npm run preview` that routes `/api/explain` to a fixed mocked response so it is deterministic: load → advance to day 12 → assert "Review recommended" → open EVA-07 and INV-03 and assert different text → assert the AI tag, then the toggle → log schedule change → advance to day 16 → assert "Within your usual range" and the trend chip → reload and assert persistence. Add a second short case where `/api/explain` fails and the template tag shows.
   **Done when:** `npm run e2e` passes headless.
 
-- [ ] **T29 Bug-fix and review pass**
+- [x] **T29 Bug-fix and review pass**
   Fix everything logged in `NOTES.md`. Review the full diff since Checkpoint A for logic errors, hard-rule violations (AGENTS.md §3), hex values outside tokens, and banned words.
   **Done when:** `npm run typecheck && npm run test && npm run e2e && npm run build` all pass and `NOTES.md` has no open defects.
 
@@ -226,6 +226,7 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
 
 T27 — Mapped every DEMO acceptance row/additional check to existing evidence; added scenario.test.ts for full-sequence packet values/provenance, poor-window reasons/AI exclusion and persisted later-edit baseline freeze. Typecheck and 574 unit tests pass; current engine timings below 20 ms recorded in NOTES. T28 follows.
 T28 — Added fixed-response full journeys at 360/1100 px and API-failure fallback; both complete checks, cache/live isolation, reloads and reset verified. Typecheck, 574 unit tests, build and 46 local browser checks pass; eight opt-ins explained in NOTES. T29 follows.
+T29 — Reviewed changes since Checkpoint A, fixed malformed response-log reads without deleting data, and deployed reviewed code 4d1b7e5. Typecheck/build, 583 unit tests and 48 local checks pass; 21 distinct public checks verified across recorded runs, timing limits disclosed. P10 PASS; next P11, T30 not begun.
 
 T26 audit — User-requested review fixed reaction duplicate input, live record validation/ordering/comparison quality and contrast/cursor defects; removed unused scaffold/CSS/save cache and corrected README. Typecheck/build, 558 unit tests, 43 local browser checks and 16 public checks pass; nine relevant local checks repeated after final wording changes. Redeployed the existing demo; T27 remains next.
 
