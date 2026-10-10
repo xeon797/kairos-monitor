@@ -234,7 +234,7 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
 
 ## Log
 
-T32 / Git deployment — Owner requested public visibility and connection to the existing Vercel deployment. Public repository access and the existing project/team were verified; GitHub repository connected with main as production branch and existing Gemini server variables retained. Added dependency-free build-time official Satoshi installation so Git builds preserve self-hosted typography without committing font binaries. Fresh typecheck/583 unit tests/build and isolated fresh-font hash checks pass. License/manual-rehearsal acceptance remains open.
+T32 / Git deployment — Owner requested public visibility and connection to the existing Vercel deployment. Public repository access and the existing project/team were verified; GitHub repository connected with main as production branch and existing Gemini server variables retained. Added dependency-free build-time official Satoshi installation so Git builds preserve self-hosted typography without committing font binaries. Fresh typecheck/583 unit tests/build and isolated fresh-font hash checks pass. Git-sourced production deployment READY; all 16 runtime assets match and five public demo/research browser checks pass. License/manual-rehearsal acceptance remains open.
 
 T32 — Owner-requested GitHub publication: polished the README and coding-agent instructions; added contributor, development/operations and verification guides. Preserved research attribution, recorded test evidence and prototype limitations. Documentation portion updated; license selection remains pending, so T32/T33 stay PARTIAL.
 
