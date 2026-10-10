@@ -224,6 +224,8 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
 
 ## Log
 
+T32 partial ? README, verified third-party table and isolated recording checklist prepared; typecheck/583 unit tests pass. Required LICENSE remains pending the owner?s MIT/Apache-2.0 choice; task stays unchecked. Authorized independent T33 verification proceeds with this blocker visible.
+
 T31 ? Completed DESIGN checklist at 360/1100 px; fixed landing disclaimer, chart-axis units and offline-notice layout. 583 unit tests/typecheck/build, 15 affected browser cases and two final polish cases pass; no supplied video, static fallback retained.
 
 T30 ? Production-only manifest/generated icons and precached shell/fonts; API excluded, updates wait for all tabs to close. 583 unit tests, typecheck/build and actual network-blocked offline/check/update browser evidence pass; NOTES records first-visit and device limits.
