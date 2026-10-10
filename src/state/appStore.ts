@@ -122,7 +122,7 @@ export class AppStore {
     });
     this.liveSaves.set(record.id,{record,promise:operation});
     this.queue=operation.catch(()=>{});
-    void operation.catch(()=>{this.liveSaves.delete(record.id);});
+    void operation.then(()=>{this.liveSaves.delete(record.id);},()=>{this.liveSaves.delete(record.id);});
     return operation;
   };
 }

@@ -172,6 +172,9 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
 
 **Checkpoint B:** PASS — the full DEMO script works on the deployed site at 360/1100 px, including validated real day-12 EVA/Inventory AI tags and template toggles. Complete real-clock browser checks save/reload separately from synthetic telemetry. T27/P10 remains unstarted.
 
+- [x] **T26 audit — user-requested review of completed work**
+  Review T01–T26, reproduce and fix defects, remove unused scaffolding, and verify regressions. Scope authorized separately by the user; T27–T33 remain unchanged. Findings and verification are recorded in NOTES.md.
+
 ---
 
 ## P10 — Verification
@@ -220,6 +223,8 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
 ---
 
 ## Log
+
+T26 audit — User-requested review fixed reaction duplicate input, live record validation/ordering/comparison quality and contrast/cursor defects; removed unused scaffold/CSS/save cache and corrected README. Typecheck/build, 558 unit tests, 43 local browser checks and 16 public checks pass; nine relevant local checks repeated after final wording changes. Redeployed the existing demo; T27 remains next.
 
 T15 — Mission renders the sorted current-evidence task comparison, persisted response history/future-entry labels and guarded recovery. 342 unit tests and 12 Chromium checks pass; typecheck/build pass. Screenshots saved, no redeployment; T16/P6 has not begun.
 

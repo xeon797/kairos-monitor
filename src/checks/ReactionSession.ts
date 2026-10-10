@@ -1,4 +1,4 @@
-import { REACTION_TIMEOUT_MS, TOTAL_TRIALS } from '../engine/config';
+import { REACTION_DOUBLE_FIRE_MS, REACTION_TIMEOUT_MS, TOTAL_TRIALS } from '../engine/config';
 import { createReactionDelays, createSeededRandom, scoreReaction, type CheckScore, type ReactionTrial } from './scoring';
 
 export interface SessionClock {
@@ -16,6 +16,7 @@ export class ReactionSession {
   private trials:ReactionTrial[]=[];
   private delays:number[]=[];
   private onsetMs:number|null=null;
+  private lastResponseMs:number|null=null;
   private focused=true;
   private trialFocused=true;
   constructor(private clock:SessionClock,private publish:(view:ReactionView)=>void){}
@@ -30,7 +31,7 @@ export class ReactionSession {
     this.timer=this.clock.schedule(()=>{if(generation===this.generation&&trial===this.trials.length){this.timer=null;callback();}},delayMs);
   }
   start(seed:number,focused:boolean):void {
-    this.stop();this.trials=[];this.delays=createReactionDelays(createSeededRandom(seed));this.focused=focused;
+    this.stop();this.trials=[];this.lastResponseMs=null;this.delays=createReactionDelays(createSeededRandom(seed));this.focused=focused;
     this.view={phase:'idle',recordedTrials:0,interruptions:0,score:null};this.next();
   }
   private next():void {
@@ -52,9 +53,13 @@ export class ReactionSession {
   }
   respond():void {
     if(!this.focused)return;
+    if(this.view.phase!=='waiting'&&this.view.phase!=='stimulus')return;
+    const now=this.clock.now();
+    if(this.lastResponseMs!==null&&now-this.lastResponseMs<REACTION_DOUBLE_FIRE_MS)return;
+    this.lastResponseMs=now;
     if(this.view.phase==='waiting'){this.finish('premature',null);return;}
     if(this.view.phase!=='stimulus'||this.onsetMs===null)return;
-    const rtMs=this.clock.now()-this.onsetMs;
+    const rtMs=now-this.onsetMs;
     if(rtMs>=REACTION_TIMEOUT_MS)this.finish('timeout',null);else this.finish('response',rtMs);
   }
   private finish(outcome:ReactionTrial['outcome'],rtMs:number|null):void {

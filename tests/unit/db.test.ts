@@ -86,6 +86,11 @@ describe('transactional scenario persistence', () => {
 });
 
 describe('validated writes and explicit unavailable storage', () => {
+  it.each([{medianRtMs:'bad'}, {falseStarts:undefined}, {validTrials:NaN}, {lapses:-1}, {commissionErrors:1.5}, {quality:'unknown'}])('rejects malformed live measurements %j atomically',async changes=>{
+    await ready();const before=await getState(store);
+    await expect(addLiveCheck({...live(),...changes} as unknown as LiveCheck,store)).rejects.toThrow();
+    expect(await getState(store)).toEqual(before);
+  });
   it.each([6,18,7.5,NaN,Infinity])('rejects invalid day %s without changing state', async day => {
     await ready(); await setDay(11,store); const before = await getState(store);
     await expect(setDay(day,store)).rejects.toThrow('Mission day');

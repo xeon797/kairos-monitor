@@ -30,6 +30,8 @@ export const TOTAL_TRIALS: Readonly<Record<TestKind, number>> = Object.freeze({ 
 export const REACTION_FALSE_START_MS = 100;
 export const REACTION_LAPSE_MS = 500;
 export const REACTION_TIMEOUT_MS = 2000;
+// experimental, illustrative: DESIGN §7 suppresses duplicate input across trial boundaries.
+export const REACTION_DOUBLE_FIRE_MS = 50;
 export const REACTION_DELAY_MIN_MS = 1500;
 export const REACTION_DELAY_MAX_MS = 4000;
 export const GO_NO_GO_COUNT = 10;

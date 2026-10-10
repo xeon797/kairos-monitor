@@ -53,6 +53,8 @@ for(const width of [360,1100])test(`Reaction premature/held/repeated input, visi
   await page.goto('/check');await page.getByRole('button',{name:'Open reaction check'}).click();await page.getByRole('button',{name:'Start reaction check'}).click();
   await page.keyboard.down('Space');await page.keyboard.down('Space');await page.keyboard.down('Space');
   await expect(page.locator('.trial-progress')).toHaveText('Trial 2 of 25');await page.keyboard.up('Space');
+  await page.keyboard.press('Space');
+  await expect(page.locator('.trial-progress')).toHaveText('Trial 2 of 25');
   await go(page,1);
   await page.evaluate(()=>{Object.defineProperty(document,'hidden',{configurable:true,get:()=>true});document.dispatchEvent(new Event('visibilitychange'));window.dispatchEvent(new Event('blur'));});
   await page.clock.runFor(2100);await expect(page.locator('.check-target')).toHaveAttribute('data-phase','paused');

@@ -8,6 +8,7 @@ for(const width of [360,1100])test(`About modal and provenance at ${width}px`,as
   await page.goto('/today');
   await page.getByRole('combobox',{name:'Jump to day'}).selectOption('12');
   const trigger=page.getByRole('button',{name:'About',exact:true});
+  await expect(trigger).toHaveCSS('cursor','pointer');
   await trigger.click();
   const dialog=page.getByRole('dialog',{name:'About Kairos Monitor'});
   await expect(dialog).toBeVisible();

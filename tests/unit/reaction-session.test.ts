@@ -12,6 +12,12 @@ function harness(){
   return {session,tick,advance:(ms:number)=>{now+=ms;},view:()=>view,jobs};
 }
 describe('reaction timing owner and records',()=>{
+  it('ignores a released duplicate within 50 ms across a trial boundary',()=>{
+    const h=harness();h.session.start(123,true);h.tick(2000);h.session.presented();h.tick(16);h.advance(250);h.session.respond();
+    h.advance(49);h.session.respond();expect(h.view().recordedTrials).toBe(1);
+    h.advance(1);h.session.respond();expect(h.view().recordedTrials).toBe(2);
+    h.session.start(123,true);h.session.respond();expect(h.view().recordedTrials).toBe(1);
+  });
   it('does not arm the response clock until the rendered target frame',()=>{
     const h=harness();h.session.start(123,true);h.tick(1500);expect(h.view().phase).toBe('rendering');h.session.respond();expect(h.view().recordedTrials).toBe(0);
     h.session.presented();h.tick(16);h.advance(250);h.session.respond();expect(h.view().recordedTrials).toBe(1);

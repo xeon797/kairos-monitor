@@ -5,6 +5,14 @@ function record(index:number,kind:LiveCheck['kind']='reaction',quality:LiveCheck
  return {id:`live-${index}`,source:'live',day:null,timestamp:`2026-10-${String(index).padStart(2,'0')}T00:00:00.000Z`,kind,quality,medianRtMs:kind==='reaction'?200+index*10:null,lapses:kind==='reaction'?index:null,falseStarts:0,commissionErrors:kind==='go_no_go'?index:null,omissionErrors:kind==='go_no_go'?0:null,validTrials:kind==='reaction'?25:40,interruptions:0};
 }
 describe('live personal comparisons',()=>{
+ it('orders ISO timestamps by time even when fractional seconds are omitted',()=>{
+  const rows=[{...record(4),timestamp:'2026-10-01T00:00:00.500Z'},{...record(1),timestamp:'2026-10-01T00:00:00Z'},record(2),record(3)];
+  expect(liveComparison(rows,'reaction').ids).toEqual(['live-1','live-4','live-2']);
+ });
+ it('excludes malformed saved records rather than comparing invalid values',()=>{
+  const invalid={...record(3),timestamp:'invalid'};
+  expect(liveComparison([record(1),record(2),invalid],'reaction').metrics).toBeNull();
+ });
  it('requires three valid checks of the same kind',()=>{
   const rows=[record(1),record(2),record(3,'go_no_go'),record(4,'reaction','poor')];
   expect(liveComparison(rows,'reaction').metrics).toBeNull();expect(liveComparison(rows,'go_no_go').metrics).toBeNull();

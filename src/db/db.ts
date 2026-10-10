@@ -1,4 +1,5 @@
 import Dexie, { type Table } from 'dexie';
+import { isLiveRecord } from '../checks/liveRecord';
 import { computeBaseline } from '../engine/baseline';
 import { BASELINE_WINDOW, MAX_RESPONSE_NOTE_LENGTH, MIN_BASELINE_CHECKS, MIN_BASELINE_SLEEP_NIGHTS, SIMULATION_MAX_DAY, SIMULATION_MIN_DAY } from '../engine/config';
 import { syntheticChecks, syntheticSleep } from '../engine/scenarios';
@@ -125,8 +126,7 @@ export async function addResponse(response:ResponseLog, store = db): Promise<Rea
   return mutate(store,() => store.responses.add({...response,source:'synthetic'}));
 }
 export async function addLiveCheck(check:LiveCheck, store = db): Promise<ReadyState> {
-  if (check.source !== 'live' || check.day !== null || !['reaction','go_no_go'].includes(check.kind) || !isIsoUtc(check.timestamp)) throw new Error('Live checks require an explicit test kind, live source, null mission day and ISO UTC timestamp.');
-  if (typeof check.id !== 'string' || !check.id.trim()) throw new Error('Live check ID is required.');
+  if (!isLiveRecord(check)) throw new Error('Live checks require a valid identity, ISO UTC timestamp, quality and nonnegative finite measurements or explicit null values.');
   return mutate(store,() => store.checks.add({...check}));
 }
 export async function resetSimulation(store = db): Promise<ReadyState> {

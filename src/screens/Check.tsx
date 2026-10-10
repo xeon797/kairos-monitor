@@ -3,6 +3,7 @@ import { ReactionTest } from '../checks/ReactionTest';
 import { GoNoGoTest } from '../checks/GoNoGoTest';
 import { LiveComparison } from '../checks/LiveBaselineView';
 import { liveMetrics } from '../checks/liveComparison';
+import { isLiveRecord } from '../checks/liveRecord';
 import { LIVE_HISTORY_LIMIT } from '../engine/config';
 import { getCheckQuality } from '../engine/quality';
 import type { TestKind } from '../engine/types';
@@ -16,7 +17,9 @@ export default function Check() {
   const trigger=useRef<HTMLButtonElement|null>(null);
   useEffect(()=>{if(!session)trigger.current?.focus();},[session]);
   const close=(count:number)=>{setSession(null);setNotice(`Returned to Check after ${count} recorded ${session?.kind==='reaction'?'trials':'stimuli'}. ${session?.practice?'Practice is never saved.':'Only explicitly saved completed results are stored.'}`);trigger.current?.focus();};
-  const history=[...app.liveChecks].sort((a,b)=>b.timestamp.localeCompare(a.timestamp)||b.id.localeCompare(a.id)).slice(0,LIVE_HISTORY_LIMIT);
+  const validRecords=app.liveChecks.filter(isLiveRecord);
+  const invalidCount=app.liveChecks.length-validRecords.length;
+  const history=validRecords.sort((a,b)=>Date.parse(b.timestamp)-Date.parse(a.timestamp)||b.id.localeCompare(a.id)).slice(0,LIVE_HISTORY_LIMIT);
   return <section aria-labelledby="screen-heading">
     <div className="screen-heading"><p className="eyebrow">Kairos Monitor / Live browser checks</p><h1 id="screen-heading">Check</h1><p className="screen-subtitle">Measure on this device. Review your own results.</p></div>
     <div className="check-card-grid">{(['reaction','go_no_go'] as const).map(kind=>{
@@ -32,7 +35,8 @@ export default function Check() {
     })}</div>
     <p className="check-notice" role="status">{notice}</p>
     <section className="panel check-history" aria-labelledby="history-title"><h2 id="history-title">Saved results</h2><p>Latest 10 · stored on this device · Live browser test</p>
-      {app.loading?<p role="status">Loading saved checks...</p>:app.error?<p role="alert">Saved history is unavailable. Reload to retry. {app.error}</p>:history.length===0?<p>No saved checks yet. Complete a check and choose Save result.</p>:<ol>{history.map(record=>{
+      {invalidCount>0&&<p className="storage-error" role="alert"><span aria-hidden="true">◐</span> Insufficient data · {invalidCount} saved live {invalidCount===1?'result is':'results are'} unavailable because the records are malformed. Existing records remain stored on this device.</p>}
+      {app.loading?<p role="status">Loading saved checks...</p>:app.error?<p role="alert">Saved history is unavailable. Reload to retry. {app.error}</p>:history.length===0?<p>{invalidCount>0?'No readable saved checks are available.':'No saved checks yet. Complete a check and choose Save result.'}</p>:<ol>{history.map(record=>{
         const quality=getCheckQuality(record,record.kind);
         return <li key={record.id}><article aria-label={`${record.kind==='reaction'?'Reaction':'Attention'} saved result`}>
           <h3>{record.kind==='reaction'?'Reaction check':'Attention check'}</h3><time dateTime={record.timestamp}>{record.timestamp.replace('T',' ').replace('Z',' UTC')}</time><p className="live-check-label">Live browser test · {record.kind} · no mission day</p>

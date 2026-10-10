@@ -18,7 +18,7 @@ An astronaut can feel capable while sleep and attention are deteriorating. A das
 3. **Task-aware context** — the same observations produce different guidance for an EVA than for routine inventory.
 4. **Explainable by design** — every status shows its numbers, thresholds, window, and data provenance.
 5. **Human review** — the system prompts reassessment and logging of rest or workload adjustments. It never gives clearance decisions.
-6. **Offline-first** — checks, storage, calculations and template explanations run without internet.
+6. **Offline-first** — checks, storage, calculations and template explanations run without internet once the app is loaded. Offline page reload requires the planned PWA shell (T30).
 
 ## What you can do in the demo
 - Step through a 17-day synthetic mission (Advance / Back / Jump / Reset).
@@ -56,7 +56,7 @@ All thresholds are in `src/engine/config.ts` and are **experimental and illustra
 |---|---|
 | Interface + logic | React, TypeScript, Vite |
 | Local storage | IndexedDB via Dexie |
-| Offline shell | PWA + service worker (`vite-plugin-pwa`) |
+| Offline shell | Planned in T30; no service worker yet |
 | Graphs | Recharts |
 | Typography | Satoshi (self-hosted, so it works offline) |
 | AI explanation | Server-side Gemini API (plain `fetch`) with validated template fallback |
@@ -113,20 +113,14 @@ Wearable integration · cloud synchronization · multiple crew members · valida
 ## License
 Add a license of your choice (e.g. MIT) before publishing, as required by the challenge rules.
 
-## Foundation setup (P1)
+## Current implementation and verification
 
-The current milestone contains the application shell only. The demo features described above are planned, not yet implemented. Canonical project documents live in the workspace root; the supplied originals remain under `Kairos Monitor/MD files/`.
+Tasks T01–T26 are complete. The deployed demo is [Kairos Monitor](https://kairos-monitor-gamma.vercel.app). It includes all four console screens, the frozen synthetic baseline, task explanations with optional Gemini rephrasing, response logging, and complete live reaction and attention checks. Live history and separate first-three-valid-check baselines stay on this device and never enter mission calculations or Gemini requests.
 
-Use Node.js 22.12 or newer (Node 24 was used here), then `npm ci` and `npm run dev`. Run `npm run typecheck`, `npm run test`, and `npm run build`; `npm run preview` serves `dist/`. Vitest currently reports zero unit tests honestly. Playwright is configured separately; the future full demo flow has not been implemented or verified.
+Use Node.js 22.12 or newer, then `npm ci`. Install the test browser with `npx playwright install chromium`. Run `npm run typecheck`, `npm run test`, `npm run build`, then `npm run e2e`. Playwright starts the production preview automatically. Its default suite uses mocked AI and controlled clocks; explicit opt-in provider and real-clock tests are documented in their test files and NOTES.md. Unit tests cover engine scenario acceptance, scoring, persistence and explanation validation. Browser tests cover both 360 px and 1100 px layouts, navigation, full checks and the demo script.
 
-Add the licensed Satoshi Regular, Medium, and Bold `.woff2` files manually to `public/fonts/` with the filenames from DESIGN §2.4. Until then, the prescribed system fallback is used. DEMO.md is missing and must be supplied before T05.
+Add Satoshi Regular, Medium and Bold `.woff2` files manually to `public/fonts/` using the filenames in DESIGN §2.4. Font files are not committed; the system fallback works without them. No fonts are loaded from a CDN.
 
-Future Gemini configuration uses server-only `GEMINI_API_KEY` and `GEMINI_MODEL`. The P1 shell needs neither variable, contains no endpoint, and makes no model requests. Keep local values in an ignored `.env` file; never use a `VITE_` prefix.
+Plain `npm run dev` serves the client without the serverless endpoint and uses templates. For Gemini, configure `GEMINI_API_KEY` and `GEMINI_MODEL` only in the server environment of the existing Vercel project. Never prefix the key with `VITE_`. The endpoint accepts only synthetic evidence; unavailable, timed-out or invalid responses silently retain the template.
 
-The P1 shell now has Today, Check, Trends and Mission placeholder routes. The mission simulator is not connected yet. About is visibly unavailable until P7. Satoshi files are still absent; the system fallback is used.
-
-For foundation browser checks, run `npx playwright install chromium`, `npm run build`, then `npm run e2e`. The two shell checks exercise every route at 360 px and 1100 px and save screenshots to ignored `test-results/`. They do not exercise the future demo, engine, cognitive tests or offline PWA.
-
-The verified P1 production shell is at https://kairos-monitor-gamma.vercel.app. Vercel builds with `npm ci` and `npm run build`, serves `dist/`, and rewrites the four shell routes for direct entry and refresh. `/api/*` is excluded; Gemini integration remains a later milestone.
-
-For an already linked project, deploy with `vercel deploy --prod --scope team_DUWOMMwlvCPNLaA6EusnFka2`. Verify the public site with `PLAYWRIGHT_BASE_URL` set to its production URL and `npm run e2e` (the checks use a fresh browser context with no protection bypass). Local Vercel metadata and environment files are ignored. Deployment details and outstanding document/font gaps are recorded in NOTES.md.
+The app currently supports in-session operation without API calls or network access. A fresh offline visit or offline reload is not supported until T30 adds the service worker. Remaining verification, polish and final documentation tasks stay tracked in PLAN.md. Historical verification results and known limitations are in NOTES.md.
