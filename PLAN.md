@@ -199,7 +199,7 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
   Add `vite-plugin-pwa` with a precache of the app shell, a manifest (name "Kairos Monitor", `theme_color` and `background_color` `#171D1C`), and two generated icons (192, 512; DESIGN.md §9). Precache `/fonts/*`. The service worker must **never cache `/api/*`** (explanations are cached in Dexie instead). Register the service worker.
   **Done when:** after one online load, turning the network off in DevTools and reloading still shows Today with template or previously cached AI text; checks still run and save.
 
-- [ ] **T31 Polish pass**
+- [x] **T31 Polish pass**
   Go through the DESIGN.md §10 checklist and fix every item. Verify at 360 px and at 1100 px. Verify keyboard use of the reaction test and focus rings.
   **Done when:** the checklist is fully ticked.
 
@@ -223,6 +223,8 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
 ---
 
 ## Log
+
+T31 ? Completed DESIGN checklist at 360/1100 px; fixed landing disclaimer, chart-axis units and offline-notice layout. 583 unit tests/typecheck/build, 15 affected browser cases and two final polish cases pass; no supplied video, static fallback retained.
 
 T30 ? Production-only manifest/generated icons and precached shell/fonts; API excluded, updates wait for all tabs to close. 583 unit tests, typecheck/build and actual network-blocked offline/check/update browser evidence pass; NOTES records first-visit and device limits.
 

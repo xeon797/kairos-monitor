@@ -30,7 +30,7 @@ export function OfflineStatus() {
     return () => { mounted = false; cleanups.forEach(cleanup => cleanup()); };
   }, []);
   if (!import.meta.env.PROD || !('serviceWorker' in navigator)) return null;
-  return <aside className="offline-status page-width" aria-label="Offline availability">
+  return <aside className="offline-status" aria-label="Offline availability">
     <p role="status">{status === 'ready' ? 'Available offline on this browser after the initial online visit.'
       : status === 'update' ? 'An update is ready. Finish and save your checks, then close all Kairos Monitor tabs and reopen online to use it.'
       : status === 'failed' ? 'Offline setup is unavailable. An online visit is required; reload online to retry.'

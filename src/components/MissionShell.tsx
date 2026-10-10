@@ -10,6 +10,7 @@ import Mission from '../screens/Mission';
 import { AppProvider, useApp } from '../state/useApp';
 import { SIMULATION_MAX_DAY } from '../engine/config';
 import { SimControls } from './SimControls';
+import { OfflineStatus } from './OfflineStatus';
 
 const Trends=lazy(()=>import('../screens/Trends'));
 
@@ -59,7 +60,7 @@ function AppShell() {
         </Routes>
         <div className="simulator-region"><SimControls showLogAction={pathname !== '/today' && pathname !== '/mission'} showResponses={pathname !== '/mission'} /></div>
         </main>
-        <footer className="app-footer page-width"><p>{FOOTER_DISCLAIMER}</p></footer>
+        <footer className="app-footer page-width"><p>{FOOTER_DISCLAIMER}</p><OfflineStatus/></footer>
       </div>
       {aboutOpen&&<AboutDialog onClose={()=>setAboutOpen(false)} trigger={aboutTrigger}/>}
     </div>

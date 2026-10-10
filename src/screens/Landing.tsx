@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Wordmark } from '../components/Wordmark';
+import { OfflineStatus } from '../components/OfflineStatus';
+import { FOOTER_DISCLAIMER } from '../content';
 import '../styles/landing.css';
 
 function LaunchLink() {return <Link className="pill-button primary-button landing-launch" to="/today">Launch demo <span aria-hidden="true">↗</span></Link>;}
@@ -21,6 +23,6 @@ export default function Landing() {
       <section className="landing-preview landing-section page-width" aria-labelledby="preview-title"><div className="preview-heading"><div><p className="section-index">03 / Inside the demo</p><h2 id="preview-title">A daily briefing.<br/>With evidence behind it.</h2></div><p>Explore mission day 12, where the same synthetic observations connect differently to EVA and Inventory.</p></div><figure className="dashboard-preview"><div className="preview-caption"><span className="synthetic-badge">Synthetic</span><span>Actual prototype capture · Mission day 12</span></div><img src="/images/kairos-day12.jpg" width="1100" height="1000" loading="lazy" decoding="async" alt="Kairos Monitor Today screen on synthetic mission day 12: Review recommended; sleep criterion met on 4 of 5 days, reaction and attention on 3 of 5; next task EVA-07 with its own concern."/><figcaption>This is a static capture of the implemented demo. Launch it to explore the evidence, trends and task context.</figcaption></figure></section>
       <section className="landing-limits landing-section page-width" aria-labelledby="limits-title"><div><p className="section-index">04 / The limits</p><h2 id="limits-title">A research prototype.<br/>A question to investigate.</h2><p>Telemetry is synthetic. Thresholds and task classifications are experimental. Browser checks are not validated flight assessments, and recovery comparisons do not establish causation.</p><p>Gemini may rephrase synthetic evidence; the deterministic engine always supplies the classification. Live browser-check results are not sent to Gemini. Task decisions remain with the crew and mission team.</p></div><div className="landing-final-action"><p>See the context for yourself.</p><LaunchLink/><span>Uses local demo storage.<br/>Your saved mission day is preserved.</span></div></section>
     </main>
-    <footer className="landing-footer page-width"><Wordmark/><p>Synthetic research prototype<br/>By Requiem_SUST</p></footer>
+    <footer className="landing-footer page-width"><Wordmark/><div className="landing-footer-meta"><p>Synthetic research prototype<br/>By Requiem_SUST</p><p>{FOOTER_DISCLAIMER}</p><OfflineStatus/></div></footer>
   </div>;
 }

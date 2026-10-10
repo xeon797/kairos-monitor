@@ -22,7 +22,7 @@ export function TrendChart({chart}:{chart:TrendData}) {
         <LineChart data={chart.points} margin={{top:16,right:12,bottom:24,left:0}} accessibilityLayer={false}>
           <CartesianGrid stroke="var(--chart-grid)" vertical={false}/>
           <XAxis type="number" dataKey="day" domain={[1,summary.day]} ticks={chart.points.map(p=>p.day)} minTickGap={16} tick={{fill:'var(--text-muted)',fontSize:12}} stroke="var(--chart-grid)" label={{value:'Mission day',position:'insideBottom',offset:-14,fill:'var(--text-muted)'}}/>
-          <YAxis width={42} tick={{fill:'var(--text-muted)',fontSize:12}} stroke="var(--chart-grid)" domain={['auto','auto']} tickFormatter={value=>trendNumber(Number(value),chart.series[0].unit)}/>
+          <YAxis width={58} tick={{fill:'var(--text-muted)',fontSize:12}} stroke="var(--chart-grid)" domain={['auto','auto']} tickFormatter={value=>trendNumber(Number(value),chart.series[0].unit)} label={{value:chart.series[0].unit,angle:-90,position:'insideLeft',offset:0,fill:'var(--text-muted)'}}/>
           <ReferenceArea x1={chart.baselineWindow[0]} x2={Math.min(chart.baselineWindow[1],summary.day)} fill="var(--chart-baseline-band)" fillOpacity={1} stroke="none"/>
           {chart.series.map(series=><ReferenceLine key={`baseline-${series.metric}`} y={series.baseline??undefined} stroke="var(--chart-baseline)" strokeDasharray={series.square?'8 4':'4 4'} ifOverflow="extendDomain"/>)}
           {chart.series.map(series=><ReferenceLine key={`criterion-${series.metric}`} y={series.criterion??undefined} stroke="var(--chart-criterion)" strokeDasharray={series.square?'6 3 1 3':'1 4'} ifOverflow="extendDomain"/>)}

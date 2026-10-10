@@ -324,17 +324,20 @@ Title: "About Kairos Monitor". Inverted lavender surface. Bullets: synthetic dat
 ---
 
 ## 10. Demo polish checklist
-- [ ] Day indicator visible on every screen
-- [ ] Synthetic badge (dashed sky) visible on Today, Trends, Mission
-- [ ] EVA vs Inventory explanation clearly different on day 12
-- [ ] No horizontal scroll at 360 px
-- [ ] All charts have axis labels with units
-- [ ] Footer disclaimer on every screen
-- [ ] Satoshi loads (check the Network tab); fallback stack still looks acceptable
-- [ ] White text on every indigo button (no lavender on indigo)
-- [ ] Indigo never used for text on dark
-- [ ] No status communicated by color alone (icon + label present)
-- [ ] Contrast spot-check with browser devtools on chips and muted text
+- [x] Day indicator visible on every screen
+- [x] Synthetic badge (dashed sky) visible on Today, Trends, Mission
+- [x] EVA vs Inventory explanation clearly different on day 12
+- [x] No horizontal scroll at 360 px
+- [x] All charts have axis labels with units
+- [x] Footer disclaimer on every screen
+- [x] Satoshi loads (check the Network tab); fallback stack still looks acceptable
+- [x] White text on every indigo button (no lavender on indigo)
+- [x] Indigo never used for text on dark
+- [x] No status communicated by color alone (icon + label present)
+- [x] Contrast spot-check with browser devtools on chips and muted text
+
+
+Verified in T31 at 360/1100 px; evidence and scope are in NOTES.md. ?Every screen? for the mission-day indicator means every console screen; the standalone landing introduction keeps the explicit ?13 exception (no simulator or mission state). The shared disclaimer now also appears on the landing footer. Optional supplied video remains pending.
 
 ---
 
