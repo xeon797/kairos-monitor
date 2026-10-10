@@ -211,7 +211,7 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
   Run `npm run typecheck && npm run test && npm run build && npm run e2e`. Run the 90-second script by hand once on the deployed URL. Record the screen capture.
   **Done when:** everything passes, the deployed URL matches the local build, and the recording exists.
 
-**Checkpoint C:** submission-ready.
+**Checkpoint C:** PARTIAL - offline support and local recordings verified; project LICENSE choice and by-hand deployed rehearsal remain required and unverified. T32/T33 stay unchecked. Final verification evidence is in NOTES.md.
 
 ---
 
@@ -223,6 +223,8 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
 ---
 
 ## Log
+
+T33 partial - Final application 7d07a85 deployed READY; 16 public asset hashes and 24 public browser checks pass. Local 583 unit/54 browser checks plus eight explained opt-ins; seven final affected cases pass. Two actual isolated recordings validated. By-hand public rehearsal remains unverified; T32 LICENSE decision still pending, Checkpoint C PARTIAL.
 
 T32 partial - README, verified third-party table and isolated recording checklist prepared; typecheck/583 unit tests pass. Required LICENSE remains pending the owner's MIT/Apache-2.0 choice; task stays unchecked. Authorized independent T33 verification proceeds with this blocker visible.
 

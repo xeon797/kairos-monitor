@@ -1,4 +1,4 @@
-﻿# Kairos Monitor — Recording checklist and walkthrough
+# Kairos Monitor — Recording checklist and walkthrough
 
 Use this alongside DEMO.md §3–4. A full cognitive check belongs **outside** the 90-second pitch; do not truncate the protocol or invent a result.
 
@@ -43,3 +43,10 @@ node scripts/record-demo.mjs
 The script records actual local application UI in fresh contexts: a guided pitch and a separate full-protocol, actual-network-blocked supplement. Pointer/keyboard inputs are automated and seeded; clocks remain real. There is no human/device accuracy or real-provider claim. It does not use or reset your browser profile, fake a saved record, shorten trials, or publish videos. See the generated `evidence.json` for revision, paths, measured durations and verified saved-state/network details. Captures are silent; use this narration/checklist for a final human voiceover if desired.
 
 Before sharing: check recordings play, text is readable, no data/credentials outside the isolated demo appears, the captured revision matches the report, and the commentary does not imply clinical validation or recovery causation. Keep optional video/polish and physical-device installation limitations visible.
+
+
+## Captured P11 artifacts
+
+Actual local captures are `.local/p11-recording/pitch.webm` (94.6 s file; 90.006 s walkthrough) and `offline-full-checks.webm` (146.76 s). Both decode/seek at 1100x900 and were visually inspected. Revision `35b7918` supplies unchanged application assets; later P11 fixes sort the same precache entries for reproducible worker bytes. The offline supplement used actual blocked network and real clocks: reaction 74.998 s, attention 48.901 s. Both saved good-quality kinds survive reload; frozen synthetic baseline/counts remain unchanged. `evidence.json` and `playback.json` contain hashes, timings and bounds.
+
+These are silent local recordings with automated inputs, no existing user profile and no real/mocked Gemini calls. They have not been published. Add narration using the checklist above. The repository's requested by-hand rehearsal on the public deployment remains unverified: interactive browser creation was unavailable. Do not substitute this automated local capture for a claimed human public rehearsal.
