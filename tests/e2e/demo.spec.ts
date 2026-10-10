@@ -119,7 +119,7 @@ for(const width of [360,1100])test(`P10 fixed-AI full journey and both saved che
   await page.getByRole('navigation').getByRole('link',{name:'Check'}).click();
   // Control cognitive trial timing only; let asynchronous AI/storage work settle normally.
   const checkTime=new Date();await page.clock.install({time:checkTime});await page.clock.pauseAt(new Date(checkTime.getTime()+1000));
-  await completeChecks(page);
+  await completeChecks(page);await page.clock.resume();
   await page.reload();await expect(page.getByRole('article',{name:'Reaction saved result',exact:true})).toContainText('Live browser test');
   await expect(page.getByRole('article',{name:'Attention saved result',exact:true})).toContainText('Live browser test');
   const beforeReset=await saved(page);expect(beforeReset.live).toHaveLength(2);
@@ -128,7 +128,8 @@ for(const width of [360,1100])test(`P10 fixed-AI full journey and both saved che
   expect(beforeReset.settings.baseline).toEqual(initial.settings.baseline);expect(beforeReset.settings.currentDay).toBe(16);
   expect(beforeReset.cacheKeys).toHaveLength(2);
   for(const route of ['today','mission','trends','check']) {
-    await page.goto('/'+route);await page.reload();await expect(page.locator('.mission-day:visible')).toHaveText('Mission day 16 / 17');
+    await page.goto('/'+route);await expect(page.locator('.mission-day:visible')).toHaveText('Mission day 16 / 17');
+    await page.reload();await expect(page.locator('.mission-day:visible')).toHaveText('Mission day 16 / 17');
     expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
     expect(await page.locator('.content-region').evaluate(element=>element.scrollWidth<=element.clientWidth)).toBe(true);
   }

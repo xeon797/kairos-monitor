@@ -1,6 +1,6 @@
 import 'fake-indexeddb/auto';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { addLiveCheck, addResponse, getState, initialize, KairosDatabase, resetSimulation, setDay, type LiveCheck, type ReadyState } from '../../src/db/db';
+import { addLiveCheck, addResponse, getState, initialize, KairosDatabase, resetSimulation, setDay, type LiveCheck, type PersistedResponse, type ReadyState } from '../../src/db/db';
 import { syntheticChecks, syntheticSleep } from '../../src/engine/scenarios';
 import { baseline as oracle, check } from './fixtures/engineOracle';
 
@@ -21,6 +21,20 @@ async function ready(): Promise<ReadyState> {
 }
 
 describe('transactional scenario persistence', () => {
+  it.each([
+    {note:{unexpected:'object'}}, {note:null}, {note:'x'.repeat(201)},
+    {day:'13'}, {day:99}, {day:undefined}, {type:'unknown'}, {source:'live'}, {id:' '},
+  ])('preserves malformed schedule changes and reports unavailable storage: %j',async patch=>{
+    await ready();await setDay(16,store);
+    const malformed={...response,source:'synthetic',...patch} as unknown as PersistedResponse;
+    await store.responses.put(malformed);
+    const before=await store.settings.get('app');
+    expect(await getState(store)).toMatchObject({status:'unavailable',error:expect.stringContaining('schedule changes')});
+    expect(await initialize(time,store)).toMatchObject({status:'unavailable'});
+    await expect(resetSimulation(store)).rejects.toThrow('schedule changes');
+    expect(await store.responses.toArray()).toEqual([malformed]);
+    expect(await store.settings.get('app')).toEqual(before);
+  });
   it('seeds the exact fixture and verified frozen baseline on first initialization', async () => {
     const state = await ready();
     expect(state.currentDay).toBe(7);

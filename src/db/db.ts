@@ -62,17 +62,30 @@ function baselineAvailable(baseline:Baseline | null): baseline is Baseline {
 function errorMessage(error:unknown): string {
   return error instanceof Error ? error.message : 'Local storage is unavailable.';
 }
+function responseAvailable(value:unknown):value is PersistedResponse {
+  if (!value || typeof value !== 'object') return false;
+  const response = value as Partial<PersistedResponse>;
+  return typeof response.id === 'string' && !!response.id.trim()
+    && typeof response.day === 'number' && isSimulationDay(response.day)
+    && (response.type === 'rest_adjustment' || response.type === 'workload_adjustment')
+    && response.source === 'synthetic' && typeof response.note === 'string'
+    && response.note.length <= MAX_RESPONSE_NOTE_LENGTH;
+}
 async function readState(store:KairosDatabase): Promise<StoredState> {
   const settings = await store.settings.get('app');
   if (!settings?.scenarioLoaded || settings.schemaVersion !== SCHEMA_VERSION || !isSimulationDay(settings.currentDay) || !baselineAvailable(settings.baseline)) {
     return {status:'unavailable',error:'Local mission storage is incomplete: current day, scenario marker or frozen baseline is unavailable.'};
   }
-  const [sleep,checks,responses] = await Promise.all([store.sleep.toArray(),store.checks.toArray(),store.responses.orderBy('day').toArray()]);
+  // Read every response: a corrupt/missing indexed day must not hide a saved row.
+  const [sleep,checks,responses] = await Promise.all([store.sleep.toArray(),store.checks.toArray(),store.responses.toArray()]);
+  if (!responses.every(responseAvailable)) {
+    return {status:'unavailable',error:'Local mission storage is incomplete: saved schedule changes are malformed. Existing records were preserved.'};
+  }
   if (!syntheticSleep.every(row => sleep.some(saved => saved.day === row.day && saved.source === 'synthetic')) ||
     !syntheticChecks.every(row => checks.some(saved => saved.id === row.id && saved.source === 'synthetic' && saved.kind === 'synthetic_daily_summary'))) {
     return {status:'unavailable',error:'Local mission storage is incomplete: synthetic scenario records are unavailable.'};
   }
-  return {status:'ready',currentDay:settings.currentDay,baseline:settings.baseline,sleep,checks,responses};
+  return {status:'ready',currentDay:settings.currentDay,baseline:settings.baseline,sleep,checks,responses:responses.sort((left,right) => left.day-right.day)};
 }
 
 /** Caller supplies time; repeated and concurrent calls preserve all existing data. */
