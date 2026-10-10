@@ -37,6 +37,8 @@ Playwright starts production preview automatically for `npm run e2e`; build firs
 
 ## Gemini and deployment
 
+The public repository [xeon797/kairos-monitor](https://github.com/xeon797/kairos-monitor) is connected to the existing Vercel project `kairos-monitor`. Its production branch is `main`; pushes to that branch use Vercel's Git deployment integration. The live alias is [kairos-monitor-gamma.vercel.app](https://kairos-monitor-gamma.vercel.app). Keep the root directory at the repository root and retain the project's server-side Gemini environment variables.
+
 `api/explain.ts` calls Gemini REST with plain fetch, using server-only **GEMINI_API_KEY** and **GEMINI_MODEL**. `.env.example` lists names, never values. Never use a `VITE_` key, commit credentials or copy them into client build configuration. Plain Vite does not run this function; use the deployed Vercel project or a separately configured Vercel development environment for the endpoint.
 
 The deterministic template renders immediately. The model can only rephrase structured synthetic evidence; client/server validation rejects changed statuses, foreign numbers, prohibited claims or excessive text. Bounded provider/client timeouts, rate limits and invalid/unavailable responses silently retain the template. A validated response is cached in Dexie by the versioned canonical evidence key with model/time metadata, at most 50 entries and seven days; cache entries are revalidated on read. UI tags are **Template explanation** or **AI-rephrased from the same evidence**, with **Show template version** when AI is available. Cached AI retains its AI source offline; an uncached packet uses the template. A tag is not proof of a fresh provider call.
@@ -47,7 +49,7 @@ Deploy to the **existing** Vercel project `kairos-monitor`; preserve its Product
 vercel deploy --prod
 ```
 
-The original development workspace is locally linked through ignored `.vercel/project.json`; a new machine must link/select that existing project before deploying, not create another one. `vercel.json` selects Vite/npm ci/build/dist and rewrites only the documented SPA routes; API/static/worker paths remain independent. CLI uploads include the locally installed fonts; a Git-based build must arrange its own permitted font installation or will use fallback. Verify the deployed index, hashed assets, fonts, icons, manifest and worker against the reviewed build. Do not expose environment values while checking configuration.
+The original development workspace is locally linked through ignored `.vercel/project.json`; a new machine must link/select that existing project before deploying, not create another one. `vercel.json` selects Vite/npm ci/build/dist and rewrites only the documented SPA routes; API/static/worker paths remain independent. Its build command runs `node scripts/install-satoshi.mjs` before `npm run build`: when fonts are absent, the script obtains the official Fontshare archive, installs only unmodified weights 400/500/700 and retains the license under ignored `.local/`. Linux builds use the builder's `unzip`; Windows uses the existing PowerShell installer. Existing valid local WOFF2 files are reused. Download/extraction/verification failure stops the deployment rather than publishing a changed font presentation. No font CDN request occurs at runtime. Verify the deployed index, hashed assets, fonts, icons, manifest and worker against the reviewed build. Do not expose environment values while checking configuration.
 
 ## Offline capabilities and updates
 

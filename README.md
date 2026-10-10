@@ -135,7 +135,7 @@ Data flows from observations through the frozen baseline and deterministic rules
 
 `.env.example` contains empty placeholders. Configure values only in a Git-ignored local environment or the hosting provider's server environment; never use a `VITE_` prefix for the key. Live browser results are never sent to Gemini. Failed, unavailable or rejected responses silently retain the template.
 
-The existing demo runs on Vercel. Deployment instructions cover linking the existing project, installing fonts, server configuration and asset verification in [Development & Operations](docs/DEVELOPMENT.md#gemini-and-deployment). A fresh checkout does not contain the original workspace's local Vercel link. Git-based builds must arrange permitted font installation or use the fallback stack.
+The public GitHub repository is connected to the existing Vercel project; `main` is its production branch. Deployment instructions cover linking the existing project, installing fonts, server configuration and asset verification in [Development & Operations](docs/DEVELOPMENT.md#gemini-and-deployment). A fresh checkout does not contain the original workspace's local Vercel link. Vercel's build command obtains the three official Satoshi files at build time when absent; font binaries remain excluded from Git and are self-hosted by the resulting application. A failed font installation stops that deployment.
 
 ## Offline behavior
 

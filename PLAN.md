@@ -234,6 +234,8 @@ Time target: finish all three windows tonight. If time runs short, cut in this o
 
 ## Log
 
+T32 / Git deployment — Owner requested public visibility and connection to the existing Vercel deployment. Public repository access and the existing project/team were verified; GitHub repository connected with main as production branch and existing Gemini server variables retained. Added dependency-free build-time official Satoshi installation so Git builds preserve self-hosted typography without committing font binaries. Fresh typecheck/583 unit tests/build and isolated fresh-font hash checks pass. License/manual-rehearsal acceptance remains open.
+
 T32 — Owner-requested GitHub publication: polished the README and coding-agent instructions; added contributor, development/operations and verification guides. Preserved research attribution, recorded test evidence and prototype limitations. Documentation portion updated; license selection remains pending, so T32/T33 stay PARTIAL.
 
 R01 - Completed restored-session deployment acceptance for application faf5189: production READY, all 16 runtime assets match a fresh build, and 12 public browser checks pass at 360/1100 px, including accessible research details and genuinely offline summaries. Typecheck/583 unit tests/build pass; no runtime edits or provider calls. T32/T33 remain PARTIAL.
