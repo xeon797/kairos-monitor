@@ -72,7 +72,7 @@ for (const width of [360, 1100]) {
       }
 
       await page.locator('footer').scrollIntoViewIfNeeded();
-      await expect(page.locator('footer')).toHaveText(FOOTER_DISCLAIMER);
+      await expect(page.locator('footer > p')).toHaveText(FOOTER_DISCLAIMER);
       const footer = await page.locator('footer').boundingBox();
       const nav = await navigation.boundingBox();
       expect(footer).not.toBeNull();

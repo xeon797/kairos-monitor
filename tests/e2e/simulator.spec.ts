@@ -91,7 +91,7 @@ for (const width of [360,1100]) {
       expect(await control.evaluate(element => element.getBoundingClientRect().height)).toBeGreaterThanOrEqual(44);
     }
     await reset.focus(); expect(await reset.evaluate(element => getComputedStyle(element).outlineStyle)).toBe('solid');
-    await page.locator('footer').scrollIntoViewIfNeeded(); await expect(page.locator('footer')).toHaveText(FOOTER_DISCLAIMER);
+    await page.locator('footer').scrollIntoViewIfNeeded(); await expect(page.locator('footer > p')).toHaveText(FOOTER_DISCLAIMER);
     if (width === 360) {
       const footer = await page.locator('footer').boundingBox(); const navigation = await page.locator('.primary-navigation').boundingBox();
       expect(footer!.y+footer!.height).toBeLessThanOrEqual(navigation!.y);

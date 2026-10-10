@@ -25,6 +25,15 @@ async function controlledChecks(page: Page) {
   await completeChecks(page);
   await page.clock.resume();
 }
+test('P11 a cold first offline visit cannot load; initial online installation is required', async ({ page, context }) => {
+  await context.setOffline(true);
+  await expect(page.goto('/today', { timeout: 5000 })).rejects.toThrow(/ERR_INTERNET_DISCONNECTED/);
+  await context.setOffline(false);
+  // Never consume provider quota while verifying shell installation.
+  await mockAI(page);
+  await page.goto('/today'); await offlineReady(page);
+  await expect(page.locator('.mission-day:visible')).toHaveText('Mission day 7 / 17');
+});
 for (const width of [360, 1100]) test(`P11 actual offline reload, routes, checks and persistence ${width}px`, async ({ page, context }) => {
   test.setTimeout(120000);
   await page.setViewportSize({ width, height: 900 });
